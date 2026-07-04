@@ -1056,16 +1056,16 @@ var INFORME_77_DATA=[{"pdf": "ALT CAMP", "panel": "ALT CAMP", "exacto": true, "v
 var INFORME_RESUMEN_OFICIAL={total:77,sinCandidaturas:32,conCandidaturas:45,votacion:3,cubiertas:16,parciales:26,candidatosTotal:111};
 
 function informe77NuestrosCandidatos(panelNombre){
-  // Nombres normalizados (APELLIDOS, NOMBRE) de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
+  // Nombres de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
   var norm=stripAccents(panelNombre);
-  var set={};
+  var list=[], set={};
   (contacts||[]).forEach(function(c){
     if(stripAccents(c.TERRITORIO||'')!==norm)return;
     if(String(c.CANDIDATURA_PRESENTADA||'').trim().toUpperCase()!=='SI')return;
     var nombre=(String(c.APELLIDOS||'').trim()+', '+String(c.NOMBRE||'').trim()).replace(/^,\s*|,\s*$/g,'');
-    if(nombre.trim())set[stripAccents(nombre)]=true;
+    if(nombre.trim()){list.push(nombre);set[stripAccents(nombre)]=true;}
   });
-  return set;
+  return {list:list,set:set};
 }
 
 function renderInforme77(){
@@ -1076,50 +1076,41 @@ function renderInforme77(){
   var haySociosReales=(contacts&&contacts.length>0);
   var html='';
 
-  // ── HERO resumen visual (estilo informe LaSoci) ──
-  html+='<div style="background:linear-gradient(135deg,#081f4a 0%,#0C3470 55%,#1a4fa0 100%);border-radius:16px;padding:24px 26px;margin-bottom:16px;position:relative;overflow:hidden;">'
-    +'<div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);top:-70px;right:-50px;"></div>'
-    +'<div style="position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04);bottom:-50px;left:-30px;"></div>'
-    +'<div style="position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:24px;">'
-      +'<div style="text-align:center;padding-right:24px;border-right:1px solid rgba(255,255,255,.18);">'
-        +'<div style="font-size:44px;font-weight:800;color:#fff;line-height:1;">'+R.candidatosTotal+'</div>'
-        +'<div style="font-size:11px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-top:4px;">Candidatos<br>presentados</div>'
-      +'</div>'
-      +'<div style="flex:1;min-width:220px;">'
-        +'<div style="font-size:13px;color:rgba(255,255,255,.85);margin-bottom:10px;">Renovación reglamentaria de Junta Rectora 2026 · <b>'+R.total+' demarcaciones</b></div>'
-        +'<div style="display:flex;height:14px;border-radius:99px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);">'
-          +'<div style="width:'+(R.cubiertas/R.total*100)+'%;background:#1D9E75;" title="Cubiertas: '+R.cubiertas+'"></div>'
-          +'<div style="width:'+(R.parciales/R.total*100)+'%;background:#3a7bd5;" title="Parciales: '+R.parciales+'"></div>'
-          +'<div style="width:'+(R.votacion/R.total*100)+'%;background:#f5a623;" title="En votación: '+R.votacion+'"></div>'
-          +'<div style="width:'+(R.sinCandidaturas/R.total*100)+'%;background:rgba(255,255,255,.22);" title="Sin candidaturas: '+R.sinCandidaturas+'"></div>'
-        +'</div>'
-        +'<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:11px;color:rgba(255,255,255,.85);">'
-          +'<span><i class="ti ti-square-rounded-filled" style="color:#1D9E75;"></i> Cubiertas ('+R.cubiertas+')</span>'
-          +'<span><i class="ti ti-square-rounded-filled" style="color:#3a7bd5;"></i> Parciales ('+R.parciales+')</span>'
-          +'<span><i class="ti ti-square-rounded-filled" style="color:#f5a623;"></i> En votación ('+R.votacion+')</span>'
-          +'<span><i class="ti ti-square-rounded-filled" style="color:rgba(255,255,255,.5);"></i> Sin candidaturas ('+R.sinCandidaturas+')</span>'
-        +'</div>'
-      +'</div>'
+  // ── Diagrama de desglose por etapas (Total → Sin/Con candidaturas → Votación/Cubierta·Parcial → Cubiertas/Parciales) ──
+  html+='<style>'
+    +'.if77-flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:6px 4px 20px;}'
+    +'.if77-stage{display:flex;flex-direction:column;justify-content:center;gap:10px;flex-shrink:0;min-width:150px;}'
+    +'.if77-stage-lbl{font-size:9.5px;color:var(--gray4);text-transform:uppercase;letter-spacing:.5px;font-weight:700;text-align:center;margin-bottom:2px;}'
+    +'.if77-card{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--gray3);}'
+    +'.if77-card .n{font-size:24px;font-weight:800;line-height:1;}'
+    +'.if77-card .l{font-size:10px;color:var(--gray5);text-transform:uppercase;letter-spacing:.3px;font-weight:600;margin-top:4px;}'
+    +'.if77-arrow{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:34px;color:var(--gray4);font-size:20px;}'
+    +'@media (max-width:640px){.if77-flow{flex-direction:column;}.if77-arrow{width:auto;padding:2px 0;transform:rotate(90deg);}}'
+  +'</style>';
+  html+='<div class="if77-flow">'
+    +'<div class="if77-stage"><div class="if77-stage-lbl">Total</div><div class="if77-card" style="background:linear-gradient(135deg,#081f4a,#1a4fa0);border:none;"><div class="n" style="color:#fff;">'+R.total+'</div><div class="l" style="color:rgba(255,255,255,.7);">Listas</div></div></div>'
+    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
+    +'<div class="if77-stage"><div class="if77-stage-lbl">Desglose de las 77</div>'
+      +'<div class="if77-card"><div class="n" style="color:#b52a2a;">'+R.sinCandidaturas+'</div><div class="l">Sin candidaturas</div></div>'
+      +'<div class="if77-card"><div class="n" style="color:#1e7a42;">'+R.conCandidaturas+'</div><div class="l">Con candidaturas</div></div>'
+    +'</div>'
+    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
+    +'<div class="if77-stage"><div class="if77-stage-lbl">De las '+R.conCandidaturas+' con candidaturas</div>'
+      +'<div class="if77-card"><div class="n" style="color:#d97706;">'+R.votacion+'</div><div class="l">En votación</div></div>'
+      +'<div class="if77-card"><div class="n" style="color:#3a7bd5;">'+(R.cubiertas+R.parciales)+'</div><div class="l">Cubierta o parcial</div></div>'
+    +'</div>'
+    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
+    +'<div class="if77-stage"><div class="if77-stage-lbl">De las '+(R.cubiertas+R.parciales)+' cubiertas/parciales</div>'
+      +'<div class="if77-card"><div class="n" style="color:#1D9E75;">'+R.cubiertas+'</div><div class="l">Cubiertas</div></div>'
+      +'<div class="if77-card"><div class="n" style="color:#3a7bd5;">'+R.parciales+'</div><div class="l">Parciales</div></div>'
     +'</div>'
   +'</div>';
 
-  // ── Tarjetas KPI secundarias ──
-  html+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px;">';
-  var kpis=[
-    {v:R.sinCandidaturas,l:'Sin candidaturas',c:'#b52a2a',ic:'ti-square-x'},
-    {v:R.conCandidaturas,l:'Con candidaturas',c:'#1e7a42',ic:'ti-square-check'},
-    {v:R.votacion,l:'En votación',c:'#d97706',ic:'ti-ballot'},
-    {v:R.cubiertas,l:'Cubiertas',c:'#1D9E75',ic:'ti-circle-check'},
-    {v:R.parciales,l:'Parciales',c:'#3a7bd5',ic:'ti-circle-half-2'}
-  ];
-  kpis.forEach(function(k){
-    html+='<div style="background:#fff;border:1px solid var(--gray3);border-radius:10px;padding:12px 10px;text-align:center;box-shadow:var(--shadow);">'
-      +'<i class="ti '+k.ic+'" style="font-size:18px;color:'+k.c+';"></i>'
-      +'<div style="font-size:22px;font-weight:700;color:'+k.c+';line-height:1.1;margin-top:2px;">'+k.v+'</div>'
-      +'<div style="font-size:10px;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;font-weight:600;margin-top:3px;">'+k.l+'</div>'
-      +'</div>';
-  });
-  html+='</div>';
+  html+='<div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#eafaf0;border:1px solid #bfe8cf;border-radius:12px;padding:14px 20px;margin-bottom:16px;">'
+    +'<i class="ti ti-users-group" style="font-size:24px;color:#1e7a42;"></i>'
+    +'<span style="font-size:26px;font-weight:800;color:#1e7a42;">'+R.candidatosTotal+'</span>'
+    +'<span style="font-size:13px;color:#1e7a42;font-weight:600;">candidatos presentados en total</span>'
+  +'</div>';
 
   // ── Avisos ──
   if(diffsNombre.length){
@@ -1129,7 +1120,7 @@ function renderInforme77(){
   }
   html+='<div style="background:'+(haySociosReales?'#e8f1fc':'#fef3cd')+';border:1px solid '+(haySociosReales?'#c7ddf5':'#ecd9a8')+';border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:'+(haySociosReales?'#0C3470':'#7a5200')+';">'
     +(haySociosReales
-      ? '<b>🔍 Candidatos comparados con el panel en vivo.</b> Un candidato del PDF en <span style="color:#b52a2a;font-weight:700;">rojo</span> significa que no figura con «Candidatura presentada = SÍ» en ese territorio dentro de RECTORES.'
+      ? '<b>🔍 Comparación en ambos sentidos.</b> Se muestran los candidatos del PDF y los registrados en el panel (Candidatura presentada = SÍ) uno junto al otro. En <span style="color:#b52a2a;font-weight:700;">rojo</span>: el del PDF que no tiene ni una coincidencia aproximada en el panel, o el del panel que no aparece en el PDF.'
       : '<b>⏳ Aún no hay datos cargados del panel</b> para cruzar candidatos — se muestran solo los del PDF. Abre esta pestaña con los datos ya sincronizados para ver el cruce en rojo.')
     +'</div>';
 
@@ -1153,18 +1144,47 @@ function renderInforme77(){
       ? '<span>'+r.panel+'</span>'
       : '<span>'+r.panel+'</span> <span style="color:#b52a2a;font-weight:700;" title="Nombre según el PDF de LaSoci">／ '+r.pdf.trim()+'</span>';
 
-    var nuestros=informe77NuestrosCandidatos(r.panel);
-    var chips='';
+    var nuestrosObj=informe77NuestrosCandidatos(r.panel);
+    var nuestrosList=nuestrosObj.list, nuestrosSet=nuestrosObj.set;
+    var pdfNorm=r.candidatos.map(stripAccents);
+
+    function coincideAprox(nombre,listaNorm){
+      var nn=stripAccents(nombre);
+      for(var j=0;j<listaNorm.length;j++){
+        var o=listaNorm[j];
+        if(nn===o||nn.indexOf(o)===0||o.indexOf(nn)===0)return true;
+      }
+      return false;
+    }
+
+    var colPdf, colNuestros;
     if(n){
-      chips='<div style="display:flex;flex-wrap:wrap;gap:6px;">'+r.candidatos.map(function(c){
-        var noCoincide=haySociosReales&&!nuestros[stripAccents(c)];
-        return noCoincide
-          ? '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No figura como candidatura presentada en RECTORES para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;"></i></span>'
-          : '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>';
+      colPdf='<div style="display:flex;flex-wrap:wrap;gap:6px;">'+r.candidatos.map(function(c){
+        var ok=!haySociosReales||coincideAprox(c,Object.keys(nuestrosSet));
+        return ok
+          ? '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>'
+          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No encontrado (ni aproximado) en el panel para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;"></i></span>';
       }).join('')+'</div>';
     } else {
-      chips='<div style="font-size:12px;color:var(--gray4);">Sin candidaturas presentadas.</div>';
+      colPdf='<div style="font-size:12px;color:var(--gray4);">El PDF no registra candidaturas.</div>';
     }
+    if(nuestrosList.length){
+      colNuestros='<div style="display:flex;flex-wrap:wrap;gap:6px;">'+nuestrosList.map(function(c){
+        var ok=coincideAprox(c,pdfNorm);
+        return ok
+          ? '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>'
+          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No aparece en el PDF de LaSoci para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;"></i></span>';
+      }).join('')+'</div>';
+    } else {
+      colNuestros=haySociosReales
+        ? '<div style="font-size:12px;color:var(--gray4);">Sin candidatura presentada registrada en el panel.</div>'
+        : '<div style="font-size:12px;color:var(--gray4);">Sin datos del panel cargados todavía.</div>';
+    }
+
+    var chips='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">'
+      +'<div><div style="font-size:10px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">📄 Según el PDF LaSoci</div>'+colPdf+'</div>'
+      +'<div><div style="font-size:10px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">🖥 Registrados en el panel</div>'+colNuestros+'</div>'
+      +'</div>';
 
     html+='<div class="acc2-wrap" style="margin-bottom:6px;box-shadow:none;border:1px solid var(--gray3);">'
       +'<div class="acc2-head" style="background:#fff;padding:10px 14px;" onclick="informe77Toggle('+i+')">'

@@ -1,0 +1,5 @@
+name = "jolly-hat-4d8d"
+compatibility_date = "2026-05-21"
+
+[assets]
+directory = "./public"

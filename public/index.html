@@ -568,10 +568,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         </div>
         <div id="acc-informe-body" class="acc2-body">
           <div class="acc2-body-inner" id="informe-77-demarcaciones">
-            <div style="font-size:13px;color:var(--gray5);text-align:center;padding:30px 10px;">
-              <i class="ti ti-file-upload" style="font-size:28px;display:block;margin-bottom:8px;opacity:.5;"></i>
-              Informe de las 77 demarcaciones pendiente de integrar aquí.
-            </div>
+            <div style="text-align:center;padding:20px;color:var(--gray4);font-size:12px;">Cargando informe…</div>
           </div>
         </div>
       </div>
@@ -1054,6 +1051,100 @@ function _consToggle(){
   if(_consIsOpen){_consIsOpen=false;document.getElementById('consideraciones-body').classList.remove('open');document.getElementById('cons-arrow').style.transform='rotate(0deg)';}
   else{_consOpen();}
 }
+var INFORME_77_DATA=[{"pdf": "ALT CAMP", "panel": "ALT CAMP", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALT EMPORDÀ", "panel": "ALT EMPORDA", "exacto": true, "vacantes": 2, "candidatos": ["ISERN SERRA, RAMON"]}, {"pdf": "ALT PENEDÈS", "panel": "ALT PENEDES", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ALT URGELL", "panel": "ALT URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALTA RIBAGORÇA", "panel": "ALTA RIBAGORÇA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ANDALUCIA (ALM GRA JAE MAL)", "panel": "ANDALUCIA (ALM,GRA,JAE,MAL)", "exacto": true, "vacantes": 5, "candidatos": ["CABRERA CRUZ, ISIDRO", "MARTINEZ GARCIA, MARCELO", "RUBI CASTILLO, FRANCISCO", "VANEGAS LOPEZ, JORGE JUAN"]}, {"pdf": "ANDALUCIA (HUE COR CAD SEV)", "panel": "ANDALUCIA (HUE,COR,CAD,SEV)", "exacto": true, "vacantes": 5, "candidatos": ["CODER GALLEGO, ELISA", "ESPINOSA GARCIA, JUAN CARLOS", "GONZALEZ MUÑOZ, JOSE LUIS", "IGLESIAS BALAGUER, JUAN JOSE", "VAZQUEZ PAVON, JUAN"]}, {"pdf": "ANDALUCIA SEVILLA CIUDAD", "panel": "ANDALUCIA (SEVILLA CIUDAD)", "exacto": true, "vacantes": 3, "candidatos": ["CORTES LOPEZ, CARLOS JAVIER", "LOPEZ RIVERA, MANUEL", "RUBIALES ALVAREZ-DARDET, FERNANDO"]}, {"pdf": "ANOIA", "panel": "ANOIA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ARAGÓN", "panel": "ARAGON", "exacto": true, "vacantes": 2, "candidatos": ["FLAMARIQUE BORREGO, FERNANDO", "GARCIA CABANES, JORGE"]}, {"pdf": "ASTURIAS", "panel": "ASTURIAS", "exacto": true, "vacantes": 2, "candidatos": ["COYA ALAEZ, LUIS", "LUQUE SAN JUAN, JAVIER"]}, {"pdf": "BAGES", "panel": "BAGES", "exacto": true, "vacantes": 2, "candidatos": ["ARNAN CASANOVAS, JORDI", "BERCH BOIX, JAUME"]}, {"pdf": "BAIX CAMP", "panel": "BAIX CAMP", "exacto": true, "vacantes": 2, "candidatos": ["OLIVE FERRAN, JAUME"]}, {"pdf": "BAIX EBRE", "panel": "BAIX EBRE", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BAIX EMPORDÀ", "panel": "BAIX EMPORDA", "exacto": true, "vacantes": 3, "candidatos": ["FORADADA CORTACANS, JOSEP", "MATEU PALE, RAFAEL", "VILOSA BUXO, ALBERT"]}, {"pdf": "BAIX LLOBREGAT", "panel": "BAIX LLOBREGAT", "exacto": true, "vacantes": 7, "candidatos": ["DOMINGUEZ MONLEON, MARIA PILAR", "MITJANS RIUS, JOSEP", "MONMANY SOLE, ANTONIO", "RIU VIDAL, EDUARD", "SIBERA ARESTE, JORDI"]}, {"pdf": "BAIX PENEDÈS", "panel": "BAIX PENEDES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "BARCELONA DTE. 01", "panel": "BARCELONA DTE. 01", "exacto": true, "vacantes": 1, "candidatos": ["PARIENTE LOPEZ, SUSANNA"]}, {"pdf": "BARCELONA DTE. 02", "panel": "BARCELONA DTE. 02", "exacto": true, "vacantes": 8, "candidatos": ["ARMENGOL RICHART, JOAN", "COSTA JAQUET, LLUIS", "FUENTES PIQUER, FRANCISCO", "MARIEGES ASENSIO, FERRAN", "PADRO BALSELLS, PERE", "POYATOS JORDA, XAVIER", "SIERRA MOYA, JAVIER"]}, {"pdf": "BARCELONA DTE. 03", "panel": "BARCELONA DTE. 03", "exacto": true, "vacantes": 3, "candidatos": ["CORRECHER CASTRO, JOSEP", "RUIZ CABALLERO, JOAN FRANCESC"]}, {"pdf": "BARCELONA DTE. 04", "panel": "BARCELONA DTE. 04", "exacto": true, "vacantes": 5, "candidatos": ["DE LUCAS COVES, MARIA VICTORIA", "FABREGAT PUIGGALI, JOSEP", "FONCILLAS SOLER, JOAN MARIA", "PLANDOLIT ARUMI, JOAN", "RAFOLS CASTELLVI, PERE", "RAMIREZ MARTINEZ, MA. ASUNCION", "TRIGAS LOPEZ, TERESA"]}, {"pdf": "BARCELONA DTE. 05", "panel": "BARCELONA DTE. 05", "exacto": true, "vacantes": 5, "candidatos": ["MOYA FOLCH, CARMEN", "SERRANO RASERO, INMACULADA", "SOLANS NAVARRO, ANTONI", "VIDAL VALLDEPERAS, ELISENDA"]}, {"pdf": "BARCELONA DTE. 06", "panel": "BARCELONA DTE. 06", "exacto": true, "vacantes": 4, "candidatos": ["FONT DE MORA CARRERAS, ROSA", "GALOFRE BATET, ELENA", "PUIG LLINARES, FERMI", "VILASECA NIUBO, ANTONI MARIA", "VALDIVIESO FONT, XAVIER"]}, {"pdf": "BARCELONA DTE. 07", "panel": "BARCELONA DTE. 07", "exacto": true, "vacantes": 3, "candidatos": ["PALOU RECHE, LUISA MARIA"]}, {"pdf": "BARCELONA DTE. 08", "panel": "BARCELONA DTE. 08", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BARCELONA DTE. 09", "panel": "BARCELONA DTE. 09", "exacto": true, "vacantes": 3, "candidatos": ["CASAS GUELL, JOAN"]}, {"pdf": "BARCELONA DTE. 10", "panel": "BARCELONA DTE. 10", "exacto": true, "vacantes": 4, "candidatos": ["CANO VERNET, ANTONI", "CORTADELLAS QUERALT, FRANCESC", "MONLEON NOVELLA, AMADOR", "SUMALLA LLOBERA, JORDI"]}, {"pdf": "BARCELONES", "panel": "BARCELONES", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "BERGUEDÀ", "panel": "BERGUEDA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CANTABRIA", "panel": "CANTABRIA", "exacto": true, "vacantes": 1, "candidatos": ["GOMEZ GONZALEZ, JOSE MANUEL"]}, {"pdf": "CASTILLA-LA MANCHA", "panel": "CASTILLA-LA MANCHA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CASTILLA-LEÓN", "panel": "CASTILLA Y LEON", "exacto": false, "vacantes": 5, "candidatos": ["ARCE MURILLO, PABLO", "HORGA MANZANAL, GREGORIO", "LARGO FERNANDEZ, FERNANDO"]}, {"pdf": "CERDANYA", "panel": "CERDANYA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "COM. VALENCIANA EXCEPTE CIUTAT", "panel": "COM. VALENCIANA (EXC.VALENCIA CIUTAT)", "exacto": false, "vacantes": 6, "candidatos": ["MARTIN SORIANO, JOSE"]}, {"pdf": "CONCA DE BARBERÀ", "panel": "CONCA DE BARBERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "EIVISSA I FORMENTERA", "panel": "EIVISSA I FORMENTERA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "EXTREMADURA", "panel": "EXTREMADURA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GALICIA", "panel": "GALICIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GARRAF", "panel": "GARRAF", "exacto": true, "vacantes": 2, "candidatos": ["CALVO COMELLA, JOSE MARIA", "MARTI FERRER, MA. ESPERANZA", "PEREZ PALANCO, EMILI"]}, {"pdf": "GIRONÈS", "panel": "GIRONES", "exacto": true, "vacantes": 4, "candidatos": ["SOLE TRISTAN, MARCEL"]}, {"pdf": "LA GARROTXA", "panel": "LA GARROTXA", "exacto": true, "vacantes": 2, "candidatos": ["BUSQUETS PICART, JOSEP"]}, {"pdf": "LA NOGUERA", "panel": "LA NOGUERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LA RIOJA", "panel": "LOGROÑO", "exacto": false, "vacantes": 2, "candidatos": ["AMUTIO PERAITA, MARIA ANGELES", "LASANTA ESTEBAN, RAQUEL"]}, {"pdf": "LA SELVA", "panel": "LA SELVA", "exacto": true, "vacantes": 3, "candidatos": ["JULIA ALSINA, BALTASAR"]}, {"pdf": "LAS PALMAS", "panel": "LAS PALMAS", "exacto": true, "vacantes": 2, "candidatos": ["GONZALEZ CABRERA, ISRAEL", "SANMARTIN Gª DE CASTRO, JOSE CARLOS"]}, {"pdf": "LES GARRIGUES", "panel": "LES GARRIGUES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LLUÇANÈS", "panel": "LLUÇANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MADRID (EXC. CIUDAD)", "panel": "MADRID (EXC. MADRID CIUDAD)", "exacto": false, "vacantes": 5, "candidatos": ["DEL CASTILLO GARCIA, CANDIDO", "GOMEZ LOPEZ, FRANCISCO", "SAINZ DE LA MAZA GIMENEZ, JUAN CARLOS", "TORO ALBA, FRANCISCO JAVIER"]}, {"pdf": "MADRID CIUDAD", "panel": "MADRID", "exacto": false, "vacantes": 6, "candidatos": ["DE GREGORIO MUÑOZ, FCO. JAVIER", "GESTOSO CARIDE, GONZALO", "GUERRA COLSA, INMACULADA", "TOVAL DEL SOL, RAFAEL"]}, {"pdf": "MALLORCA EXCEPTE PALMA", "panel": "MALLORCA (EXC. PALMA)", "exacto": false, "vacantes": 3, "candidatos": ["CAPO SERRA, JOSEP JOAN", "MAYRATA MASCARO, MIGUEL", "TOMAS MORLA, DAMIAN"]}, {"pdf": "MARESME", "panel": "MARESME", "exacto": true, "vacantes": 6, "candidatos": ["GUILLOT COLLS, CARLES", "PADROS GIRALT, JOSEP"]}, {"pdf": "MENORCA", "panel": "MENORCA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "MOIANÈS", "panel": "MOIANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MONTSIÀ", "panel": "MONTSIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MURCIA", "panel": "MURCIA", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "NAVARRA", "panel": "NAVARRA", "exacto": true, "vacantes": 2, "candidatos": ["CASADO FUENTES, EDUARDO"]}, {"pdf": "OSONA", "panel": "OSONA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "PAÍS VASCO", "panel": "PAIS VASCO", "exacto": true, "vacantes": 4, "candidatos": ["HURTADO DE MENDOZA VELASCO, JOSE", "MARTINEZ REGUERA, JORGE", "ULLOA SALDAÑA, OSCAR"]}, {"pdf": "PALLARS JUSSÀ", "panel": "PALLARS JUSSA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALLARS SOBIRÀ", "panel": "PALLARS SOBIRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALMA DE MALLORCA", "panel": "PALMA DE MALLORCA", "exacto": true, "vacantes": 4, "candidatos": ["BARCELO RIERA, FRANCISCO", "FERRER MOTOS, ENRIC", "VADELL GOMEZ, TONI"]}, {"pdf": "PLA D'ESTANY", "panel": "PLA DE L'ESTANY", "exacto": false, "vacantes": 2, "candidatos": ["TORRAS CONGOST, MARTIRIA", "TRIAS FERRER, JOAN"]}, {"pdf": "PLA D'URGELL", "panel": "PLA D'URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PRIORAT", "panel": "PRIORAT", "exacto": true, "vacantes": 1, "candidatos": ["CLUA LLOP, JOSEP"]}, {"pdf": "RIBERA D'EBRE", "panel": "RIBERA D'EBRE", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "RIPOLLES", "panel": "RIPOLLES", "exacto": true, "vacantes": 1, "candidatos": ["COSTA CAMBRAS, LLUIS"]}, {"pdf": "SANTA CRUZ DE TENERIFE", "panel": "SANTA CRUZ DE TENERIFE", "exacto": true, "vacantes": 4, "candidatos": ["CABA BETANCORT, MAR", "HERNANDEZ JIMENEZ, PABLO", "PEREZ PEREZ, SIXTO GREGORIO"]}, {"pdf": "SEGARRA", "panel": "SEGARRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "SEGRIÀ", "panel": "SEGRIA", "exacto": true, "vacantes": 4, "candidatos": ["PICANYOL TARRE, JOAN", "TRUJILLO PESTAÑA, MIQUEL"]}, {"pdf": "SOLSONÈS", "panel": "SOLSONES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "TARRAGONÈS", "panel": "TARRAGONES", "exacto": true, "vacantes": 3, "candidatos": ["GUINOVART PUJALS, JOAN MARIA", "HIJOS VALLVE, SANTIAGO"]}, {"pdf": "TERRA ALTA", "panel": "TERRA ALTA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "URGELL", "panel": "URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "VALÈNCIA CIUTAT", "panel": "VALENCIA (CIUTAT)", "exacto": true, "vacantes": 4, "candidatos": ["GONZALEZ RODRIGUEZ, JOSE MANUEL"]}, {"pdf": "VALL D'ARAN", "panel": "VALL D'ARAN", "exacto": true, "vacantes": 1, "candidatos": ["GARCIA SANTANACH, ROBERT"]}, {"pdf": "VALLÈS OCCIDENTAL", "panel": "VALLES OCCIDENTAL", "exacto": true, "vacantes": 7, "candidatos": ["SALINAS MOLINA, RAMON", "URGELES BORRAS, DELFI"]}, {"pdf": "VALLÈS ORIENTAL", "panel": "VALLES ORIENTAL", "exacto": true, "vacantes": 4, "candidatos": []}];
+
+var INFORME_RESUMEN_OFICIAL={total:77,sinCandidaturas:32,conCandidaturas:45,votacion:3,cubiertas:16,parciales:26,candidatosTotal:111};
+function renderInforme77(){
+  var wrap=document.getElementById('informe-77-demarcaciones');
+  if(!wrap)return;
+  var R=INFORME_RESUMEN_OFICIAL;
+  var diffs=INFORME_77_DATA.filter(function(r){return !r.exacto;});
+  var html='';
+
+  // ── Resumen visual ──
+  html+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px;">';
+  var kpis=[
+    {v:R.total,l:'Demarcaciones',c:'#0C3470'},
+    {v:R.sinCandidaturas,l:'Sin candidaturas',c:'#b52a2a'},
+    {v:R.conCandidaturas,l:'Con candidaturas',c:'#1e7a42'},
+    {v:R.votacion,l:'En votación',c:'#d97706'},
+    {v:R.cubiertas,l:'Cubiertas',c:'#1e7a42'},
+    {v:R.parciales,l:'Parciales',c:'#3a7bd5'},
+    {v:R.candidatosTotal,l:'Candidatos',c:'#0C3470'}
+  ];
+  kpis.forEach(function(k){
+    html+='<div style="background:#fff;border:1px solid var(--gray3);border-radius:10px;padding:12px 10px;text-align:center;box-shadow:var(--shadow);">'
+      +'<div style="font-size:24px;font-weight:700;color:'+k.c+';line-height:1.1;">'+k.v+'</div>'
+      +'<div style="font-size:10px;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;font-weight:600;margin-top:3px;">'+k.l+'</div>'
+      +'</div>';
+  });
+  html+='</div>';
+
+  // ── Aviso de nombres no coincidentes ──
+  if(diffs.length){
+    html+='<div style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#7a2020;">'
+      +'<b>⚠ '+diffs.length+' demarcaciones con nombre distinto</b> entre el panel y el PDF de LaSoci (misma demarcación, otra forma de nombrarla). Se muestran ambas; en <span style="color:#b52a2a;font-weight:700;">rojo</span> la del PDF.'
+      +'</div>';
+  }
+
+  // ── Controles ──
+  html+='<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px;">'
+    +'<button onclick="informe77ToggleAll(true)" style="font-size:11px;padding:6px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;">Expandir todas</button>'
+    +'<button onclick="informe77ToggleAll(false)" style="font-size:11px;padding:6px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;">Contraer todas</button>'
+    +'</div>';
+
+  // ── Listado de demarcaciones ──
+  html+='<div id="informe77-list">';
+  INFORME_77_DATA.forEach(function(r,i){
+    var n=r.candidatos.length, v=r.vacantes;
+    var estado, estadoCol;
+    if(n===0){estado='Sin candidaturas';estadoCol='#b52a2a';}
+    else if(n>v){estado='En votación';estadoCol='#d97706';}
+    else if(n>=v){estado='Cubierta';estadoCol='#1e7a42';}
+    else{estado='Parcial';estadoCol='#3a7bd5';}
+
+    var nombreHtml = r.exacto
+      ? '<span>'+r.panel+'</span>'
+      : '<span>'+r.panel+'</span> <span style="color:#b52a2a;font-weight:700;" title="Nombre según el PDF de LaSoci">／ '+r.pdf.trim()+'</span>';
+
+    html+='<div class="acc2-wrap" style="margin-bottom:6px;box-shadow:none;border:1px solid var(--gray3);">'
+      +'<div class="acc2-head" style="background:#fff;padding:10px 14px;" onclick="informe77Toggle('+i+')">'
+        +'<div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">'
+          +'<span id="informe77-arrow-'+i+'" style="color:var(--azul);font-size:11px;transition:transform .2s;">▶</span>'
+          +'<span style="font-size:12.5px;font-weight:700;color:var(--azul);text-transform:none;letter-spacing:0;">'+nombreHtml+'</span>'
+        +'</div>'
+        +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">'
+          +'<span style="font-size:10px;color:var(--gray5);">'+n+'/'+v+'</span>'
+          +'<span class="badge" style="background:'+estadoCol+'22;color:'+estadoCol+';font-size:10px;">'+estado+'</span>'
+        +'</div>'
+      +'</div>'
+      +'<div id="informe77-body-'+i+'" style="display:none;background:#fafbfd;border-top:1px solid var(--gray3);padding:10px 16px;">'
+      + (n
+          ? '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+r.candidatos.map(function(c){
+              return '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>';
+            }).join('')+'</div>'
+          : '<div style="font-size:12px;color:var(--gray4);">Sin candidaturas presentadas.</div>')
+      +'</div>'
+    +'</div>';
+  });
+  html+='</div>';
+
+  wrap.innerHTML=html;
+}
+function informe77Toggle(i){
+  var body=document.getElementById('informe77-body-'+i);
+  var arrow=document.getElementById('informe77-arrow-'+i);
+  var open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'rotate(0deg)':'rotate(90deg)';
+}
+function informe77ToggleAll(open){
+  INFORME_77_DATA.forEach(function(r,i){
+    document.getElementById('informe77-body-'+i).style.display=open?'block':'none';
+    document.getElementById('informe77-arrow-'+i).style.transform=open?'rotate(90deg)':'rotate(0deg)';
+  });
+}
+
 function toggleAcc2(id){
   var body=document.getElementById(id+'-body');
   var arrow=document.getElementById(id+'-arrow');
@@ -1525,6 +1616,8 @@ window.onerror=function(msg,src,line){
 };
 function init(){
   try{
+  // Pintar el informe estático de las 77 demarcaciones (no depende de datos remotos)
+  try{renderInforme77();}catch(e){}
   // Siempre arrancar limpio: borrar cache local (movil o PC) para evitar datos desactualizados
   try{localStorage.removeItem('rectores_data');localStorage.removeItem('rectores_cuotas');}catch(e){}
   contacts=[];cuotas=[];

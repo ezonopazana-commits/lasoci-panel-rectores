@@ -335,7 +335,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
     <button class="tab active" onclick="showTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></button>
     <button class="tab" onclick="showTab('crm',this)"><i class="ti ti-chart-bar"></i><span>CRM</span></button>
     <button class="tab" onclick="showTab('contactos',this)"><i class="ti ti-users"></i><span>Rectores</span></button>
-    <button class="tab" onclick="showTab('afines_mapa',this)"><i class="ti ti-map-pin"></i><span>Proyección</span></button>
+    <button class="tab" onclick="showTab('afines_mapa',this)"><i class="ti ti-map-pin"></i><span>Candidaturas</span></button>
     <button class="tab" onclick="showTab('evolucion',this)"><i class="ti ti-chart-line"></i><span>Evolución</span></button>
     <div class="tabs-admin-group">
       <button class="tab tab-locked" onclick="showTab('censo',this)"><i class="ti ti-id"></i><span>Censo</span></button>
@@ -514,6 +514,14 @@ tr:hover .id-gray { color: var(--gray5) !important; }
           line-height: 22px;
           text-align: center;
         }
+        .acc2-wrap { border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:12px; }
+        .acc2-head { background:linear-gradient(135deg,#081f4a,#1a4fa0); padding:14px 20px; cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center; transition:box-shadow .25s; }
+        .acc2-head:hover { box-shadow:0 4px 18px rgba(8,31,74,.35); }
+        .acc2-title { font-size:13px; font-weight:700; color:#fff; letter-spacing:.6px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+        .acc2-arrow { color:#fff; font-size:12px; opacity:.85; transition:transform .25s; }
+        .acc2-body { display:none; background:var(--white); border:1px solid var(--gray3); border-top:none; }
+        .acc2-body.open { display:block; }
+        .acc2-body-inner { padding:16px; }
       </style>
       <div id="consideraciones-wrap"
         onmouseenter="_consOpen()"
@@ -521,7 +529,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <div id="consideraciones-trigger" onclick="_consToggle()">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:4px;">Proyección de Rectores</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:4px;">Candidaturas de Rectores</div>
               <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:.3px;">Consideraciones <span id="cons-arrow" style="font-size:13px;font-weight:400;opacity:.7;transition:transform .3s;display:inline-block;">▼</span></div>
             </div>
             <button onclick="event.stopPropagation();exportarInformePDF('proyeccion')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
@@ -539,12 +547,46 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         </div>
       </div>
       <div id="proy-kpis" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;"></div>
-      <div class="card" style="margin-bottom:12px;">
-        <div class="card-title">🗺 Proyección — Situación por CCAA y territorios</div>
-        <div style="font-size:11px;color:var(--gray5);margin-bottom:8px;">Cobertura · <b style="color:#888;font-size:14px;">■</b> Sin Rectores &nbsp; <b style="color:#e74c3c;font-size:14px;">■</b> &lt;25% &nbsp; <b style="color:#f39c12;font-size:14px;">■</b> 25–50% &nbsp; <b style="color:#2e86de;font-size:14px;">■</b> 50–75% &nbsp; <b style="color:#1e7a42;font-size:14px;">■</b> ≥75%</div>
-        <div id="mapa-afines-svg" style="overflow-x:auto;"></div>
+      <div class="acc2-wrap">
+        <div class="acc2-head" onclick="toggleAcc2('acc-mapa')">
+          <div class="acc2-title"><i class="ti ti-map-pin"></i> MAPA</div>
+          <span id="acc-mapa-arrow" class="acc2-arrow">▼</span>
+        </div>
+        <div id="acc-mapa-body" class="acc2-body open">
+          <div class="acc2-body-inner">
+            <div class="card-title">🗺 Situación por CCAA y territorios</div>
+            <div style="font-size:11px;color:var(--gray5);margin-bottom:8px;">Cobertura · <b style="color:#888;font-size:14px;">■</b> Sin Rectores &nbsp; <b style="color:#e74c3c;font-size:14px;">■</b> &lt;25% &nbsp; <b style="color:#f39c12;font-size:14px;">■</b> 25–50% &nbsp; <b style="color:#2e86de;font-size:14px;">■</b> 50–75% &nbsp; <b style="color:#1e7a42;font-size:14px;">■</b> ≥75%</div>
+            <div id="mapa-afines-svg" style="overflow-x:auto;"></div>
+          </div>
+        </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding-bottom:40px;" id="afines-ccaa-cards"></div>
+
+      <div class="acc2-wrap">
+        <div class="acc2-head" onclick="toggleAcc2('acc-informe')">
+          <div class="acc2-title"><i class="ti ti-file-text"></i> INFORME</div>
+          <span id="acc-informe-arrow" class="acc2-arrow">▼</span>
+        </div>
+        <div id="acc-informe-body" class="acc2-body">
+          <div class="acc2-body-inner" id="informe-77-demarcaciones">
+            <div style="font-size:13px;color:var(--gray5);text-align:center;padding:30px 10px;">
+              <i class="ti ti-file-upload" style="font-size:28px;display:block;margin-bottom:8px;opacity:.5;"></i>
+              Informe de las 77 demarcaciones pendiente de integrar aquí.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc2-wrap" style="margin-bottom:40px;">
+        <div class="acc2-head" onclick="toggleAcc2('acc-ranking')">
+          <div class="acc2-title"><i class="ti ti-list-numbers"></i> RANKING CCAA</div>
+          <span id="acc-ranking-arrow" class="acc2-arrow">▼</span>
+        </div>
+        <div id="acc-ranking-body" class="acc2-body">
+          <div class="acc2-body-inner">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;" id="afines-ccaa-cards"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -1011,6 +1053,13 @@ function _consClose(){
 function _consToggle(){
   if(_consIsOpen){_consIsOpen=false;document.getElementById('consideraciones-body').classList.remove('open');document.getElementById('cons-arrow').style.transform='rotate(0deg)';}
   else{_consOpen();}
+}
+function toggleAcc2(id){
+  var body=document.getElementById(id+'-body');
+  var arrow=document.getElementById(id+'-arrow');
+  var open=body.classList.contains('open');
+  if(open){body.classList.remove('open');arrow.style.transform='rotate(0deg)';}
+  else{body.classList.add('open');arrow.style.transform='rotate(180deg)';}
 }
 function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('open');}
 document.addEventListener('click',function(e){if(!document.getElementById('langSwitcher').contains(e.target))document.getElementById('langDropdown').classList.remove('open');});
@@ -3006,7 +3055,7 @@ function exportarInformePDF(seccion){
   var titulos={
     dashboard:'Dashboard — Visión General',
     crm:'CRM — Análisis y Progreso',
-    proyeccion:'Proyección — Situación por CCAA',
+    proyeccion:'Candidaturas — Situación por CCAA',
     evolucion:'Evolución — Rectores y Candidaturas',
     config:'Configuración del Sistema',
     rectores:'Rectores — Listado completo',

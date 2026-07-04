@@ -1,0 +1,2 @@
+# lasoci-panel-rectores
+RECTORES

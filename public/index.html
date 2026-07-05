@@ -550,9 +550,9 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div class="acc2-wrap">
         <div class="acc2-head" onclick="toggleAcc2('acc-mapa')">
           <div class="acc2-title"><i class="ti ti-map-pin"></i> MAPA</div>
-          <span id="acc-mapa-arrow" class="acc2-arrow">▼</span>
+          <span id="acc-mapa-arrow" class="acc2-arrow">▶</span>
         </div>
-        <div id="acc-mapa-body" class="acc2-body open">
+        <div id="acc-mapa-body" class="acc2-body">
           <div class="acc2-body-inner">
             <div class="card-title">🗺 Situación por CCAA y territorios</div>
             <div style="font-size:11px;color:var(--gray5);margin-bottom:8px;">Cobertura · <b style="color:#888;font-size:14px;">■</b> Sin Rectores &nbsp; <b style="color:#e74c3c;font-size:14px;">■</b> &lt;25% &nbsp; <b style="color:#f39c12;font-size:14px;">■</b> 25–50% &nbsp; <b style="color:#2e86de;font-size:14px;">■</b> 50–75% &nbsp; <b style="color:#1e7a42;font-size:14px;">■</b> ≥75%</div>
@@ -564,7 +564,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div class="acc2-wrap">
         <div class="acc2-head" onclick="toggleAcc2('acc-informe')">
           <div class="acc2-title"><i class="ti ti-file-text"></i> INFORME</div>
-          <span id="acc-informe-arrow" class="acc2-arrow">▼</span>
+          <span id="acc-informe-arrow" class="acc2-arrow">▶</span>
         </div>
         <div id="acc-informe-body" class="acc2-body">
           <div class="acc2-body-inner" id="informe-77-demarcaciones">
@@ -576,7 +576,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div class="acc2-wrap" style="margin-bottom:40px;">
         <div class="acc2-head" onclick="toggleAcc2('acc-ranking')">
           <div class="acc2-title"><i class="ti ti-list-numbers"></i> RANKING CCAA</div>
-          <span id="acc-ranking-arrow" class="acc2-arrow">▼</span>
+          <span id="acc-ranking-arrow" class="acc2-arrow">▶</span>
         </div>
         <div id="acc-ranking-body" class="acc2-body">
           <div class="acc2-body-inner">
@@ -1223,11 +1223,15 @@ function informe77SetFiltro(f){ INFORME_FILTRO=f; renderInforme77(); }
 function informe77NuestrosCandidatos(panelNombre){
   // Nombres de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
   // Deduplicado por nombre normalizado: si la misma persona tiene 2+ fichas duplicadas en el panel, solo cuenta una vez.
+  // Se excluyen fichas ficticias/placeholder (p.ej. "Número 7", "Buscar Rector") que no son candidatos reales.
   var norm=stripAccents(panelNombre);
   var list=[], set={}, duplicados=[];
   (contacts||[]).forEach(function(c){
     if(stripAccents(c.TERRITORIO||'')!==norm)return;
     if(String(c.CANDIDATURA_PRESENTADA||'').trim().toUpperCase()!=='SI')return;
+    try{if(esFicticio(c))return;}catch(e){}
+    var apellidosNorm=stripAccents(c.APELLIDOS||'');
+    if(/^NUMERO\s*\d+$/.test(apellidosNorm))return; // placeholder tipo "Numero 7"
     var nombre=(String(c.APELLIDOS||'').trim()+', '+String(c.NOMBRE||'').trim()).replace(/^,\s*|,\s*$/g,'');
     if(!nombre.trim())return;
     var key=stripAccents(nombre);
@@ -1272,40 +1276,54 @@ function renderInforme77(){
     +'<path d="M440,272 C500,272 500,332 560,332" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
     +'<path d="M750,332 C790,332 790,278 830,278" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
     +'<path d="M750,332 C790,332 790,388 830,388" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
-    // ── nodo N1: Total ──
-    +'<g filter="url(#if77sh)"><rect x="10" y="127" width="120" height="90" rx="16" fill="url(#if77g1)"/></g>'
-    +'<text x="70" y="164" text-anchor="middle" font-size="30" font-weight="800" fill="#fff">'+R.total+'</text>'
-    +'<text x="70" y="184" text-anchor="middle" font-size="10.5" font-weight="600" fill="rgba(255,255,255,.7)" letter-spacing="0.4">TOTAL LISTAS</text>'
-    // ── nodo N2: Sin candidaturas ──
-    +'<g filter="url(#if77sh)"><rect x="250" y="40" width="190" height="64" rx="14" fill="#fff" stroke="#f0d2d2"/></g>'
-    +'<rect x="250" y="40" width="5" height="64" rx="2" fill="#b52a2a"/>'
-    +'<text x="285" y="66" font-size="20" font-weight="800" fill="#b52a2a">'+R.sinCandidaturas+'</text>'
-    +'<text x="285" y="86" font-size="11.5" font-weight="600" fill="#3d4454">Sin candidaturas</text>'
-    // ── nodo N3: Con candidaturas ──
-    +'<g filter="url(#if77sh)"><rect x="250" y="240" width="190" height="64" rx="14" fill="#fff" stroke="#cfe6d8"/></g>'
-    +'<rect x="250" y="240" width="5" height="64" rx="2" fill="#1e7a42"/>'
-    +'<text x="285" y="266" font-size="20" font-weight="800" fill="#1e7a42">'+R.conCandidaturas+'</text>'
-    +'<text x="285" y="286" font-size="11.5" font-weight="600" fill="#3d4454">Con candidaturas</text>'
-    // ── nodo N4: En votación ──
-    +'<g filter="url(#if77sh)"><rect x="560" y="180" width="190" height="64" rx="14" fill="#fff" stroke="#f3e0c2"/></g>'
-    +'<rect x="560" y="180" width="5" height="64" rx="2" fill="#d97706"/>'
-    +'<text x="595" y="206" font-size="20" font-weight="800" fill="#d97706">'+R.votacion+'</text>'
-    +'<text x="595" y="226" font-size="11" font-weight="600" fill="#3d4454">En votación</text>'
-    // ── nodo N5: Cubierta o parcial ──
-    +'<g filter="url(#if77sh)"><rect x="560" y="300" width="190" height="64" rx="14" fill="#fff" stroke="#cdd9ee"/></g>'
-    +'<rect x="560" y="300" width="5" height="64" rx="2" fill="#3a7bd5"/>'
-    +'<text x="595" y="326" font-size="20" font-weight="800" fill="#3a7bd5">'+(R.cubiertas+R.parciales)+'</text>'
-    +'<text x="595" y="346" font-size="10.5" font-weight="600" fill="#3d4454">Cubierta o parcial</text>'
-    // ── nodo N6: Cubiertas ──
-    +'<g filter="url(#if77sh)"><rect x="830" y="250" width="150" height="56" rx="12" fill="#fff" stroke="#bfe6d4"/></g>'
-    +'<rect x="830" y="250" width="5" height="56" rx="2" fill="#1D9E75"/>'
-    +'<text x="858" y="273" font-size="18" font-weight="800" fill="#1D9E75">'+R.cubiertas+'</text>'
-    +'<text x="858" y="291" font-size="10.5" font-weight="600" fill="#3d4454">Cubiertas</text>'
-    // ── nodo N7: Parciales ──
-    +'<g filter="url(#if77sh)"><rect x="830" y="360" width="150" height="56" rx="12" fill="#fff" stroke="#cdd9ee"/></g>'
-    +'<rect x="830" y="360" width="5" height="56" rx="2" fill="#3a7bd5"/>'
-    +'<text x="858" y="383" font-size="18" font-weight="800" fill="#3a7bd5">'+R.parciales+'</text>'
-    +'<text x="858" y="401" font-size="10.5" font-weight="600" fill="#3d4454">Parciales</text>'
+    // ── nodo N1: Total (clic -> ver todas) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'todas\')">'
+      +'<g filter="url(#if77sh)"><rect x="10" y="127" width="120" height="90" rx="16" fill="url(#if77g1)"/></g>'
+      +'<text x="70" y="164" text-anchor="middle" font-size="30" font-weight="800" fill="#fff">'+R.total+'</text>'
+      +'<text x="70" y="184" text-anchor="middle" font-size="10.5" font-weight="600" fill="rgba(255,255,255,.7)" letter-spacing="0.4">TOTAL LISTAS</text>'
+    +'</g>'
+    // ── nodo N2: Sin candidaturas (clic -> filtrar) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'sin\')">'
+      +'<g filter="url(#if77sh)"><rect x="250" y="40" width="190" height="64" rx="14" fill="#fff" stroke="#f0d2d2"/></g>'
+      +'<rect x="250" y="40" width="5" height="64" rx="2" fill="#b52a2a"/>'
+      +'<text x="285" y="66" font-size="20" font-weight="800" fill="#b52a2a">'+R.sinCandidaturas+'</text>'
+      +'<text x="285" y="86" font-size="11.5" font-weight="600" fill="#3d4454">Sin candidaturas</text>'
+    +'</g>'
+    // ── nodo N3: Con candidaturas (clic -> filtrar) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'con\')">'
+      +'<g filter="url(#if77sh)"><rect x="250" y="240" width="190" height="64" rx="14" fill="#fff" stroke="#cfe6d8"/></g>'
+      +'<rect x="250" y="240" width="5" height="64" rx="2" fill="#1e7a42"/>'
+      +'<text x="285" y="266" font-size="20" font-weight="800" fill="#1e7a42">'+R.conCandidaturas+'</text>'
+      +'<text x="285" y="286" font-size="11.5" font-weight="600" fill="#3d4454">Con candidaturas</text>'
+    +'</g>'
+    // ── nodo N4: En votación (clic -> filtrar) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'votacion\')">'
+      +'<g filter="url(#if77sh)"><rect x="560" y="180" width="190" height="64" rx="14" fill="#fff" stroke="#f3e0c2"/></g>'
+      +'<rect x="560" y="180" width="5" height="64" rx="2" fill="#d97706"/>'
+      +'<text x="595" y="206" font-size="20" font-weight="800" fill="#d97706">'+R.votacion+'</text>'
+      +'<text x="595" y="226" font-size="11" font-weight="600" fill="#3d4454">En votación</text>'
+    +'</g>'
+    // ── nodo N5: Cubierta o parcial (clic -> filtrar ambas) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubiertaoparcial\')">'
+      +'<g filter="url(#if77sh)"><rect x="560" y="300" width="190" height="64" rx="14" fill="#fff" stroke="#cdd9ee"/></g>'
+      +'<rect x="560" y="300" width="5" height="64" rx="2" fill="#3a7bd5"/>'
+      +'<text x="595" y="326" font-size="20" font-weight="800" fill="#3a7bd5">'+(R.cubiertas+R.parciales)+'</text>'
+      +'<text x="595" y="346" font-size="10.5" font-weight="600" fill="#3d4454">Cubierta o parcial</text>'
+    +'</g>'
+    // ── nodo N6: Cubiertas (clic -> filtrar) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubierta\')">'
+      +'<g filter="url(#if77sh)"><rect x="830" y="250" width="150" height="56" rx="12" fill="#fff" stroke="#bfe6d4"/></g>'
+      +'<rect x="830" y="250" width="5" height="56" rx="2" fill="#1D9E75"/>'
+      +'<text x="858" y="273" font-size="18" font-weight="800" fill="#1D9E75">'+R.cubiertas+'</text>'
+      +'<text x="858" y="291" font-size="10.5" font-weight="600" fill="#3d4454">Cubiertas</text>'
+    +'</g>'
+    // ── nodo N7: Parciales (clic -> filtrar) ──
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'parcial\')">'
+      +'<g filter="url(#if77sh)"><rect x="830" y="360" width="150" height="56" rx="12" fill="#fff" stroke="#cdd9ee"/></g>'
+      +'<rect x="830" y="360" width="5" height="56" rx="2" fill="#3a7bd5"/>'
+      +'<text x="858" y="383" font-size="18" font-weight="800" fill="#3a7bd5">'+R.parciales+'</text>'
+      +'<text x="858" y="401" font-size="10.5" font-weight="600" fill="#3d4454">Parciales</text>'
+    +'</g>'
   +'</svg></div>';
 
   html+='<div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#eafaf0;border:1px solid #bfe8cf;border-radius:12px;padding:14px 20px;margin-bottom:16px;">'
@@ -1331,7 +1349,8 @@ function renderInforme77(){
     {k:'todas', l:'Todas', n:R.total, c:'#0C3470'},
     {k:'sin', l:'Sin candidaturas', n:R.sinCandidaturas, c:'#b52a2a'},
     {k:'votacion', l:'En votación', n:R.votacion, c:'#d97706'},
-    {k:'cubiertaparcial', l:'Cubierta o parcial', n:(R.cubiertas+R.parciales), c:'#3a7bd5'}
+    {k:'cubierta', l:'Cubiertas', n:R.cubiertas, c:'#1D9E75'},
+    {k:'parcial', l:'Parciales', n:R.parciales, c:'#3a7bd5'}
   ];
   html+='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">';
   filtros.forEach(function(f){
@@ -1354,10 +1373,13 @@ function renderInforme77(){
     var estado, estadoCol, catFiltro;
     if(n===0){estado='Sin candidaturas';estadoCol='#b52a2a';catFiltro='sin';}
     else if(n>v){estado='En votación';estadoCol='#d97706';catFiltro='votacion';}
-    else if(n>=v){estado='Cubierta';estadoCol='#1D9E75';catFiltro='cubiertaparcial';}
-    else{estado='Parcial';estadoCol='#3a7bd5';catFiltro='cubiertaparcial';}
+    else if(n>=v){estado='Cubierta';estadoCol='#1D9E75';catFiltro='cubierta';}
+    else{estado='Parcial';estadoCol='#3a7bd5';catFiltro='parcial';}
 
-    if(INFORME_FILTRO!=='todas'&&catFiltro!==INFORME_FILTRO)return; // no coincide con el filtro activo: no se pinta
+    var coincideFiltro = INFORME_FILTRO==='todas' || catFiltro===INFORME_FILTRO
+      || (INFORME_FILTRO==='con'&&catFiltro!=='sin')
+      || (INFORME_FILTRO==='cubiertaoparcial'&&(catFiltro==='cubierta'||catFiltro==='parcial'));
+    if(!coincideFiltro)return; // no coincide con el filtro activo: no se pinta
     mostradas++;
 
     var nombreHtml = r.exacto
@@ -1460,7 +1482,7 @@ function toggleAcc2(id){
   var open=body.classList.contains('open');
   if(open){body.classList.remove('open');arrow.style.transform='rotate(0deg)';}
   else{
-    body.classList.add('open');arrow.style.transform='rotate(180deg)';
+    body.classList.add('open');arrow.style.transform='rotate(90deg)';
     // El INFORME de candidaturas siempre se repinta al abrir, para reflejar cualquier edición reciente en RECTORES
     if(id==='acc-informe'){try{renderInforme77();}catch(e){}}
   }

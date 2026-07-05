@@ -1076,35 +1076,55 @@ function renderInforme77(){
   var haySociosReales=(contacts&&contacts.length>0);
   var html='';
 
-  // ── Diagrama de desglose por etapas (Total → Sin/Con candidaturas → Votación/Cubierta·Parcial → Cubiertas/Parciales) ──
-  html+='<style>'
-    +'.if77-flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:6px 4px 20px;}'
-    +'.if77-stage{display:flex;flex-direction:column;justify-content:center;gap:10px;flex-shrink:0;min-width:150px;}'
-    +'.if77-stage-lbl{font-size:9.5px;color:var(--gray4);text-transform:uppercase;letter-spacing:.5px;font-weight:700;text-align:center;margin-bottom:2px;}'
-    +'.if77-card{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--gray3);}'
-    +'.if77-card .n{font-size:24px;font-weight:800;line-height:1;}'
-    +'.if77-card .l{font-size:10px;color:var(--gray5);text-transform:uppercase;letter-spacing:.3px;font-weight:600;margin-top:4px;}'
-    +'.if77-arrow{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:34px;color:var(--gray4);font-size:20px;}'
-    +'@media (max-width:640px){.if77-flow{flex-direction:column;}.if77-arrow{width:auto;padding:2px 0;transform:rotate(90deg);}}'
-  +'</style>';
-  html+='<div class="if77-flow">'
-    +'<div class="if77-stage"><div class="if77-stage-lbl">Total</div><div class="if77-card" style="background:linear-gradient(135deg,#081f4a,#1a4fa0);border:none;"><div class="n" style="color:#fff;">'+R.total+'</div><div class="l" style="color:rgba(255,255,255,.7);">Listas</div></div></div>'
-    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
-    +'<div class="if77-stage"><div class="if77-stage-lbl">Desglose de las 77</div>'
-      +'<div class="if77-card"><div class="n" style="color:#b52a2a;">'+R.sinCandidaturas+'</div><div class="l">Sin candidaturas</div></div>'
-      +'<div class="if77-card"><div class="n" style="color:#1e7a42;">'+R.conCandidaturas+'</div><div class="l">Con candidaturas</div></div>'
-    +'</div>'
-    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
-    +'<div class="if77-stage"><div class="if77-stage-lbl">De las '+R.conCandidaturas+' con candidaturas</div>'
-      +'<div class="if77-card"><div class="n" style="color:#d97706;">'+R.votacion+'</div><div class="l">En votación</div></div>'
-      +'<div class="if77-card"><div class="n" style="color:#3a7bd5;">'+(R.cubiertas+R.parciales)+'</div><div class="l">Cubierta o parcial</div></div>'
-    +'</div>'
-    +'<div class="if77-arrow"><i class="ti ti-arrow-narrow-right"></i></div>'
-    +'<div class="if77-stage"><div class="if77-stage-lbl">De las '+(R.cubiertas+R.parciales)+' cubiertas/parciales</div>'
-      +'<div class="if77-card"><div class="n" style="color:#1D9E75;">'+R.cubiertas+'</div><div class="l">Cubiertas</div></div>'
-      +'<div class="if77-card"><div class="n" style="color:#3a7bd5;">'+R.parciales+'</div><div class="l">Parciales</div></div>'
-    +'</div>'
-  +'</div>';
+  // ── Diagrama SVG con conectores curvos (estilo esquema de tablas) ──
+  html+='<style>.if77-svgwrap{overflow-x:auto;margin-bottom:8px;}.if77-svgwrap svg{display:block;min-width:760px;}</style>';
+  html+='<div class="if77-svgwrap"><svg viewBox="0 0 1000 440" style="width:100%;height:auto;font-family:inherit;">'
+    +'<defs>'
+      +'<linearGradient id="if77g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081f4a"/><stop offset="1" stop-color="#1a4fa0"/></linearGradient>'
+      +'<filter id="if77sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0C3470" flood-opacity="0.18"/></filter>'
+    +'</defs>'
+    // ── conectores (curvas) ──
+    +'<path d="M130,172 C190,172 190,72 250,72" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    +'<path d="M130,172 C190,172 190,272 250,272" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    +'<path d="M440,272 C500,272 500,212 560,212" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    +'<path d="M440,272 C500,272 500,332 560,332" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    +'<path d="M750,332 C790,332 790,278 830,278" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    +'<path d="M750,332 C790,332 790,388 830,388" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
+    // ── nodo N1: Total ──
+    +'<g filter="url(#if77sh)"><rect x="10" y="127" width="120" height="90" rx="16" fill="url(#if77g1)"/></g>'
+    +'<text x="70" y="164" text-anchor="middle" font-size="30" font-weight="800" fill="#fff">'+R.total+'</text>'
+    +'<text x="70" y="184" text-anchor="middle" font-size="10.5" font-weight="600" fill="rgba(255,255,255,.7)" letter-spacing="0.4">TOTAL LISTAS</text>'
+    // ── nodo N2: Sin candidaturas ──
+    +'<g filter="url(#if77sh)"><rect x="250" y="40" width="190" height="64" rx="14" fill="#fff" stroke="#f0d2d2"/></g>'
+    +'<rect x="250" y="40" width="5" height="64" rx="2" fill="#b52a2a"/>'
+    +'<text x="285" y="66" font-size="20" font-weight="800" fill="#b52a2a">'+R.sinCandidaturas+'</text>'
+    +'<text x="285" y="86" font-size="11.5" font-weight="600" fill="#3d4454">Sin candidaturas</text>'
+    // ── nodo N3: Con candidaturas ──
+    +'<g filter="url(#if77sh)"><rect x="250" y="240" width="190" height="64" rx="14" fill="#fff" stroke="#cfe6d8"/></g>'
+    +'<rect x="250" y="240" width="5" height="64" rx="2" fill="#1e7a42"/>'
+    +'<text x="285" y="266" font-size="20" font-weight="800" fill="#1e7a42">'+R.conCandidaturas+'</text>'
+    +'<text x="285" y="286" font-size="11.5" font-weight="600" fill="#3d4454">Con candidaturas</text>'
+    // ── nodo N4: En votación ──
+    +'<g filter="url(#if77sh)"><rect x="560" y="180" width="190" height="64" rx="14" fill="#fff" stroke="#f3e0c2"/></g>'
+    +'<rect x="560" y="180" width="5" height="64" rx="2" fill="#d97706"/>'
+    +'<text x="595" y="206" font-size="20" font-weight="800" fill="#d97706">'+R.votacion+'</text>'
+    +'<text x="595" y="226" font-size="11" font-weight="600" fill="#3d4454">En votación</text>'
+    // ── nodo N5: Cubierta o parcial ──
+    +'<g filter="url(#if77sh)"><rect x="560" y="300" width="190" height="64" rx="14" fill="#fff" stroke="#cdd9ee"/></g>'
+    +'<rect x="560" y="300" width="5" height="64" rx="2" fill="#3a7bd5"/>'
+    +'<text x="595" y="326" font-size="20" font-weight="800" fill="#3a7bd5">'+(R.cubiertas+R.parciales)+'</text>'
+    +'<text x="595" y="346" font-size="10.5" font-weight="600" fill="#3d4454">Cubierta o parcial</text>'
+    // ── nodo N6: Cubiertas ──
+    +'<g filter="url(#if77sh)"><rect x="830" y="250" width="150" height="56" rx="12" fill="#fff" stroke="#bfe6d4"/></g>'
+    +'<rect x="830" y="250" width="5" height="56" rx="2" fill="#1D9E75"/>'
+    +'<text x="858" y="273" font-size="18" font-weight="800" fill="#1D9E75">'+R.cubiertas+'</text>'
+    +'<text x="858" y="291" font-size="10.5" font-weight="600" fill="#3d4454">Cubiertas</text>'
+    // ── nodo N7: Parciales ──
+    +'<g filter="url(#if77sh)"><rect x="830" y="360" width="150" height="56" rx="12" fill="#fff" stroke="#cdd9ee"/></g>'
+    +'<rect x="830" y="360" width="5" height="56" rx="2" fill="#3a7bd5"/>'
+    +'<text x="858" y="383" font-size="18" font-weight="800" fill="#3a7bd5">'+R.parciales+'</text>'
+    +'<text x="858" y="401" font-size="10.5" font-weight="600" fill="#3d4454">Parciales</text>'
+  +'</svg></div>';
 
   html+='<div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#eafaf0;border:1px solid #bfe8cf;border-radius:12px;padding:14px 20px;margin-bottom:16px;">'
     +'<i class="ti ti-users-group" style="font-size:24px;color:#1e7a42;"></i>'

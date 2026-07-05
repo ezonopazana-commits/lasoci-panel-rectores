@@ -526,7 +526,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div id="consideraciones-wrap"
         onmouseenter="_consOpen()"
         onmouseleave="_consClose()">
-        <div id="consideraciones-trigger" onclick="_consToggle()">
+        <div id="consideraciones-trigger" onclick="_consToggle()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();_consToggle();}" tabindex="0" role="button" aria-label="Mostrar u ocultar consideraciones">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
               <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:4px;">Candidaturas de Rectores</div>
@@ -548,7 +548,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       </div>
       <div id="proy-kpis" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;"></div>
       <div class="acc2-wrap">
-        <div class="acc2-head" onclick="toggleAcc2('acc-mapa')">
+        <div class="acc2-head" onclick="toggleAcc2('acc-mapa')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAcc2('acc-mapa');}" tabindex="0" role="button" aria-expanded="false" aria-controls="acc-mapa-body">
           <div class="acc2-title"><i class="ti ti-map-pin" aria-hidden="true"></i> MAPA</div>
           <span id="acc-mapa-arrow" class="acc2-arrow">▶</span>
         </div>
@@ -562,7 +562,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       </div>
 
       <div class="acc2-wrap">
-        <div class="acc2-head" onclick="toggleAcc2('acc-informe')">
+        <div class="acc2-head" onclick="toggleAcc2('acc-informe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAcc2('acc-informe');}" tabindex="0" role="button" aria-expanded="false" aria-controls="acc-informe-body">
           <div class="acc2-title"><i class="ti ti-file-text" aria-hidden="true"></i> INFORME</div>
           <span id="acc-informe-arrow" class="acc2-arrow">▶</span>
         </div>
@@ -574,7 +574,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       </div>
 
       <div class="acc2-wrap" style="margin-bottom:40px;">
-        <div class="acc2-head" onclick="toggleAcc2('acc-ranking')">
+        <div class="acc2-head" onclick="toggleAcc2('acc-ranking')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAcc2('acc-ranking');}" tabindex="0" role="button" aria-expanded="false" aria-controls="acc-ranking-body">
           <div class="acc2-title"><i class="ti ti-list-numbers" aria-hidden="true"></i> RANKING CCAA</div>
           <span id="acc-ranking-arrow" class="acc2-arrow">▶</span>
         </div>
@@ -809,7 +809,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       </div>
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title">Importar Excel</div>
-        <div class="import-zone" onclick="checkImportAuth()">
+        <div class="import-zone" onclick="checkImportAuth()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();checkImportAuth();}" tabindex="0" role="button" aria-label="Importar archivo">
           <i class="ti ti-file-spreadsheet" aria-hidden="true"></i>
           <p>Haz clic o arrastra tu archivo .xlsx / .csv</p>
           <small>Requiere contraseña · Columnas: ID · APELLIDOS · NOMBRE · TERRITORIO · IDIOMA · EMAIL · CCAA · MOVIL · ESTADO</small>
@@ -1388,8 +1388,10 @@ function renderInforme77(){
     if(r.noEncontrado)nombreHtml+=' <span style="color:#d97706;font-weight:700;font-size:10px;" title="No se ha encontrado esta demarcación en el último PDF subido">⚠ no está en el último PDF</span>';
 
     var nuestrosObj=informe77NuestrosCandidatos(r.panel);
-    var nuestrosList=nuestrosObj.list, nuestrosSet=nuestrosObj.set;
-    var pdfNorm=r.candidatos.map(stripAccents);
+    var nuestrosList=nuestrosObj.list.slice().sort(function(a,b){return a.localeCompare(b,'es');});
+    var nuestrosSet=nuestrosObj.set;
+    var candidatosPdfOrdenados=r.candidatos.slice().sort(function(a,b){return a.localeCompare(b,'es');});
+    var pdfNorm=candidatosPdfOrdenados.map(stripAccents);
 
     function coincideAprox(nombre,listaNorm){
       var nn=stripAccents(nombre);
@@ -1402,7 +1404,7 @@ function renderInforme77(){
 
     var colPdf, colNuestros;
     if(n){
-      colPdf='<div style="display:flex;flex-wrap:wrap;gap:6px;">'+r.candidatos.map(function(c){
+      colPdf='<div style="display:flex;flex-wrap:wrap;gap:6px;">'+candidatosPdfOrdenados.map(function(c){
         var ok=!haySociosReales||coincideAprox(c,Object.keys(nuestrosSet));
         return ok
           ? '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>'
@@ -1435,7 +1437,7 @@ function renderInforme77(){
     }
 
     html+='<div class="acc2-wrap" style="margin-bottom:6px;box-shadow:none;border:1px solid var(--gray3);">'
-      +'<div class="acc2-head" style="background:#fff;padding:10px 14px;" onclick="informe77Toggle('+i+')">'
+      +'<div class="acc2-head" style="background:#fff;padding:10px 14px;" onclick="informe77Toggle('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();informe77Toggle('+i+');}" tabindex="0" role="button" aria-expanded="false" aria-controls="informe77-body-'+i+'" aria-label="'+r.panel.replace(/"/g,'')+', '+estado+', '+n+' de '+v+'">'
         +'<div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">'
           +'<span id="informe77-arrow-'+i+'" style="color:var(--azul);font-size:11px;transition:transform .2s;">▶</span>'
           +'<span style="font-size:12.5px;font-weight:700;color:var(--azul);text-transform:none;letter-spacing:0;">'+nombreHtml+'</span>'
@@ -1461,17 +1463,21 @@ function informe77Toggle(i){
   var body=document.getElementById('informe77-body-'+i);
   var arrow=document.getElementById('informe77-arrow-'+i);
   if(!body||!arrow)return;
+  var head=arrow.closest('.acc2-head');
   var open=body.style.display==='block';
   body.style.display=open?'none':'block';
   arrow.style.transform=open?'rotate(0deg)':'rotate(90deg)';
+  if(head)head.setAttribute('aria-expanded',open?'false':'true');
 }
 function informe77ToggleAll(open){
   INFORME_77_DATA.forEach(function(r,i){
     var body=document.getElementById('informe77-body-'+i);
     var arrow=document.getElementById('informe77-arrow-'+i);
     if(!body||!arrow)return; // fila oculta por el filtro activo: se ignora
+    var head=arrow.closest('.acc2-head');
     body.style.display=open?'block':'none';
     arrow.style.transform=open?'rotate(90deg)':'rotate(0deg)';
+    if(head)head.setAttribute('aria-expanded',open?'true':'false');
   });
 }
 
@@ -1479,10 +1485,11 @@ function informe77ToggleAll(open){
 function toggleAcc2(id){
   var body=document.getElementById(id+'-body');
   var arrow=document.getElementById(id+'-arrow');
+  var head=arrow?arrow.closest('.acc2-head'):null;
   var open=body.classList.contains('open');
-  if(open){body.classList.remove('open');arrow.style.transform='rotate(0deg)';}
+  if(open){body.classList.remove('open');arrow.style.transform='rotate(0deg)';if(head)head.setAttribute('aria-expanded','false');}
   else{
-    body.classList.add('open');arrow.style.transform='rotate(90deg)';
+    body.classList.add('open');arrow.style.transform='rotate(90deg)';if(head)head.setAttribute('aria-expanded','true');
     // El INFORME de candidaturas siempre se repinta al abrir, para reflejar cualquier edición reciente en RECTORES
     if(id==='acc-informe'){try{renderInforme77();}catch(e){}}
   }

@@ -4,7 +4,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0C3470">
@@ -258,7 +258,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
   .header { padding: 0 .7rem; gap: 8px; }
   .header-title h1 { font-size: 15px; letter-spacing: .8px; }
   .header-actions { gap: 4px; }
-  .btn-icon { width: 30px; height: 30px; font-size: 15px; }
+  .btn-icon { width: 36px; height: 36px; font-size: 16px; }
   #snapshotLabel { width: 100% !important; flex: 1 1 100%; }
   /* Censo / CRM Reorganización: ajustes móviles aditivos, no tocan nada existente */
   .tabs-admin-group { margin-left: 0 !important; }
@@ -325,33 +325,33 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn-icon" onclick="syncNow()" title="Sincronizar"><i class="ti ti-refresh"></i></button>
-      <button class="btn-icon" onclick="exportExcel()" title="Exportar Excel"><i class="ti ti-download"></i></button>
-      <button class="btn-icon" onclick="resetLocalCache()" title="Limpiar caché local" style="opacity:.7;"><i class="ti ti-database-off"></i></button>
+      <button class="btn-icon" onclick="syncNow()" title="Sincronizar"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="btn-icon" onclick="exportExcel()" title="Exportar Excel"><i class="ti ti-download" aria-hidden="true"></i></button>
+      <button class="btn-icon" onclick="resetLocalCache()" title="Limpiar caché local" style="opacity:.7;"><i class="ti ti-database-off" aria-hidden="true"></i></button>
     </div>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="showTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></button>
-    <button class="tab" onclick="showTab('crm',this)"><i class="ti ti-chart-bar"></i><span>CRM</span></button>
-    <button class="tab" onclick="showTab('contactos',this)"><i class="ti ti-users"></i><span>Rectores</span></button>
-    <button class="tab" onclick="showTab('afines_mapa',this)"><i class="ti ti-map-pin"></i><span>Candidaturas</span></button>
-    <button class="tab" onclick="showTab('evolucion',this)"><i class="ti ti-chart-line"></i><span>Evolución</span></button>
+    <button class="tab active" onclick="showTab('dashboard',this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i><span>Dashboard</span></button>
+    <button class="tab" onclick="showTab('crm',this)"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>CRM</span></button>
+    <button class="tab" onclick="showTab('contactos',this)"><i class="ti ti-users" aria-hidden="true"></i><span>Rectores</span></button>
+    <button class="tab" onclick="showTab('afines_mapa',this)"><i class="ti ti-map-pin" aria-hidden="true"></i><span>Candidaturas</span></button>
+    <button class="tab" onclick="showTab('evolucion',this)"><i class="ti ti-chart-line" aria-hidden="true"></i><span>Evolución</span></button>
     <div class="tabs-admin-group">
-      <button class="tab tab-locked" onclick="showTab('censo',this)"><i class="ti ti-id"></i><span>Censo</span></button>
+      <button class="tab tab-locked" onclick="showTab('censo',this)"><i class="ti ti-id" aria-hidden="true"></i><span>Censo</span></button>
       <span class="tab-sep"></span>
-      <button class="tab tab-locked" onclick="showTab('crmreorg',this)"><i class="ti ti-affiliate"></i><span>CRM Reorganización</span></button>
+      <button class="tab tab-locked" onclick="showTab('crmreorg',this)"><i class="ti ti-affiliate" aria-hidden="true"></i><span>CRM Reorganización</span></button>
     </div>
     <span class="tab-sep"></span>
-    <button class="tab" onclick="showTab('config',this)"><i class="ti ti-settings"></i><span>Config</span></button>
+    <button class="tab" onclick="showTab('config',this)"><i class="ti ti-settings" aria-hidden="true"></i><span>Config</span></button>
   </div>
 
   <div class="content">
     <div id="tab-dashboard" class="section active">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-layout-dashboard"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-layout-dashboard" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>Dashboard</h2><p>Visión general de la campaña de Rectores</p></div>
-        <button onclick="exportarInformePDF('dashboard')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('dashboard')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
       <div style="background:var(--white);border:1px solid var(--gray3);border-radius:var(--radius);padding:.6rem 1rem;margin-bottom:10px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:6px;align-items:center;" id="ccaa-pills-top"></div>
       <div class="metrics" id="metrics"></div>
@@ -366,9 +366,9 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-contactos" class="section">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-users"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>Rectores</h2><p>Listado completo con filtros y seguimiento</p></div>
-        <button onclick="exportarInformePDF('rectores')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('rectores')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
       <div class="filters">
         <input type="text" id="searchQ" placeholder="Buscar..." oninput="_filtroGeneralCambio('searchQ',renderTable)" style="min-width:100px;max-width:130px;flex:0 1 130px;">
@@ -384,9 +384,9 @@ tr:hover .id-gray { color: var(--gray5) !important; }
           <select id="fNRCCAA" onchange="onFiltroNRCCAAChange()" style="min-width:95px;border-color:var(--azul3);font-size:12px;"><option value="">CCAA</option></select>
           <select id="fNRTerritorio" onchange="onFiltroNRTerritorioChange()" style="min-width:100px;border-color:var(--azul3);font-size:12px;"><option value="">Territorio</option></select>
           <select id="fSeccionNR" onchange="_filtroNRCambio('fSeccionNR',renderTable)" style="min-width:110px;border-color:var(--azul3);font-size:12px;"><option value="">Sección</option></select>
-          <button class="btn btn-sm" onclick="resetFiltrosNR()" title="Limpiar solo estos filtros" style="padding:5px 8px;"><i class="ti ti-x"></i></button>
+          <button class="btn btn-sm" onclick="resetFiltrosNR()" title="Limpiar solo estos filtros" style="padding:5px 8px;"><i class="ti ti-x" aria-hidden="true"></i></button>
         </div>
-        <button class="btn btn-sm" onclick="resetFilters()"><i class="ti ti-x"></i> Limpiar</button>
+        <button class="btn btn-sm" onclick="resetFilters()"><i class="ti ti-x" aria-hidden="true"></i> Limpiar</button>
         
       </div>
       <div class="pg" id="pgTop" style="margin-bottom:6px;"></div>
@@ -418,9 +418,9 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-crm" class="section">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-chart-bar"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>CRM</h2><p>Análisis detallado y progreso por CCAA</p></div>
-        <button onclick="exportarInformePDF('crm')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('crm')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
       <!-- KPI Cards Row -->
       <div id="crm-kpis" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;align-items:stretch;"></div>
@@ -532,7 +532,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
               <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:4px;">Candidaturas de Rectores</div>
               <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:.3px;">Consideraciones <span id="cons-arrow" style="font-size:13px;font-weight:400;opacity:.7;transition:transform .3s;display:inline-block;">▼</span></div>
             </div>
-            <button onclick="event.stopPropagation();exportarInformePDF('proyeccion')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+            <button onclick="event.stopPropagation();exportarInformePDF('proyeccion')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
           </div>
         </div>
         <div id="consideraciones-body">
@@ -549,21 +549,21 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div id="proy-kpis" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;"></div>
       <div class="acc2-wrap">
         <div class="acc2-head" onclick="toggleAcc2('acc-mapa')">
-          <div class="acc2-title"><i class="ti ti-map-pin"></i> MAPA</div>
+          <div class="acc2-title"><i class="ti ti-map-pin" aria-hidden="true"></i> MAPA</div>
           <span id="acc-mapa-arrow" class="acc2-arrow">▶</span>
         </div>
         <div id="acc-mapa-body" class="acc2-body">
           <div class="acc2-body-inner">
             <div class="card-title">🗺 Situación por CCAA y territorios</div>
             <div style="font-size:11px;color:var(--gray5);margin-bottom:8px;">Cobertura · <b style="color:#888;font-size:14px;">■</b> Sin Rectores &nbsp; <b style="color:#e74c3c;font-size:14px;">■</b> &lt;25% &nbsp; <b style="color:#f39c12;font-size:14px;">■</b> 25–50% &nbsp; <b style="color:#2e86de;font-size:14px;">■</b> 50–75% &nbsp; <b style="color:#1e7a42;font-size:14px;">■</b> ≥75%</div>
-            <div id="mapa-afines-svg" style="overflow-x:auto;"></div>
+            <div id="mapa-afines-svg" role="img" aria-label="Mapa de España con la situación de Rectores por comunidad autónoma y territorio" style="overflow-x:auto;"></div>
           </div>
         </div>
       </div>
 
       <div class="acc2-wrap">
         <div class="acc2-head" onclick="toggleAcc2('acc-informe')">
-          <div class="acc2-title"><i class="ti ti-file-text"></i> INFORME</div>
+          <div class="acc2-title"><i class="ti ti-file-text" aria-hidden="true"></i> INFORME</div>
           <span id="acc-informe-arrow" class="acc2-arrow">▶</span>
         </div>
         <div id="acc-informe-body" class="acc2-body">
@@ -575,7 +575,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
       <div class="acc2-wrap" style="margin-bottom:40px;">
         <div class="acc2-head" onclick="toggleAcc2('acc-ranking')">
-          <div class="acc2-title"><i class="ti ti-list-numbers"></i> RANKING CCAA</div>
+          <div class="acc2-title"><i class="ti ti-list-numbers" aria-hidden="true"></i> RANKING CCAA</div>
           <span id="acc-ranking-arrow" class="acc2-arrow">▶</span>
         </div>
         <div id="acc-ranking-body" class="acc2-body">
@@ -590,16 +590,16 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-evolucion" class="section">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-chart-line"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-chart-line" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>Evolución — Rectores y Candidaturas</h2><p>Seguimiento histórico de Rectores y Candidaturas</p></div>
-        <button onclick="exportarInformePDF('evolucion')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('evolucion')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
   <!-- Snapshot controls -->
   <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
     <div style="display:flex;gap:8px;align-items:center;">
       <input type="text" id="snapshotLabel" placeholder="Etiqueta (ej: Semana 1)" style="font-size:13px;padding:7px 12px;border:1.5px solid var(--gray3);border-radius:var(--radius);font-family:var(--font);outline:none;width:180px;">
-      <button class="btn btn-primary btn-sm" onclick="guardarSnapshot()"><i class="ti ti-camera"></i> Guardar snapshot</button>
-      <button class="btn btn-sm" onclick="borrarSnapshots()" style="color:#c0392b;border-color:#c0392b;" title="Borrar todos los snapshots"><i class="ti ti-trash"></i></button>
+      <button class="btn btn-primary btn-sm" onclick="guardarSnapshot()"><i class="ti ti-camera" aria-hidden="true"></i> Guardar snapshot</button>
+      <button class="btn btn-sm" onclick="borrarSnapshots()" style="color:#c0392b;border-color:#c0392b;" title="Borrar todos los snapshots"><i class="ti ti-trash" aria-hidden="true"></i></button>
     </div>
   </div>
 
@@ -623,7 +623,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
     </div>
   </div>
   <div id="evol-empty" style="text-align:center;padding:40px;color:var(--gray4);display:none;">
-    <i class="ti ti-camera" style="font-size:48px;display:block;margin-bottom:12px;"></i>
+    <i class="ti ti-camera" style="font-size:48px;display:block;margin-bottom:12px;" aria-hidden="true"></i>
     <div style="font-size:15px;font-weight:600;">Sin snapshots guardados</div>
     <div style="font-size:13px;margin-top:6px;">Guarda el primer snapshot para empezar a ver la evolución</div>
   </div>
@@ -687,17 +687,17 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-censo" class="section">
       <div class="sec-header" style="margin-bottom:8px;">
-        <div class="sec-header-icon"><i class="ti ti-id"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-id" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>Censo</h2><p>Censo de socios 2026 — datos originales + planificación de reorganización</p></div>
-        <button class="btn-icon" onclick="censoRefrescar()" title="Recargar"><i class="ti ti-refresh"></i></button>
-        <button onclick="censoExportarPDF()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button class="btn-icon" onclick="censoRefrescar()" title="Recargar"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+        <button onclick="censoExportarPDF()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
-      <div style="font-size:11px;color:var(--gray5);background:var(--gray1);border-radius:8px;padding:6px 12px;margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="ti ti-lock" style="color:var(--azul3);"></i> Columnas <b>CCAA · Provincia · Territorio actual · Apellidos · Nombre · Cuota actual</b> son datos originales del censo (solo consulta). El resto de columnas son de planificación y se pueden editar. El botón <b>PDF</b> deja marcar qué columnas imprimir.</div>
+      <div style="font-size:11px;color:var(--gray5);background:var(--gray1);border-radius:8px;padding:6px 12px;margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="ti ti-lock" style="color:var(--azul3);" aria-hidden="true"></i> Columnas <b>CCAA · Provincia · Territorio actual · Apellidos · Nombre · Cuota actual</b> son datos originales del censo (solo consulta). El resto de columnas son de planificación y se pueden editar. El botón <b>PDF</b> deja marcar qué columnas imprimir.</div>
       <div class="filters" style="margin-bottom:4px;">
         <input type="text" id="censoSearchQ" placeholder="Buscar apellidos/nombre..." oninput="censoRenderTable()" style="min-width:140px;max-width:180px;flex:0 1 180px;">
         <select id="censoFCCAA" onchange="censoOnCCAAChange()" style="min-width:100px;max-width:140px;"><option value="">CCAA</option></select>
         <select id="censoFTerritorio" onchange="censoRenderTable()" style="min-width:120px;max-width:160px;"><option value="">Territorio actual</option></select>
-        <button class="btn btn-sm" onclick="censoResetFilters()"><i class="ti ti-x"></i> Limpiar</button>
+        <button class="btn btn-sm" onclick="censoResetFilters()"><i class="ti ti-x" aria-hidden="true"></i> Limpiar</button>
       </div>
       <div class="filters" style="margin-top:0;justify-content:space-between;">
         <div style="display:flex;align-items:center;gap:5px;border:2px solid var(--azul2);border-radius:10px;padding:6px 12px;position:relative;margin-left:6px;background:linear-gradient(135deg,var(--azul6),var(--azul5));box-shadow:0 2px 8px rgba(12,52,112,.12);flex-wrap:wrap;">
@@ -734,9 +734,9 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-crmreorg" class="section">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-affiliate"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-affiliate" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>CRM Reorganización</h2><p>Estrategia de crecimiento territorial — reparto real validado, Cataluña 125→90, total fijo en 200</p></div>
-        <button onclick="exportarInformePDF('crmreorg')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('crmreorg')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
       <div class="card" style="margin-bottom:12px;">
         <div class="card-title">🎯 Nuevo número de Rectores objetivo por CCAA</div>
@@ -774,7 +774,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
           <select id="notaEstrategiaCategoria" style="min-width:120px;"><option value="Regla">Regla</option><option value="Hallazgo">Hallazgo</option><option value="Decisión">Decisión</option><option value="Pendiente">Pendiente</option></select>
           <textarea id="notaEstrategiaTexto" placeholder="Escribe la regla, hallazgo o decisión..." style="flex:1;min-width:220px;min-height:60px;padding:8px 10px;border:1.5px solid var(--gray3);border-radius:8px;font-family:var(--font);font-size:13px;resize:vertical;"></textarea>
-          <button class="btn btn-primary" style="align-self:flex-end;" onclick="notaEstrategiaAnadir()"><i class="ti ti-plus"></i> Añadir nota</button>
+          <button class="btn btn-primary" style="align-self:flex-end;" onclick="notaEstrategiaAnadir()"><i class="ti ti-plus" aria-hidden="true"></i> Añadir nota</button>
         </div>
         <div id="notasEstrategiaLista"></div>
       </div>
@@ -782,16 +782,16 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
     <div id="tab-config" class="section">
       <div class="sec-header">
-        <div class="sec-header-icon"><i class="ti ti-settings"></i></div>
+        <div class="sec-header-icon"><i class="ti ti-settings" aria-hidden="true"></i></div>
         <div class="sec-header-info"><h2>Config</h2><p>Configuración de conexión, importación y exportación</p></div>
-        <button onclick="exportarInformePDF('config')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button onclick="exportarInformePDF('config')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF</button>
       </div>
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title">Tu alias de conexión</div>
         <p style="font-size:12px;color:var(--gray5);margin-bottom:12px;">Este alias aparecerá en cada nota que añadas. Se te pedirá la primera vez que añadas una nota.</p>
         <div style="display:flex;gap:8px;margin-bottom:6px;">
           <input type="text" id="aliasConfigInput" placeholder="Ej: Juan C., Admin..." maxlength="30" style="flex:1;font-size:12px;padding:8px 10px;border:1.5px solid var(--orange);border-radius:var(--radius);font-family:var(--font);outline:none;">
-          <button class="btn btn-primary btn-sm" onclick="saveAliasConfig()"><i class="ti ti-check"></i> Guardar</button>
+          <button class="btn btn-primary btn-sm" onclick="saveAliasConfig()"><i class="ti ti-check" aria-hidden="true"></i> Guardar</button>
         </div>
         <span id="aliasConfigStatus" style="font-size:11px;color:var(--gray5);"></span>
       </div>
@@ -801,16 +801,16 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <p style="font-size:12px;color:var(--gray5);margin-bottom:12px;">URL de tu Google Apps Script desplegado.</p>
         <div style="display:flex;gap:8px;margin-bottom:10px;">
           <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/..." style="flex:1;font-size:12px;padding:8px 10px;border:1.5px solid var(--orange);border-radius:var(--radius);font-family:var(--font);outline:none;">
-          <button class="btn btn-primary btn-sm" onclick="saveScriptUrl()"><i class="ti ti-check"></i> Guardar</button>
+          <button class="btn btn-primary btn-sm" onclick="saveScriptUrl()"><i class="ti ti-check" aria-hidden="true"></i> Guardar</button>
         </div>
-        <button class="btn btn-sm" onclick="syncNow()"><i class="ti ti-refresh"></i> Sincronizar ahora</button>
-        <button class="btn btn-sm" style="color:var(--red);margin-left:8px;" onclick="resetLocalCache()"><i class="ti ti-trash"></i> Limpiar caché local</button>
+        <button class="btn btn-sm" onclick="syncNow()"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar ahora</button>
+        <button class="btn btn-sm" style="color:var(--red);margin-left:8px;" onclick="resetLocalCache()"><i class="ti ti-trash" aria-hidden="true"></i> Limpiar caché local</button>
         <span id="syncStatus" style="font-size:11px;color:var(--gray5);margin-left:8px;"></span>
       </div>
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title">Importar Excel</div>
         <div class="import-zone" onclick="checkImportAuth()">
-          <i class="ti ti-file-spreadsheet"></i>
+          <i class="ti ti-file-spreadsheet" aria-hidden="true"></i>
           <p>Haz clic o arrastra tu archivo .xlsx / .csv</p>
           <small>Requiere contraseña · Columnas: ID · APELLIDOS · NOMBRE · TERRITORIO · IDIOMA · EMAIL · CCAA · MOVIL · ESTADO</small>
         </div>
@@ -820,8 +820,8 @@ tr:hover .id-gray { color: var(--gray5) !important; }
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title">Exportar</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-green" onclick="exportExcel()"><i class="ti ti-download"></i> Descargar Excel</button>
-          <button class="btn btn-sm" onclick="downloadTemplate()"><i class="ti ti-template"></i> Plantilla Excel</button>
+          <button class="btn btn-green" onclick="exportExcel()"><i class="ti ti-download" aria-hidden="true"></i> Descargar Excel</button>
+          <button class="btn btn-sm" onclick="downloadTemplate()"><i class="ti ti-template" aria-hidden="true"></i> Plantilla Excel</button>
         </div>
         <p style="font-size:11px;color:var(--gray4);margin-top:8px;">Total activos: <span id="expCount">0</span> rectores</p>
       </div>
@@ -840,7 +840,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-top"><h2 id="modalTitle">Nuevo rector</h2><button class="btn-icon" onclick="closeModal()"><i class="ti ti-x"></i></button></div>
+    <div class="modal-top"><h2 id="modalTitle">Nuevo rector</h2><button class="btn-icon" onclick="closeModal()" aria-label="Cerrar"><i class="ti ti-x" aria-hidden="true"></i></button></div>
     <div class="modal-body">
       <div class="fgrid">
         <div class="fg"><label>Apellidos *</label><input id="f-apellidos" placeholder="García López"></div>
@@ -884,13 +884,13 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <div class="fg full"><label>Notas</label><textarea id="f-notas" placeholder="Notas sobre este rector..." onclick="_unlockNotasField(this)"></textarea></div>
       </div>
     </div>
-    <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveContact()"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveContact()"><i class="ti ti-check" aria-hidden="true"></i> Guardar</button></div>
   </div>
 </div>
 
 <div class="modal-bg" id="censoModal" onclick="if(event.target===this)closeCensoModal()">
   <div class="modal">
-    <div class="modal-top"><h2 id="censoModalTitle">Editar registro del censo</h2><button class="btn-icon" onclick="closeCensoModal()"><i class="ti ti-x"></i></button></div>
+    <div class="modal-top"><h2 id="censoModalTitle">Editar registro del censo</h2><button class="btn-icon" onclick="closeCensoModal()" aria-label="Cerrar"><i class="ti ti-x" aria-hidden="true"></i></button></div>
     <div class="modal-body">
       <div class="fgrid">
         <div class="fg"><label>CCAA 🔒</label><input id="censo-f-ccaa" readonly style="color:var(--gray4);background:var(--gray1);"></div>
@@ -902,11 +902,11 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <div class="fg full"><label>Delegado / Sección</label><input id="censo-f-delsec" placeholder="Delegado, Sección..."></div>
         <div class="fg"><label>Provincia nueva</label><select id="censo-f-provnueva"><option value="">-- Seleccionar --</option></select></div>
         <div class="fg"><label>Nuevo territorio para rector</label><input id="censo-f-terrnuevo" list="censo-terrnuevo-sugerencias" placeholder="Escribe o elige uno existente..."><datalist id="censo-terrnuevo-sugerencias"></datalist></div>
-        <div class="fg"><label>Nueva cuota de socios <i class="ti ti-refresh-dot" title="Se recalcula automáticamente al guardar" style="color:var(--azul3);"></i></label><input id="censo-f-nuevacuota" readonly style="color:var(--gray4);background:var(--gray1);"></div>
-        <div class="fg"><label>Socios del nuevo territorio <i class="ti ti-refresh-dot" title="Se recalcula automáticamente al guardar" style="color:var(--azul3);"></i></label><input id="censo-f-sociosnuevo" readonly style="color:var(--gray4);background:var(--gray1);"></div>
+        <div class="fg"><label>Nueva cuota de socios <i class="ti ti-refresh-dot" title="Se recalcula automáticamente al guardar" style="color:var(--azul3);" aria-hidden="true"></i></label><input id="censo-f-nuevacuota" readonly style="color:var(--gray4);background:var(--gray1);"></div>
+        <div class="fg"><label>Socios del nuevo territorio <i class="ti ti-refresh-dot" title="Se recalcula automáticamente al guardar" style="color:var(--azul3);" aria-hidden="true"></i></label><input id="censo-f-sociosnuevo" readonly style="color:var(--gray4);background:var(--gray1);"></div>
       </div>
     </div>
-    <div class="modal-foot"><button class="btn" onclick="closeCensoModal()">Cancelar</button><button class="btn btn-primary" onclick="censoSaveEditModal()"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-foot"><button class="btn" onclick="closeCensoModal()">Cancelar</button><button class="btn btn-primary" onclick="censoSaveEditModal()"><i class="ti ti-check" aria-hidden="true"></i> Guardar</button></div>
   </div>
 </div>
 
@@ -915,14 +915,14 @@ tr:hover .id-gray { color: var(--gray5) !important; }
     <div class="ficha-top">
       <div class="ficha-avatar" id="fichaAvatar"></div>
       <div class="ficha-info"><h3 id="fichaNombre"></h3><p id="fichaMeta"></p></div>
-      <button onclick="closeFicha()" style="margin-left:auto;background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 8px;color:#fff;cursor:pointer;"><i class="ti ti-x" style="font-size:16px;"></i></button>
+      <button onclick="closeFicha()" aria-label="Cerrar ficha" style="margin-left:auto;background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 8px;color:#fff;cursor:pointer;"><i class="ti ti-x" aria-hidden="true" style="font-size:16px;"></i></button>
     </div>
     <div class="ficha-body">
       <div class="ficha-grid" id="fichaDatos"></div>
       <div class="seg-section">
         <div class="seg-title">Notas de seguimiento<span id="notaCount" style="font-size:11px;color:var(--gray4);font-weight:400;"></span></div>
-        <div id="addNotaToggle" style="margin-bottom:8px;display:none;"><button class="btn btn-sm" onclick="showAddNota()" style="color:var(--azul);border-color:var(--azul3);"><i class="ti ti-plus"></i> Añadir nota</button></div>
-        <div class="add-nota" id="addNotaForm"><textarea id="nuevaNota" placeholder="Escribe una nota de seguimiento..."></textarea><button class="btn btn-primary btn-sm" onclick="addNota()" style="align-self:flex-end;"><i class="ti ti-plus"></i> Añadir</button></div>
+        <div id="addNotaToggle" style="margin-bottom:8px;display:none;"><button class="btn btn-sm" onclick="showAddNota()" style="color:var(--azul);border-color:var(--azul3);"><i class="ti ti-plus" aria-hidden="true"></i> Añadir nota</button></div>
+        <div class="add-nota" id="addNotaForm"><textarea id="nuevaNota" placeholder="Escribe una nota de seguimiento..."></textarea><button class="btn btn-primary btn-sm" onclick="addNota()" style="align-self:flex-end;"><i class="ti ti-plus" aria-hidden="true"></i> Añadir</button></div>
         <div id="notasList"></div>
       </div>
     </div>
@@ -931,21 +931,21 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 
 <div class="alias-modal-bg" id="aliasModal">
   <div class="alias-modal">
-    <div class="alias-modal-top"><i class="ti ti-user-circle"></i><h3>Identificate antes de añadir una nota</h3></div>
+    <div class="alias-modal-top"><i class="ti ti-user-circle" aria-hidden="true"></i><h3>Identificate antes de añadir una nota</h3></div>
     <div class="alias-modal-body">
       <p>Introduce un alias o nombre corto. Se guardará para todas tus notas y podrás cambiarlo en <b>Configuración</b>.</p>
       <input type="text" id="aliasInput" placeholder="Ej: Juan C., Admin, JC..." maxlength="30" />
     </div>
     <div class="alias-modal-foot">
       <button class="btn btn-sm" onclick="closeAliasModal()">Cancelar</button>
-      <button class="btn btn-primary btn-sm" onclick="confirmAlias()"><i class="ti ti-check"></i> Confirmar</button>
+      <button class="btn btn-primary btn-sm" onclick="confirmAlias()"><i class="ti ti-check" aria-hidden="true"></i> Confirmar</button>
     </div>
   </div>
 </div>
 
 <div class="notas-popup-bg" id="notasPopup" onclick="if(event.target===this)closeNotasPopup()">
   <div class="notas-popup">
-    <div class="notas-popup-top"><h3 id="notasPopupTitle">Notas</h3><button onclick="closeNotasPopup()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;"><i class="ti ti-x" style="font-size:15px;"></i></button></div>
+    <div class="notas-popup-top"><h3 id="notasPopupTitle">Notas</h3><button onclick="closeNotasPopup()" aria-label="Cerrar notas" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;"><i class="ti ti-x" aria-hidden="true" style="font-size:15px;"></i></button></div>
     <div class="notas-popup-body" id="notasPopupBody" style="white-space:pre-wrap;font-size:13px;color:var(--gray6);line-height:1.6;"></div>
   </div>
 </div>
@@ -957,7 +957,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.3;text-transform:uppercase;letter-spacing:.4px;">Candidatos presentados</div>
         <div id="candidatosPopupSub" style="font-size:15px;font-weight:700;color:rgba(255,255,255,.92);margin-top:5px;"></div>
       </div>
-      <button onclick="closeCandidatosPopup()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;flex-shrink:0;"><i class="ti ti-x" style="font-size:15px;"></i></button>
+      <button onclick="closeCandidatosPopup()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;flex-shrink:0;"><i class="ti ti-x" style="font-size:15px;" aria-hidden="true"></i></button>
     </div>
     <div style="padding:10px 1.25rem 8px;border-bottom:1px solid var(--gray2);font-size:12px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;text-align:center;">Candidatos presentados por territorio</div>
     <div class="notas-popup-body" id="candidatosPopupBody" style="font-size:13px;color:var(--gray6);line-height:1.5;"></div>
@@ -1009,7 +1009,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
     </div>
     <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:18px;text-transform:uppercase;letter-spacing:1.5px;animation:loaderGlow 2.5s ease-in-out infinite;">la SOCI · Sincronizando con Google Sheets</div>
     <div id="init-loading-retry" style="display:none;margin-top:20px;">
-      <button onclick="location.reload()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;"><i class="ti ti-refresh"></i> Reintentar</button>
+      <button onclick="location.reload()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;"><i class="ti ti-refresh" aria-hidden="true"></i> Reintentar</button>
     </div>
   </div>
 </div>
@@ -1255,7 +1255,7 @@ function renderInforme77(){
     +'<div style="display:flex;gap:8px;align-items:center;">'
       +'<span id="informe77-upload-status" style="font-size:11px;color:var(--azul2);"></span>'
       +'<label style="font-size:11.5px;background:var(--azul);color:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;">'
-        +'<i class="ti ti-upload"></i> Subir Candidaturas LaSoci (PDF)'
+        +'<i class="ti ti-upload" aria-hidden="true"></i> Subir Candidaturas LaSoci (PDF)'
         +'<input type="file" accept="application/pdf" style="display:none;" onchange="informe77SubirPDF(this)">'
       +'</label>'
       +(INFORME_META.fecha?'<button onclick="informe77RestaurarOriginal()" style="font-size:11px;padding:7px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;color:var(--gray5);">Restaurar original</button>':'')
@@ -1263,8 +1263,8 @@ function renderInforme77(){
   +'</div>';
 
   // ── Diagrama SVG con conectores curvos (estilo esquema de tablas) ──
-  html+='<style>.if77-svgwrap{overflow-x:auto;margin-bottom:8px;}.if77-svgwrap svg{display:block;min-width:760px;}</style>';
-  html+='<div class="if77-svgwrap"><svg viewBox="0 0 1000 440" style="width:100%;height:auto;font-family:inherit;">'
+  html+='<style>.if77-svgwrap{overflow-x:auto;margin-bottom:8px;}.if77-svgwrap svg{display:block;min-width:760px;}.if77-svgwrap svg g[tabindex]:focus{outline:3px solid #1a4fa0;outline-offset:2px;}</style>';
+  html+='<div class="if77-svgwrap"><svg viewBox="0 0 1000 440" role="img" aria-label="Resumen de las candidaturas: '+R.total+' demarcaciones en total, '+R.sinCandidaturas+' sin candidaturas, '+R.conCandidaturas+' con candidaturas ('+R.votacion+' en votación, '+R.cubiertas+' cubiertas, '+R.parciales+' parciales)" style="width:100%;height:auto;font-family:inherit;">'
     +'<defs>'
       +'<linearGradient id="if77g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081f4a"/><stop offset="1" stop-color="#1a4fa0"/></linearGradient>'
       +'<filter id="if77sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0C3470" flood-opacity="0.18"/></filter>'
@@ -1277,48 +1277,48 @@ function renderInforme77(){
     +'<path d="M750,332 C790,332 790,278 830,278" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
     +'<path d="M750,332 C790,332 790,388 830,388" fill="none" stroke="#c9d3e0" stroke-width="2"/>'
     // ── nodo N1: Total (clic -> ver todas) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'todas\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'todas\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'todas\')}" tabindex="0" role="button" aria-label="Ver todas las demarcaciones">'
       +'<g filter="url(#if77sh)"><rect x="10" y="127" width="120" height="90" rx="16" fill="url(#if77g1)"/></g>'
       +'<text x="70" y="164" text-anchor="middle" font-size="30" font-weight="800" fill="#fff">'+R.total+'</text>'
       +'<text x="70" y="184" text-anchor="middle" font-size="10.5" font-weight="600" fill="rgba(255,255,255,.7)" letter-spacing="0.4">TOTAL LISTAS</text>'
     +'</g>'
     // ── nodo N2: Sin candidaturas (clic -> filtrar) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'sin\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'sin\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'sin\')}" tabindex="0" role="button" aria-label="Filtrar: sin candidaturas">'
       +'<g filter="url(#if77sh)"><rect x="250" y="40" width="190" height="64" rx="14" fill="#fff" stroke="#f0d2d2"/></g>'
       +'<rect x="250" y="40" width="5" height="64" rx="2" fill="#b52a2a"/>'
       +'<text x="285" y="66" font-size="20" font-weight="800" fill="#b52a2a">'+R.sinCandidaturas+'</text>'
       +'<text x="285" y="86" font-size="11.5" font-weight="600" fill="#3d4454">Sin candidaturas</text>'
     +'</g>'
     // ── nodo N3: Con candidaturas (clic -> filtrar) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'con\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'con\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'con\')}" tabindex="0" role="button" aria-label="Filtrar: con candidaturas">'
       +'<g filter="url(#if77sh)"><rect x="250" y="240" width="190" height="64" rx="14" fill="#fff" stroke="#cfe6d8"/></g>'
       +'<rect x="250" y="240" width="5" height="64" rx="2" fill="#1e7a42"/>'
       +'<text x="285" y="266" font-size="20" font-weight="800" fill="#1e7a42">'+R.conCandidaturas+'</text>'
       +'<text x="285" y="286" font-size="11.5" font-weight="600" fill="#3d4454">Con candidaturas</text>'
     +'</g>'
     // ── nodo N4: En votación (clic -> filtrar) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'votacion\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'votacion\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'votacion\')}" tabindex="0" role="button" aria-label="Filtrar: en votación">'
       +'<g filter="url(#if77sh)"><rect x="560" y="180" width="190" height="64" rx="14" fill="#fff" stroke="#f3e0c2"/></g>'
       +'<rect x="560" y="180" width="5" height="64" rx="2" fill="#d97706"/>'
       +'<text x="595" y="206" font-size="20" font-weight="800" fill="#d97706">'+R.votacion+'</text>'
       +'<text x="595" y="226" font-size="11" font-weight="600" fill="#3d4454">En votación</text>'
     +'</g>'
     // ── nodo N5: Cubierta o parcial (clic -> filtrar ambas) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubiertaoparcial\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubiertaoparcial\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'cubiertaoparcial\')}" tabindex="0" role="button" aria-label="Filtrar: cubierta o parcial">'
       +'<g filter="url(#if77sh)"><rect x="560" y="300" width="190" height="64" rx="14" fill="#fff" stroke="#cdd9ee"/></g>'
       +'<rect x="560" y="300" width="5" height="64" rx="2" fill="#3a7bd5"/>'
       +'<text x="595" y="326" font-size="20" font-weight="800" fill="#3a7bd5">'+(R.cubiertas+R.parciales)+'</text>'
       +'<text x="595" y="346" font-size="10.5" font-weight="600" fill="#3d4454">Cubierta o parcial</text>'
     +'</g>'
     // ── nodo N6: Cubiertas (clic -> filtrar) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubierta\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'cubierta\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'cubierta\')}" tabindex="0" role="button" aria-label="Filtrar: cubiertas">'
       +'<g filter="url(#if77sh)"><rect x="830" y="250" width="150" height="56" rx="12" fill="#fff" stroke="#bfe6d4"/></g>'
       +'<rect x="830" y="250" width="5" height="56" rx="2" fill="#1D9E75"/>'
       +'<text x="858" y="273" font-size="18" font-weight="800" fill="#1D9E75">'+R.cubiertas+'</text>'
       +'<text x="858" y="291" font-size="10.5" font-weight="600" fill="#3d4454">Cubiertas</text>'
     +'</g>'
     // ── nodo N7: Parciales (clic -> filtrar) ──
-    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'parcial\')">'
+    +'<g style="cursor:pointer;" onclick="informe77SetFiltro(\'parcial\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){informe77SetFiltro(\'parcial\')}" tabindex="0" role="button" aria-label="Filtrar: parciales">'
       +'<g filter="url(#if77sh)"><rect x="830" y="360" width="150" height="56" rx="12" fill="#fff" stroke="#cdd9ee"/></g>'
       +'<rect x="830" y="360" width="5" height="56" rx="2" fill="#3a7bd5"/>'
       +'<text x="858" y="383" font-size="18" font-weight="800" fill="#3a7bd5">'+R.parciales+'</text>'
@@ -1327,7 +1327,7 @@ function renderInforme77(){
   +'</svg></div>';
 
   html+='<div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#eafaf0;border:1px solid #bfe8cf;border-radius:12px;padding:14px 20px;margin-bottom:16px;">'
-    +'<i class="ti ti-users-group" style="font-size:24px;color:#1e7a42;"></i>'
+    +'<i class="ti ti-users-group" style="font-size:24px;color:#1e7a42;" aria-hidden="true"></i>'
     +'<span style="font-size:26px;font-weight:800;color:#1e7a42;">'+R.candidatosTotal+'</span>'
     +'<span style="font-size:13px;color:#1e7a42;font-weight:600;">candidatos presentados en total</span>'
   +'</div>';
@@ -1406,7 +1406,7 @@ function renderInforme77(){
         var ok=!haySociosReales||coincideAprox(c,Object.keys(nuestrosSet));
         return ok
           ? '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>'
-          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No encontrado (ni aproximado) en el panel para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;"></i></span>';
+          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No encontrado (ni aproximado) en el panel para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;" aria-hidden="true"></i></span>';
       }).join('')+'</div>';
     } else {
       colPdf='<div style="font-size:12px;color:var(--gray4);">El PDF no registra candidaturas.</div>';
@@ -1416,7 +1416,7 @@ function renderInforme77(){
         var ok=coincideAprox(c,pdfNorm);
         return ok
           ? '<span style="background:#fff;border:1px solid var(--gray3);border-radius:99px;padding:4px 12px;font-size:11.5px;color:var(--gray6);">'+c+'</span>'
-          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No aparece en el PDF de LaSoci para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;"></i></span>';
+          : '<span style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:99px;padding:4px 12px;font-size:11.5px;color:#b52a2a;font-weight:700;" title="No aparece en el PDF de LaSoci para este territorio">'+c+' <i class="ti ti-alert-triangle" style="font-size:11px;" aria-hidden="true"></i></span>';
       }).join('')+'</div>';
     } else {
       colNuestros=haySociosReales
@@ -1430,7 +1430,7 @@ function renderInforme77(){
       +'</div>';
     if(nuestrosObj.duplicados.length){
       chips+='<div style="margin-top:10px;background:#fff7e6;border:1px solid #f0dba0;border-radius:8px;padding:8px 12px;font-size:11px;color:#8a5a00;">'
-        +'<i class="ti ti-copy" style="font-size:12px;"></i> Ficha duplicada en el panel para: <b>'+nuestrosObj.duplicados.join(', ')+'</b> (hay más de un contacto con Candidatura presentada = SÍ para la misma persona en este territorio — conviene revisarlo y fusionar/borrar la ficha sobrante).'
+        +'<i class="ti ti-copy" style="font-size:12px;" aria-hidden="true"></i> Ficha duplicada en el panel para: <b>'+nuestrosObj.duplicados.join(', ')+'</b> (hay más de un contacto con Candidatura presentada = SÍ para la misma persona en este territorio — conviene revisarlo y fusionar/borrar la ficha sobrante).'
         +'</div>';
     }
 
@@ -1534,7 +1534,7 @@ function showSobrecupoTooltip(el,msg){
   var bg=document.getElementById('sobrecupo-overlay-bg');
   var isMobile=window.innerWidth<=600;
   tip.innerHTML='<div style="display:flex;gap:10px;align-items:flex-start;">'
-    +'<div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-alert-triangle" style="font-size:14px;"></i></div>'
+    +'<div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-alert-triangle" style="font-size:14px;" aria-hidden="true"></i></div>'
     +'<div style="flex:1;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;opacity:.85;margin-bottom:3px;">Cupo superado</div>'+msg+'</div>'
     +(isMobile?'<button onclick="event.stopPropagation();hideSobrecupoTooltip()" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:6px;width:22px;height:22px;flex-shrink:0;cursor:pointer;font-size:13px;">&times;</button>':'')
     +'</div>';
@@ -1752,7 +1752,7 @@ function verCandidatos(ccaa){
             if(!secciones.length&&c.SECCION)secciones=[c.SECCION];
             if(secciones.length){
               seccionHtml=secciones.map(function(s){
-                return '<span style="font-size:10px;font-weight:600;color:#92611a;background:linear-gradient(135deg,#fff3da,#ffe9c2);padding:3px 9px;border-radius:99px;border:1px solid #f3d8a3;letter-spacing:.1px;white-space:nowrap;"><i class="ti ti-bookmark" style="font-size:9px;margin-right:3px;vertical-align:-1px;"></i>'+s+'</span>';
+                return '<span style="font-size:10px;font-weight:600;color:#92611a;background:linear-gradient(135deg,#fff3da,#ffe9c2);padding:3px 9px;border-radius:99px;border:1px solid #f3d8a3;letter-spacing:.1px;white-space:nowrap;"><i class="ti ti-bookmark" style="font-size:9px;margin-right:3px;vertical-align:-1px;" aria-hidden="true"></i>'+s+'</span>';
               }).join('');
             }
           }
@@ -1768,7 +1768,7 @@ function verCandidatos(ccaa){
         }).join('');
         return '<div style="margin-bottom:18px;">'
           +'<div style="display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#0C3470 0%,#1a4fa0 55%,#2e6fc4 100%);border-radius:10px;padding:9px 14px;margin-bottom:8px;box-shadow:0 3px 10px rgba(12,52,112,.18);">'
-          +'<span style="font-size:12.5px;font-weight:700;color:#fff;letter-spacing:.2px;"><i class="ti ti-map-pin" style="font-size:13px;margin-right:5px;vertical-align:-1px;opacity:.85;"></i>'+tk+(sociosTerr?(' <span style="opacity:.65;font-weight:500;font-size:11px;">· '+sociosTerr.toLocaleString('es-ES')+' socios ('+(sociosTerr/TOTAL_SOCIOS_ESPANA*100).toFixed(1)+'%)</span>'):'')+'</span>'
+          +'<span style="font-size:12.5px;font-weight:700;color:#fff;letter-spacing:.2px;"><i class="ti ti-map-pin" style="font-size:13px;margin-right:5px;vertical-align:-1px;opacity:.85;" aria-hidden="true"></i>'+tk+(sociosTerr?(' <span style="opacity:.65;font-weight:500;font-size:11px;">· '+sociosTerr.toLocaleString('es-ES')+' socios ('+(sociosTerr/TOTAL_SOCIOS_ESPANA*100).toFixed(1)+'%)</span>'):'')+'</span>'
           +'<span style="font-size:13px;font-weight:700;color:#fff;background:rgba(255,255,255,.18);padding:2px 10px;border-radius:99px;">'+cands.length+'<span style="opacity:.7;font-weight:500;">/'+cuota+'</span></span>'
           +'</div>'+rows+'</div>';
       }).join('');
@@ -1930,7 +1930,7 @@ function renderAfinesMapa(){
       +'<div style="font-size:11px;font-weight:600;color:'+candCol+';margin-top:3px;">Candidaturas presentadas: '+candidaturas+'</div>'
       +(candidaturas>0?'<a href="javascript:void(0)" onclick="event.stopPropagation();verCandidatos(\''+d.ccaa.replace(/'/g,"\\'")+'\')" style="font-size:11px;font-weight:600;color:var(--azul3);text-decoration:underline;cursor:pointer;display:block;margin-top:2px;">Ver candidatos</a>':'');
     var headerHtml='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">'      +'<div><div style="font-size:13px;font-weight:700;color:var(--azul2);">'+d.ccaa+'</div>'      +candLinkHtml+'</div>'      +'<div style="display:flex;align-items:center;gap:6px;">'      +'<div style="text-align:right;"><div style="font-size:9px;color:var(--gray5);text-transform:uppercase;letter-spacing:.3px;">Cobertura rectores</div><div style="font-size:16px;font-weight:700;color:'+col+';">'
-      +(sobrecupo?'<span style="cursor:pointer;font-size:19px;font-weight:800;color:#c0392b;" onclick="event.stopPropagation();showSobrecupoTooltip(this,\''+sobrecupoTitle.replace(/'/g,"\\'")+'\')" onmouseenter="if(window.innerWidth>600)showSobrecupoTooltip(this,\''+sobrecupoTitle.replace(/'/g,"\\'")+'\')" onmouseleave="if(window.innerWidth>600)hideSobrecupoTooltip()"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-1px;margin-right:3px;"></i>'+d.activos+'</span>':d.activos)
+      +(sobrecupo?'<span style="cursor:pointer;font-size:19px;font-weight:800;color:#c0392b;" onclick="event.stopPropagation();showSobrecupoTooltip(this,\''+sobrecupoTitle.replace(/'/g,"\\'")+'\')" onmouseenter="if(window.innerWidth>600)showSobrecupoTooltip(this,\''+sobrecupoTitle.replace(/'/g,"\\'")+'\')" onmouseleave="if(window.innerWidth>600)hideSobrecupoTooltip()"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-1px;margin-right:3px;" aria-hidden="true"></i>'+d.activos+'</span>':d.activos)
       +'/'+d.cuota      +(d.pendientes>0?' <span style="font-size:11px;color:#d97706;">+'+d.pendientes+'</span>':'')      +' <span style="font-size:11px;font-weight:400;color:var(--gray5);">('+pct+'%)</span></div></div>'      +(isCat?'<button onclick="_toggleCat()" id="btn-cat" style="width:26px;height:26px;border-radius:50%;border:2px solid var(--azul3);background:var(--white);color:var(--azul);font-size:18px;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0;">+</button>':'')      +'</div></div>';
     var barHtml='<div style="height:5px;background:var(--gray2);border-radius:99px;overflow:hidden;margin-bottom:8px;">'      +'<div style="height:100%;width:'+Math.min(pct,100)+'%;background:'+col+';border-radius:99px;"></div></div>';
     var faltanHtml=faltan>0?'<div style="margin-top:6px;font-size:11px;color:#c0392b;">Faltan '+faltan+' rectores</div>':'';
@@ -2343,7 +2343,7 @@ function renderTable(){
   var pageCts=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
   _pageIds=pageCts.map(function(c){return String(c.ID);});
   var tb=document.getElementById('tbody');
-  if(!pageCts.length){tb.innerHTML='<tr><td colspan="12"><div class="empty"><i class="ti ti-search"></i><p>Sin resultados</p></div></td></tr>';}
+  if(!pageCts.length){tb.innerHTML='<tr><td colspan="12"><div class="empty"><i class="ti ti-search" aria-hidden="true"></i><p>Sin resultados</p></div></td></tr>';}
   else{
     var rows=[];
     for(var rp=0;rp<pageCts.length;rp++){
@@ -2366,8 +2366,8 @@ function renderTable(){
         '<td style="text-align:center;"><span style="font-size:11px;font-weight:700;color:'+(String(c.CANDIDATURA_PRESENTADA||'').trim().toUpperCase()==='SI'?'#1e7a42':'var(--gray4)')+';">'+(c.CANDIDATURA_PRESENTADA||'-')+'</span></td>'+
         '<td>'+(c.TIPO_ASOCIADO||'-')+'</td>'+
         '<td style="font-size:11px;color:var(--gray5);max-width:100px;overflow:hidden;text-overflow:ellipsis;">'+(c.SECCION||'-')+'</td>'+
-        '<td style="text-align:center;"><button class="ibtn" onclick="rowNotas('+rp+')" onmouseenter="showNotasTooltip(this,'+rp+')" onmouseleave="hideNotasTooltip()" title="Notas" style="position:relative;"><i class="ti ti-notes"></i>'+dot+'</button></td>'+
-        '<td style="background:var(--gray1);"><div class="row-actions">'+(isPend?'<button class="ibtn" onclick="rowActivar('+rp+')" title="Convertir en Rector" style="color:#1e7a42;"><i class="ti ti-user-check"></i></button>':'')+'<button class="ibtn" onclick="rowCopia('+rp+')" title="Alta por copia" style="color:var(--azul3);"><i class="ti ti-copy"></i></button><button class="ibtn" onclick="rowEdit('+rp+')" title="Editar"><i class="ti ti-edit"></i></button><button class="ibtn danger" onclick="rowDel('+rp+')" title="Eliminar"><i class="ti ti-trash"></i></button></div></td>'+
+        '<td style="text-align:center;"><button class="ibtn" onclick="rowNotas('+rp+')" onmouseenter="showNotasTooltip(this,'+rp+')" onmouseleave="hideNotasTooltip()" title="Notas" style="position:relative;"><i class="ti ti-notes" aria-hidden="true"></i>'+dot+'</button></td>'+
+        '<td style="background:var(--gray1);"><div class="row-actions">'+(isPend?'<button class="ibtn" onclick="rowActivar('+rp+')" title="Convertir en Rector" style="color:#1e7a42;"><i class="ti ti-user-check" aria-hidden="true"></i></button>':'')+'<button class="ibtn" onclick="rowCopia('+rp+')" title="Alta por copia" style="color:var(--azul3);"><i class="ti ti-copy" aria-hidden="true"></i></button><button class="ibtn" onclick="rowEdit('+rp+')" title="Editar"><i class="ti ti-edit" aria-hidden="true"></i></button><button class="ibtn danger" onclick="rowDel('+rp+')" title="Eliminar"><i class="ti ti-trash" aria-hidden="true"></i></button></div></td>'+
         '</tr>');
     }
     tb.innerHTML=rows.join('');
@@ -2568,7 +2568,7 @@ function renderNotas(c){
   document.getElementById('nuevaNota').value='';
   document.getElementById('notasList').innerHTML=notas.length?[...notas].reverse().map(n=>{
     const aliasHtml=n.alias
-      ?'<span class="nota-alias nota-del-trigger" onclick="deleteNota(\''+n.id+'\')" title="Clic para eliminar nota" style="cursor:pointer;"><i class="ti ti-user" style="font-size:9px;"></i>'+n.alias+'</span>'
+      ?'<span class="nota-alias nota-del-trigger" onclick="deleteNota(\''+n.id+'\')" title="Clic para eliminar nota" style="cursor:pointer;"><i class="ti ti-user" style="font-size:9px;" aria-hidden="true"></i>'+n.alias+'</span>'
       :'';
     return '<div class="nota-item"><div class="nota-meta" style="gap:6px;">'
       +aliasHtml
@@ -3474,7 +3474,7 @@ function renderCRM(){
           +'</div>';
       }).join('');
     } else {
-      notasEl.innerHTML='<div style="text-align:center;padding:16px;"><div style="font-size:28px;margin-bottom:6px;">🔒</div><div style="font-size:12px;color:var(--gray5);margin-bottom:10px;">'+allNotas.length+' notas — requiere contraseña</div><button class="btn btn-sm" onclick="checkNotasAuth(function(){_crmNotasUnlocked=true;renderCRM();})"><i class="ti ti-lock-open"></i> Ver notas</button></div>';
+      notasEl.innerHTML='<div style="text-align:center;padding:16px;"><div style="font-size:28px;margin-bottom:6px;">🔒</div><div style="font-size:12px;color:var(--gray5);margin-bottom:10px;">'+allNotas.length+' notas — requiere contraseña</div><button class="btn btn-sm" onclick="checkNotasAuth(function(){_crmNotasUnlocked=true;renderCRM();})"><i class="ti ti-lock-open" aria-hidden="true"></i> Ver notas</button></div>';
     }
   }
 }
@@ -3960,7 +3960,7 @@ function renderEvolucion() {
     var candPend=act.activos-candPres;
     var candPctPend=act.activos?Math.round(candPend/act.activos*100):0;
     tot_ini+=(ini.activos||0);tot_total2026+=totalCCAA;tot_pendAct+=act.pendientes;tot_act+=act.activos;tot_dif+=dif;tot_candPres+=candPres;tot_candPend+=candPend;
-    var trendIcon=dif>0?'<i class="ti ti-trending-up" style="font-size:13px;"></i>':dif<0?'<i class="ti ti-trending-down" style="font-size:13px;"></i>':'<i class="ti ti-minus" style="font-size:12px;"></i>';
+    var trendIcon=dif>0?'<i class="ti ti-trending-up" style="font-size:13px;" aria-hidden="true"></i>':dif<0?'<i class="ti ti-trending-down" style="font-size:13px;" aria-hidden="true"></i>':'<i class="ti ti-minus" style="font-size:12px;" aria-hidden="true"></i>';
     var trendCol=dif>0?'#1e7a42':dif<0?'#c0392b':'#999';
     ccaaHtml += '<tr>' +
       '<td>'+ccaa+'</td>' +
@@ -3977,7 +3977,7 @@ function renderEvolucion() {
   var tot_pctCambio = tot_ini>0?Math.round(tot_dif/tot_ini*100):0;
   var tot_candPctPres = tot_act?Math.round(tot_candPres/tot_act*100):0;
   var tot_candPctPend = tot_act?Math.round(tot_candPend/tot_act*100):0;
-  var totTrendIcon=tot_dif>0?'<i class="ti ti-trending-up" style="font-size:15px;"></i>':tot_dif<0?'<i class="ti ti-trending-down" style="font-size:15px;"></i>':'<i class="ti ti-minus" style="font-size:14px;"></i>';
+  var totTrendIcon=tot_dif>0?'<i class="ti ti-trending-up" style="font-size:15px;" aria-hidden="true"></i>':tot_dif<0?'<i class="ti ti-trending-down" style="font-size:15px;" aria-hidden="true"></i>':'<i class="ti ti-minus" style="font-size:14px;" aria-hidden="true"></i>';
   var totBg='background:#0C3470;';
   ccaaHtml += '<tr class="evol-total-row" style="background:#0C3470;border-bottom:none;">' +
     '<td style="'+totBg+'font-weight:800;font-size:14px;color:#fff;letter-spacing:.5px;">TOTAL</td>' +
@@ -4198,7 +4198,7 @@ function censoRenderTable(){
   var pageRows=filtered.slice((censoPage-1)*censoPerPage,censoPage*censoPerPage);
   censoPageRows=pageRows;
   var tb=document.getElementById('censoTbody');
-  if(!pageRows.length){tb.innerHTML='<tr><td colspan="12"><div class="empty"><i class="ti ti-search"></i><p>Sin resultados</p></div></td></tr>';}
+  if(!pageRows.length){tb.innerHTML='<tr><td colspan="12"><div class="empty"><i class="ti ti-search" aria-hidden="true"></i><p>Sin resultados</p></div></td></tr>';}
   else{
     var rows=[];
     for(var i=0;i<pageRows.length;i++){
@@ -4215,7 +4215,7 @@ function censoRenderTable(){
         '<td>'+(c.PROVINCIA_NUEVA||'-')+'</td>'+
         '<td style="font-size:11px;">'+(c.NUEVO_TERRITORIO_PARA_RECTOR||'-')+'</td>'+
         '<td style="text-align:center;">'+(c['Nº SOCIOS NUEVO TERRITORIO']||'-')+'</td>'+
-        '<td style="background:var(--gray1);"><div class="row-actions"><button class="ibtn" onclick="censoOpenEdit('+c._row+')" title="Editar"><i class="ti ti-edit"></i></button><button class="ibtn danger" onclick="censoDeleteRow('+c._row+')" title="Eliminar"><i class="ti ti-trash"></i></button></div></td>'+
+        '<td style="background:var(--gray1);"><div class="row-actions"><button class="ibtn" onclick="censoOpenEdit('+c._row+')" title="Editar"><i class="ti ti-edit" aria-hidden="true"></i></button><button class="ibtn danger" onclick="censoDeleteRow('+c._row+')" title="Eliminar"><i class="ti ti-trash" aria-hidden="true"></i></button></div></td>'+
         '</tr>');
     }
     tb.innerHTML=rows.join('');
@@ -4532,12 +4532,12 @@ function crmReorgRenderObjetivoRectores(){
   var totalObjetivo=filas.reduce(function(s,f){return s+f.objetivo;},0);
   var resumen='<div style="display:flex;gap:12px;margin-bottom:10px;font-size:12px;color:var(--gray5);align-items:center;flex-wrap:wrap;">'
     +'<span>Total actual: <b style="color:var(--azul);font-size:15px;">'+totalActual+'</b> rectores</span>'
-    +'<i class="ti ti-arrow-right"></i>'
+    +'<i class="ti ti-arrow-right" aria-hidden="true"></i>'
     +'<span>Nuevo reparto entre las '+filas.length+' CCAA: <b style="color:#1e7a42;font-size:15px;">'+totalObjetivo+'</b> rectores'+(totalObjetivo!==200?' <span style="color:#c0392b;">(¡no son 200!)</span>':' (mismo total, 200)')+'</span>'
     +'<span style="margin-left:auto;display:flex;gap:8px;align-items:center;">'
-    +(ESTRUCTURA_FINAL_FECHA?'<span style="font-size:11px;color:#1e7a42;"><i class="ti ti-check"></i> Guardada como final el '+ESTRUCTURA_FINAL_FECHA+'</span>':'')
-    +'<button class="btn btn-sm btn-primary" onclick="crmObjetivoGuardarFinal()"><i class="ti ti-device-floppy"></i> Guardar estructura final</button>'
-    +'<button class="btn btn-sm" onclick="crmObjetivoRestablecer()"><i class="ti ti-rotate"></i> Restablecer borrador</button>'
+    +(ESTRUCTURA_FINAL_FECHA?'<span style="font-size:11px;color:#1e7a42;"><i class="ti ti-check" aria-hidden="true"></i> Guardada como final el '+ESTRUCTURA_FINAL_FECHA+'</span>':'')
+    +'<button class="btn btn-sm btn-primary" onclick="crmObjetivoGuardarFinal()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar estructura final</button>'
+    +'<button class="btn btn-sm" onclick="crmObjetivoRestablecer()"><i class="ti ti-rotate" aria-hidden="true"></i> Restablecer borrador</button>'
     +'</span>'
     +'</div>';
   wrap.innerHTML=resumen+'<table><thead><tr><th style="width:24px;"></th><th>CCAA</th><th style="text-align:center;">Rectores actuales</th><th style="text-align:center;">Nuevo objetivo</th><th style="text-align:center;">Cambio</th><th style="text-align:center;">Territorios nuevos</th><th style="text-align:center;">Socios totales</th></tr></thead><tbody>'
@@ -4557,7 +4557,7 @@ function crmReorgRenderObjetivoRectores(){
               +'<td style="padding:4px 8px;"><input value="'+t.nombre.replace(/"/g,'&quot;')+'" oninput="crmObjetivoRenombrar(\''+f.key+'\','+i+',this.value)" style="width:100%;border:1px solid transparent;background:transparent;padding:3px 5px;border-radius:5px;font-size:12px;" onfocus="this.style.border=\'1px solid var(--azul3)\';this.style.background=\'#fff\';" onblur="this.style.border=\'1px solid transparent\';this.style.background=\'transparent\';"></td>'
               +'<td style="text-align:center;padding:4px 8px;">'+t.socios+'</td><td style="text-align:center;padding:4px 8px;font-weight:700;color:var(--azul2);">'+t.rectores+'</td></tr>';}).join('')
           +'</tbody></table>'
-          +'<div style="margin-top:8px;display:flex;gap:8px;"><button class="btn btn-sm" onclick="crmObjetivoFusionar(\''+f.key+'\')"><i class="ti ti-arrows-join"></i> Fusionar seleccionados</button><span style="font-size:11px;color:var(--gray5);align-self:center;">Marca 2 o más territorios de arriba y fusiónalos en uno — recalcula los rectores solo</span></div>'
+          +'<div style="margin-top:8px;display:flex;gap:8px;"><button class="btn btn-sm" onclick="crmObjetivoFusionar(\''+f.key+'\')"><i class="ti ti-arrows-join" aria-hidden="true"></i> Fusionar seleccionados</button><span style="font-size:11px;color:var(--gray5);align-self:center;">Marca 2 o más territorios de arriba y fusiónalos en uno — recalcula los rectores solo</span></div>'
           +'</td></tr>';
       }
       return fila1+fila2;
@@ -4625,7 +4625,7 @@ function crmReorgRenderTabla(){
     });
   }
   var tb=document.getElementById('crmReorgTbody');
-  if(!data.length){tb.innerHTML='<tr><td colspan="8"><div class="empty"><i class="ti ti-search"></i><p>Sin datos — pulsa Regenerar</p></div></td></tr>';return;}
+  if(!data.length){tb.innerHTML='<tr><td colspan="8"><div class="empty"><i class="ti ti-search" aria-hidden="true"></i><p>Sin datos — pulsa Regenerar</p></div></td></tr>';return;}
   tb.innerHTML=data.map(function(r){
     var mant=String(r.MANTIENE_RECTOR||'').toUpperCase()==='SI';
     return '<tr>'
@@ -5052,7 +5052,7 @@ function notaEstrategiaRender(){
     return '<div style="border:1px solid var(--gray2);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;">'
       +'<span class="badge" style="background:'+(coloresCat[cat]||'var(--gray1)')+';color:'+(textoCat[cat]||'var(--gray6)')+';flex-shrink:0;">'+cat+'</span>'
       +'<div style="flex:1;"><div style="font-size:13px;color:var(--gray6);white-space:pre-wrap;">'+String(n.NOTA||'').replace(/</g,'&lt;')+'</div><div style="font-size:10px;color:var(--gray4);margin-top:4px;">'+(n.FECHA||'')+'</div></div>'
-      +(n._row?'<button class="ibtn danger" onclick="notaEstrategiaBorrar('+n._row+')" title="Eliminar"><i class="ti ti-trash"></i></button>':'')
+      +(n._row?'<button class="ibtn danger" onclick="notaEstrategiaBorrar('+n._row+')" title="Eliminar"><i class="ti ti-trash" aria-hidden="true"></i></button>':'')
       +'</div>';
   }).join('');
 }

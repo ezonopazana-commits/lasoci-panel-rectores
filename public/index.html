@@ -1057,15 +1057,19 @@ var INFORME_RESUMEN_OFICIAL={total:77,sinCandidaturas:32,conCandidaturas:45,vota
 
 function informe77NuestrosCandidatos(panelNombre){
   // Nombres de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
+  // Deduplicado por nombre normalizado: si la misma persona tiene 2+ fichas duplicadas en el panel, solo cuenta una vez.
   var norm=stripAccents(panelNombre);
-  var list=[], set={};
+  var list=[], set={}, duplicados=[];
   (contacts||[]).forEach(function(c){
     if(stripAccents(c.TERRITORIO||'')!==norm)return;
     if(String(c.CANDIDATURA_PRESENTADA||'').trim().toUpperCase()!=='SI')return;
     var nombre=(String(c.APELLIDOS||'').trim()+', '+String(c.NOMBRE||'').trim()).replace(/^,\s*|,\s*$/g,'');
-    if(nombre.trim()){list.push(nombre);set[stripAccents(nombre)]=true;}
+    if(!nombre.trim())return;
+    var key=stripAccents(nombre);
+    if(set[key]){ if(duplicados.indexOf(nombre)===-1)duplicados.push(nombre); return; }
+    set[key]=true; list.push(nombre);
   });
-  return {list:list,set:set};
+  return {list:list,set:set,duplicados:duplicados};
 }
 
 function renderInforme77(){
@@ -1205,6 +1209,11 @@ function renderInforme77(){
       +'<div><div style="font-size:10px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">📄 Según el PDF LaSoci</div>'+colPdf+'</div>'
       +'<div><div style="font-size:10px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">🖥 Registrados en el panel</div>'+colNuestros+'</div>'
       +'</div>';
+    if(nuestrosObj.duplicados.length){
+      chips+='<div style="margin-top:10px;background:#fff7e6;border:1px solid #f0dba0;border-radius:8px;padding:8px 12px;font-size:11px;color:#8a5a00;">'
+        +'<i class="ti ti-copy" style="font-size:12px;"></i> Ficha duplicada en el panel para: <b>'+nuestrosObj.duplicados.join(', ')+'</b> (hay más de un contacto con Candidatura presentada = SÍ para la misma persona en este territorio — conviene revisarlo y fusionar/borrar la ficha sobrante).'
+        +'</div>';
+    }
 
     html+='<div class="acc2-wrap" style="margin-bottom:6px;box-shadow:none;border:1px solid var(--gray3);">'
       +'<div class="acc2-head" style="background:#fff;padding:10px 14px;" onclick="informe77Toggle('+i+')">'

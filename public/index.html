@@ -1019,6 +1019,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 var LASOCI_LOGO_URI="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAkACQAAD/4QLaRXhpZgAATU0AKgAAAAgABAE7AAIAAAAFAAABSodpAAQAAAABAAABUJydAAEAAAAKAAACyOocAAcAAAEMAAAAPgAAAAAc6gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARXNweQAAAAWQAwACAAAAFAAAAp6QBAACAAAAFAAAArKSkQACAAAAAzU3AACSkgACAAAAAzU3AADqHAAHAAABDAAAAZIAAAAAHOoAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIwMjY6MDU6MTkgMjM6NTQ6MjgAMjAyNjowNToxOSAyMzo1NDoyOAAAAEUAcwBwAHkAAAD/4QQXaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyI+PHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj48cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0idXVpZDpmYWY1YmRkNS1iYTNkLTExZGEtYWQzMS1kMzNkNzUxODJmMWIiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIvPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj48eG1wOkNyZWF0ZURhdGU+MjAyNi0wNS0xOVQyMzo1NDoyOC41NzM8L3htcDpDcmVhdGVEYXRlPjwvcmRmOkRlc2NyaXB0aW9uPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj48ZGM6Y3JlYXRvcj48cmRmOlNlcSB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxyZGY6bGk+RXNweTwvcmRmOmxpPjwvcmRmOlNlcT4NCgkJCTwvZGM6Y3JlYXRvcj48L3JkZjpEZXNjcmlwdGlvbj48L3JkZjpSREY+PC94OnhtcG1ldGE+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPD94cGFja2V0IGVuZD0ndyc/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";
 var MAPA_LOGO_URI="data:image/png;base64,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";
@@ -1051,9 +1052,173 @@ function _consToggle(){
   if(_consIsOpen){_consIsOpen=false;document.getElementById('consideraciones-body').classList.remove('open');document.getElementById('cons-arrow').style.transform='rotate(0deg)';}
   else{_consOpen();}
 }
-var INFORME_77_DATA=[{"pdf": "ALT CAMP", "panel": "ALT CAMP", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALT EMPORDÀ", "panel": "ALT EMPORDA", "exacto": true, "vacantes": 2, "candidatos": ["ISERN SERRA, RAMON"]}, {"pdf": "ALT PENEDÈS", "panel": "ALT PENEDES", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ALT URGELL", "panel": "ALT URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALTA RIBAGORÇA", "panel": "ALTA RIBAGORÇA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ANDALUCIA (ALM GRA JAE MAL)", "panel": "ANDALUCIA (ALM,GRA,JAE,MAL)", "exacto": true, "vacantes": 5, "candidatos": ["CABRERA CRUZ, ISIDRO", "MARTINEZ GARCIA, MARCELO", "RUBI CASTILLO, FRANCISCO", "VANEGAS LOPEZ, JORGE JUAN"]}, {"pdf": "ANDALUCIA (HUE COR CAD SEV)", "panel": "ANDALUCIA (HUE,COR,CAD,SEV)", "exacto": true, "vacantes": 5, "candidatos": ["CODER GALLEGO, ELISA", "ESPINOSA GARCIA, JUAN CARLOS", "GONZALEZ MUÑOZ, JOSE LUIS", "IGLESIAS BALAGUER, JUAN JOSE", "VAZQUEZ PAVON, JUAN"]}, {"pdf": "ANDALUCIA SEVILLA CIUDAD", "panel": "ANDALUCIA (SEVILLA CIUDAD)", "exacto": true, "vacantes": 3, "candidatos": ["CORTES LOPEZ, CARLOS JAVIER", "LOPEZ RIVERA, MANUEL", "RUBIALES ALVAREZ-DARDET, FERNANDO"]}, {"pdf": "ANOIA", "panel": "ANOIA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ARAGÓN", "panel": "ARAGON", "exacto": true, "vacantes": 2, "candidatos": ["FLAMARIQUE BORREGO, FERNANDO", "GARCIA CABANES, JORGE"]}, {"pdf": "ASTURIAS", "panel": "ASTURIAS", "exacto": true, "vacantes": 2, "candidatos": ["COYA ALAEZ, LUIS", "LUQUE SAN JUAN, JAVIER"]}, {"pdf": "BAGES", "panel": "BAGES", "exacto": true, "vacantes": 2, "candidatos": ["ARNAN CASANOVAS, JORDI", "BERCH BOIX, JAUME"]}, {"pdf": "BAIX CAMP", "panel": "BAIX CAMP", "exacto": true, "vacantes": 2, "candidatos": ["OLIVE FERRAN, JAUME"]}, {"pdf": "BAIX EBRE", "panel": "BAIX EBRE", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BAIX EMPORDÀ", "panel": "BAIX EMPORDA", "exacto": true, "vacantes": 3, "candidatos": ["FORADADA CORTACANS, JOSEP", "MATEU PALE, RAFAEL", "VILOSA BUXO, ALBERT"]}, {"pdf": "BAIX LLOBREGAT", "panel": "BAIX LLOBREGAT", "exacto": true, "vacantes": 7, "candidatos": ["DOMINGUEZ MONLEON, MARIA PILAR", "MITJANS RIUS, JOSEP", "MONMANY SOLE, ANTONIO", "RIU VIDAL, EDUARD", "SIBERA ARESTE, JORDI"]}, {"pdf": "BAIX PENEDÈS", "panel": "BAIX PENEDES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "BARCELONA DTE. 01", "panel": "BARCELONA DTE. 01", "exacto": true, "vacantes": 1, "candidatos": ["PARIENTE LOPEZ, SUSANNA"]}, {"pdf": "BARCELONA DTE. 02", "panel": "BARCELONA DTE. 02", "exacto": true, "vacantes": 8, "candidatos": ["ARMENGOL RICHART, JOAN", "COSTA JAQUET, LLUIS", "FUENTES PIQUER, FRANCISCO", "MARIEGES ASENSIO, FERRAN", "PADRO BALSELLS, PERE", "POYATOS JORDA, XAVIER", "SIERRA MOYA, JAVIER"]}, {"pdf": "BARCELONA DTE. 03", "panel": "BARCELONA DTE. 03", "exacto": true, "vacantes": 3, "candidatos": ["CORRECHER CASTRO, JOSEP", "RUIZ CABALLERO, JOAN FRANCESC"]}, {"pdf": "BARCELONA DTE. 04", "panel": "BARCELONA DTE. 04", "exacto": true, "vacantes": 5, "candidatos": ["DE LUCAS COVES, MARIA VICTORIA", "FABREGAT PUIGGALI, JOSEP", "FONCILLAS SOLER, JOAN MARIA", "PLANDOLIT ARUMI, JOAN", "RAFOLS CASTELLVI, PERE", "RAMIREZ MARTINEZ, MA. ASUNCION", "TRIGAS LOPEZ, TERESA"]}, {"pdf": "BARCELONA DTE. 05", "panel": "BARCELONA DTE. 05", "exacto": true, "vacantes": 5, "candidatos": ["MOYA FOLCH, CARMEN", "SERRANO RASERO, INMACULADA", "SOLANS NAVARRO, ANTONI", "VIDAL VALLDEPERAS, ELISENDA"]}, {"pdf": "BARCELONA DTE. 06", "panel": "BARCELONA DTE. 06", "exacto": true, "vacantes": 4, "candidatos": ["FONT DE MORA CARRERAS, ROSA", "GALOFRE BATET, ELENA", "PUIG LLINARES, FERMI", "VILASECA NIUBO, ANTONI MARIA", "VALDIVIESO FONT, XAVIER"]}, {"pdf": "BARCELONA DTE. 07", "panel": "BARCELONA DTE. 07", "exacto": true, "vacantes": 3, "candidatos": ["PALOU RECHE, LUISA MARIA"]}, {"pdf": "BARCELONA DTE. 08", "panel": "BARCELONA DTE. 08", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BARCELONA DTE. 09", "panel": "BARCELONA DTE. 09", "exacto": true, "vacantes": 3, "candidatos": ["CASAS GUELL, JOAN"]}, {"pdf": "BARCELONA DTE. 10", "panel": "BARCELONA DTE. 10", "exacto": true, "vacantes": 4, "candidatos": ["CANO VERNET, ANTONI", "CORTADELLAS QUERALT, FRANCESC", "MONLEON NOVELLA, AMADOR", "SUMALLA LLOBERA, JORDI"]}, {"pdf": "BARCELONES", "panel": "BARCELONES", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "BERGUEDÀ", "panel": "BERGUEDA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CANTABRIA", "panel": "CANTABRIA", "exacto": true, "vacantes": 1, "candidatos": ["GOMEZ GONZALEZ, JOSE MANUEL"]}, {"pdf": "CASTILLA-LA MANCHA", "panel": "CASTILLA-LA MANCHA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CASTILLA-LEÓN", "panel": "CASTILLA Y LEON", "exacto": false, "vacantes": 5, "candidatos": ["ARCE MURILLO, PABLO", "HORGA MANZANAL, GREGORIO", "LARGO FERNANDEZ, FERNANDO"]}, {"pdf": "CERDANYA", "panel": "CERDANYA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "COM. VALENCIANA EXCEPTE CIUTAT", "panel": "COM. VALENCIANA (EXC.VALENCIA CIUTAT)", "exacto": false, "vacantes": 6, "candidatos": ["MARTIN SORIANO, JOSE"]}, {"pdf": "CONCA DE BARBERÀ", "panel": "CONCA DE BARBERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "EIVISSA I FORMENTERA", "panel": "EIVISSA I FORMENTERA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "EXTREMADURA", "panel": "EXTREMADURA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GALICIA", "panel": "GALICIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GARRAF", "panel": "GARRAF", "exacto": true, "vacantes": 2, "candidatos": ["CALVO COMELLA, JOSE MARIA", "MARTI FERRER, MA. ESPERANZA", "PEREZ PALANCO, EMILI"]}, {"pdf": "GIRONÈS", "panel": "GIRONES", "exacto": true, "vacantes": 4, "candidatos": ["SOLE TRISTAN, MARCEL"]}, {"pdf": "LA GARROTXA", "panel": "LA GARROTXA", "exacto": true, "vacantes": 2, "candidatos": ["BUSQUETS PICART, JOSEP"]}, {"pdf": "LA NOGUERA", "panel": "LA NOGUERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LA RIOJA", "panel": "LOGROÑO", "exacto": false, "vacantes": 2, "candidatos": ["AMUTIO PERAITA, MARIA ANGELES", "LASANTA ESTEBAN, RAQUEL"]}, {"pdf": "LA SELVA", "panel": "LA SELVA", "exacto": true, "vacantes": 3, "candidatos": ["JULIA ALSINA, BALTASAR"]}, {"pdf": "LAS PALMAS", "panel": "LAS PALMAS", "exacto": true, "vacantes": 2, "candidatos": ["GONZALEZ CABRERA, ISRAEL", "SANMARTIN Gª DE CASTRO, JOSE CARLOS"]}, {"pdf": "LES GARRIGUES", "panel": "LES GARRIGUES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LLUÇANÈS", "panel": "LLUÇANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MADRID (EXC. CIUDAD)", "panel": "MADRID (EXC. MADRID CIUDAD)", "exacto": false, "vacantes": 5, "candidatos": ["DEL CASTILLO GARCIA, CANDIDO", "GOMEZ LOPEZ, FRANCISCO", "SAINZ DE LA MAZA GIMENEZ, JUAN CARLOS", "TORO ALBA, FRANCISCO JAVIER"]}, {"pdf": "MADRID CIUDAD", "panel": "MADRID", "exacto": false, "vacantes": 6, "candidatos": ["DE GREGORIO MUÑOZ, FCO. JAVIER", "GESTOSO CARIDE, GONZALO", "GUERRA COLSA, INMACULADA", "TOVAL DEL SOL, RAFAEL"]}, {"pdf": "MALLORCA EXCEPTE PALMA", "panel": "MALLORCA (EXC. PALMA)", "exacto": false, "vacantes": 3, "candidatos": ["CAPO SERRA, JOSEP JOAN", "MAYRATA MASCARO, MIGUEL", "TOMAS MORLA, DAMIAN"]}, {"pdf": "MARESME", "panel": "MARESME", "exacto": true, "vacantes": 6, "candidatos": ["GUILLOT COLLS, CARLES", "PADROS GIRALT, JOSEP"]}, {"pdf": "MENORCA", "panel": "MENORCA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "MOIANÈS", "panel": "MOIANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MONTSIÀ", "panel": "MONTSIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MURCIA", "panel": "MURCIA", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "NAVARRA", "panel": "NAVARRA", "exacto": true, "vacantes": 2, "candidatos": ["CASADO FUENTES, EDUARDO"]}, {"pdf": "OSONA", "panel": "OSONA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "PAÍS VASCO", "panel": "PAIS VASCO", "exacto": true, "vacantes": 4, "candidatos": ["HURTADO DE MENDOZA VELASCO, JOSE", "MARTINEZ REGUERA, JORGE", "ULLOA SALDAÑA, OSCAR"]}, {"pdf": "PALLARS JUSSÀ", "panel": "PALLARS JUSSA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALLARS SOBIRÀ", "panel": "PALLARS SOBIRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALMA DE MALLORCA", "panel": "PALMA DE MALLORCA", "exacto": true, "vacantes": 4, "candidatos": ["BARCELO RIERA, FRANCISCO", "FERRER MOTOS, ENRIC", "VADELL GOMEZ, TONI"]}, {"pdf": "PLA D'ESTANY", "panel": "PLA DE L'ESTANY", "exacto": false, "vacantes": 2, "candidatos": ["TORRAS CONGOST, MARTIRIA", "TRIAS FERRER, JOAN"]}, {"pdf": "PLA D'URGELL", "panel": "PLA D'URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PRIORAT", "panel": "PRIORAT", "exacto": true, "vacantes": 1, "candidatos": ["CLUA LLOP, JOSEP"]}, {"pdf": "RIBERA D'EBRE", "panel": "RIBERA D'EBRE", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "RIPOLLES", "panel": "RIPOLLES", "exacto": true, "vacantes": 1, "candidatos": ["COSTA CAMBRAS, LLUIS"]}, {"pdf": "SANTA CRUZ DE TENERIFE", "panel": "SANTA CRUZ DE TENERIFE", "exacto": true, "vacantes": 4, "candidatos": ["CABA BETANCORT, MAR", "HERNANDEZ JIMENEZ, PABLO", "PEREZ PEREZ, SIXTO GREGORIO"]}, {"pdf": "SEGARRA", "panel": "SEGARRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "SEGRIÀ", "panel": "SEGRIA", "exacto": true, "vacantes": 4, "candidatos": ["PICANYOL TARRE, JOAN", "TRUJILLO PESTAÑA, MIQUEL"]}, {"pdf": "SOLSONÈS", "panel": "SOLSONES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "TARRAGONÈS", "panel": "TARRAGONES", "exacto": true, "vacantes": 3, "candidatos": ["GUINOVART PUJALS, JOAN MARIA", "HIJOS VALLVE, SANTIAGO"]}, {"pdf": "TERRA ALTA", "panel": "TERRA ALTA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "URGELL", "panel": "URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "VALÈNCIA CIUTAT", "panel": "VALENCIA (CIUTAT)", "exacto": true, "vacantes": 4, "candidatos": ["GONZALEZ RODRIGUEZ, JOSE MANUEL"]}, {"pdf": "VALL D'ARAN", "panel": "VALL D'ARAN", "exacto": true, "vacantes": 1, "candidatos": ["GARCIA SANTANACH, ROBERT"]}, {"pdf": "VALLÈS OCCIDENTAL", "panel": "VALLES OCCIDENTAL", "exacto": true, "vacantes": 7, "candidatos": ["SALINAS MOLINA, RAMON", "URGELES BORRAS, DELFI"]}, {"pdf": "VALLÈS ORIENTAL", "panel": "VALLES ORIENTAL", "exacto": true, "vacantes": 4, "candidatos": []}];
+var INFORME_77_DEFAULT=[{"pdf": "ALT CAMP", "panel": "ALT CAMP", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALT EMPORDÀ", "panel": "ALT EMPORDA", "exacto": true, "vacantes": 2, "candidatos": ["ISERN SERRA, RAMON"]}, {"pdf": "ALT PENEDÈS", "panel": "ALT PENEDES", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ALT URGELL", "panel": "ALT URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ALTA RIBAGORÇA", "panel": "ALTA RIBAGORÇA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "ANDALUCIA (ALM GRA JAE MAL)", "panel": "ANDALUCIA (ALM,GRA,JAE,MAL)", "exacto": true, "vacantes": 5, "candidatos": ["CABRERA CRUZ, ISIDRO", "MARTINEZ GARCIA, MARCELO", "RUBI CASTILLO, FRANCISCO", "VANEGAS LOPEZ, JORGE JUAN"]}, {"pdf": "ANDALUCIA (HUE COR CAD SEV)", "panel": "ANDALUCIA (HUE,COR,CAD,SEV)", "exacto": true, "vacantes": 5, "candidatos": ["CODER GALLEGO, ELISA", "ESPINOSA GARCIA, JUAN CARLOS", "GONZALEZ MUÑOZ, JOSE LUIS", "IGLESIAS BALAGUER, JUAN JOSE", "VAZQUEZ PAVON, JUAN"]}, {"pdf": "ANDALUCIA SEVILLA CIUDAD", "panel": "ANDALUCIA (SEVILLA CIUDAD)", "exacto": true, "vacantes": 3, "candidatos": ["CORTES LOPEZ, CARLOS JAVIER", "LOPEZ RIVERA, MANUEL", "RUBIALES ALVAREZ-DARDET, FERNANDO"]}, {"pdf": "ANOIA", "panel": "ANOIA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "ARAGÓN", "panel": "ARAGON", "exacto": true, "vacantes": 2, "candidatos": ["FLAMARIQUE BORREGO, FERNANDO", "GARCIA CABANES, JORGE"]}, {"pdf": "ASTURIAS", "panel": "ASTURIAS", "exacto": true, "vacantes": 2, "candidatos": ["COYA ALAEZ, LUIS", "LUQUE SAN JUAN, JAVIER"]}, {"pdf": "BAGES", "panel": "BAGES", "exacto": true, "vacantes": 2, "candidatos": ["ARNAN CASANOVAS, JORDI", "BERCH BOIX, JAUME"]}, {"pdf": "BAIX CAMP", "panel": "BAIX CAMP", "exacto": true, "vacantes": 2, "candidatos": ["OLIVE FERRAN, JAUME"]}, {"pdf": "BAIX EBRE", "panel": "BAIX EBRE", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BAIX EMPORDÀ", "panel": "BAIX EMPORDA", "exacto": true, "vacantes": 3, "candidatos": ["FORADADA CORTACANS, JOSEP", "MATEU PALE, RAFAEL", "VILOSA BUXO, ALBERT"]}, {"pdf": "BAIX LLOBREGAT", "panel": "BAIX LLOBREGAT", "exacto": true, "vacantes": 7, "candidatos": ["DOMINGUEZ MONLEON, MARIA PILAR", "MITJANS RIUS, JOSEP", "MONMANY SOLE, ANTONIO", "RIU VIDAL, EDUARD", "SIBERA ARESTE, JORDI"]}, {"pdf": "BAIX PENEDÈS", "panel": "BAIX PENEDES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "BARCELONA DTE. 01", "panel": "BARCELONA DTE. 01", "exacto": true, "vacantes": 1, "candidatos": ["PARIENTE LOPEZ, SUSANNA"]}, {"pdf": "BARCELONA DTE. 02", "panel": "BARCELONA DTE. 02", "exacto": true, "vacantes": 8, "candidatos": ["ARMENGOL RICHART, JOAN", "COSTA JAQUET, LLUIS", "FUENTES PIQUER, FRANCISCO", "MARIEGES ASENSIO, FERRAN", "PADRO BALSELLS, PERE", "POYATOS JORDA, XAVIER", "SIERRA MOYA, JAVIER"]}, {"pdf": "BARCELONA DTE. 03", "panel": "BARCELONA DTE. 03", "exacto": true, "vacantes": 3, "candidatos": ["CORRECHER CASTRO, JOSEP", "RUIZ CABALLERO, JOAN FRANCESC"]}, {"pdf": "BARCELONA DTE. 04", "panel": "BARCELONA DTE. 04", "exacto": true, "vacantes": 5, "candidatos": ["DE LUCAS COVES, MARIA VICTORIA", "FABREGAT PUIGGALI, JOSEP", "FONCILLAS SOLER, JOAN MARIA", "PLANDOLIT ARUMI, JOAN", "RAFOLS CASTELLVI, PERE", "RAMIREZ MARTINEZ, MA. ASUNCION", "TRIGAS LOPEZ, TERESA"]}, {"pdf": "BARCELONA DTE. 05", "panel": "BARCELONA DTE. 05", "exacto": true, "vacantes": 5, "candidatos": ["MOYA FOLCH, CARMEN", "SERRANO RASERO, INMACULADA", "SOLANS NAVARRO, ANTONI", "VIDAL VALLDEPERAS, ELISENDA"]}, {"pdf": "BARCELONA DTE. 06", "panel": "BARCELONA DTE. 06", "exacto": true, "vacantes": 4, "candidatos": ["FONT DE MORA CARRERAS, ROSA", "GALOFRE BATET, ELENA", "PUIG LLINARES, FERMI", "VILASECA NIUBO, ANTONI MARIA", "VALDIVIESO FONT, XAVIER"]}, {"pdf": "BARCELONA DTE. 07", "panel": "BARCELONA DTE. 07", "exacto": true, "vacantes": 3, "candidatos": ["PALOU RECHE, LUISA MARIA"]}, {"pdf": "BARCELONA DTE. 08", "panel": "BARCELONA DTE. 08", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "BARCELONA DTE. 09", "panel": "BARCELONA DTE. 09", "exacto": true, "vacantes": 3, "candidatos": ["CASAS GUELL, JOAN"]}, {"pdf": "BARCELONA DTE. 10", "panel": "BARCELONA DTE. 10", "exacto": true, "vacantes": 4, "candidatos": ["CANO VERNET, ANTONI", "CORTADELLAS QUERALT, FRANCESC", "MONLEON NOVELLA, AMADOR", "SUMALLA LLOBERA, JORDI"]}, {"pdf": "BARCELONES", "panel": "BARCELONES", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "BERGUEDÀ", "panel": "BERGUEDA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CANTABRIA", "panel": "CANTABRIA", "exacto": true, "vacantes": 1, "candidatos": ["GOMEZ GONZALEZ, JOSE MANUEL"]}, {"pdf": "CASTILLA-LA MANCHA", "panel": "CASTILLA-LA MANCHA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "CASTILLA-LEÓN", "panel": "CASTILLA Y LEON", "exacto": false, "vacantes": 5, "candidatos": ["ARCE MURILLO, PABLO", "HORGA MANZANAL, GREGORIO", "LARGO FERNANDEZ, FERNANDO"]}, {"pdf": "CERDANYA", "panel": "CERDANYA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "COM. VALENCIANA EXCEPTE CIUTAT", "panel": "COM. VALENCIANA (EXC.VALENCIA CIUTAT)", "exacto": false, "vacantes": 6, "candidatos": ["MARTIN SORIANO, JOSE"]}, {"pdf": "CONCA DE BARBERÀ", "panel": "CONCA DE BARBERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "EIVISSA I FORMENTERA", "panel": "EIVISSA I FORMENTERA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "EXTREMADURA", "panel": "EXTREMADURA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GALICIA", "panel": "GALICIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "GARRAF", "panel": "GARRAF", "exacto": true, "vacantes": 2, "candidatos": ["CALVO COMELLA, JOSE MARIA", "MARTI FERRER, MA. ESPERANZA", "PEREZ PALANCO, EMILI"]}, {"pdf": "GIRONÈS", "panel": "GIRONES", "exacto": true, "vacantes": 4, "candidatos": ["SOLE TRISTAN, MARCEL"]}, {"pdf": "LA GARROTXA", "panel": "LA GARROTXA", "exacto": true, "vacantes": 2, "candidatos": ["BUSQUETS PICART, JOSEP"]}, {"pdf": "LA NOGUERA", "panel": "LA NOGUERA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LA RIOJA", "panel": "LOGROÑO", "exacto": false, "vacantes": 2, "candidatos": ["AMUTIO PERAITA, MARIA ANGELES", "LASANTA ESTEBAN, RAQUEL"]}, {"pdf": "LA SELVA", "panel": "LA SELVA", "exacto": true, "vacantes": 3, "candidatos": ["JULIA ALSINA, BALTASAR"]}, {"pdf": "LAS PALMAS", "panel": "LAS PALMAS", "exacto": true, "vacantes": 2, "candidatos": ["GONZALEZ CABRERA, ISRAEL", "SANMARTIN Gª DE CASTRO, JOSE CARLOS"]}, {"pdf": "LES GARRIGUES", "panel": "LES GARRIGUES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "LLUÇANÈS", "panel": "LLUÇANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MADRID (EXC. CIUDAD)", "panel": "MADRID (EXC. MADRID CIUDAD)", "exacto": false, "vacantes": 5, "candidatos": ["DEL CASTILLO GARCIA, CANDIDO", "GOMEZ LOPEZ, FRANCISCO", "SAINZ DE LA MAZA GIMENEZ, JUAN CARLOS", "TORO ALBA, FRANCISCO JAVIER"]}, {"pdf": "MADRID CIUDAD", "panel": "MADRID", "exacto": false, "vacantes": 6, "candidatos": ["DE GREGORIO MUÑOZ, FCO. JAVIER", "GESTOSO CARIDE, GONZALO", "GUERRA COLSA, INMACULADA", "TOVAL DEL SOL, RAFAEL"]}, {"pdf": "MALLORCA EXCEPTE PALMA", "panel": "MALLORCA (EXC. PALMA)", "exacto": false, "vacantes": 3, "candidatos": ["CAPO SERRA, JOSEP JOAN", "MAYRATA MASCARO, MIGUEL", "TOMAS MORLA, DAMIAN"]}, {"pdf": "MARESME", "panel": "MARESME", "exacto": true, "vacantes": 6, "candidatos": ["GUILLOT COLLS, CARLES", "PADROS GIRALT, JOSEP"]}, {"pdf": "MENORCA", "panel": "MENORCA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "MOIANÈS", "panel": "MOIANES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MONTSIÀ", "panel": "MONTSIA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "MURCIA", "panel": "MURCIA", "exacto": true, "vacantes": 3, "candidatos": []}, {"pdf": "NAVARRA", "panel": "NAVARRA", "exacto": true, "vacantes": 2, "candidatos": ["CASADO FUENTES, EDUARDO"]}, {"pdf": "OSONA", "panel": "OSONA", "exacto": true, "vacantes": 2, "candidatos": []}, {"pdf": "PAÍS VASCO", "panel": "PAIS VASCO", "exacto": true, "vacantes": 4, "candidatos": ["HURTADO DE MENDOZA VELASCO, JOSE", "MARTINEZ REGUERA, JORGE", "ULLOA SALDAÑA, OSCAR"]}, {"pdf": "PALLARS JUSSÀ", "panel": "PALLARS JUSSA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALLARS SOBIRÀ", "panel": "PALLARS SOBIRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PALMA DE MALLORCA", "panel": "PALMA DE MALLORCA", "exacto": true, "vacantes": 4, "candidatos": ["BARCELO RIERA, FRANCISCO", "FERRER MOTOS, ENRIC", "VADELL GOMEZ, TONI"]}, {"pdf": "PLA D'ESTANY", "panel": "PLA DE L'ESTANY", "exacto": false, "vacantes": 2, "candidatos": ["TORRAS CONGOST, MARTIRIA", "TRIAS FERRER, JOAN"]}, {"pdf": "PLA D'URGELL", "panel": "PLA D'URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "PRIORAT", "panel": "PRIORAT", "exacto": true, "vacantes": 1, "candidatos": ["CLUA LLOP, JOSEP"]}, {"pdf": "RIBERA D'EBRE", "panel": "RIBERA D'EBRE", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "RIPOLLES", "panel": "RIPOLLES", "exacto": true, "vacantes": 1, "candidatos": ["COSTA CAMBRAS, LLUIS"]}, {"pdf": "SANTA CRUZ DE TENERIFE", "panel": "SANTA CRUZ DE TENERIFE", "exacto": true, "vacantes": 4, "candidatos": ["CABA BETANCORT, MAR", "HERNANDEZ JIMENEZ, PABLO", "PEREZ PEREZ, SIXTO GREGORIO"]}, {"pdf": "SEGARRA", "panel": "SEGARRA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "SEGRIÀ", "panel": "SEGRIA", "exacto": true, "vacantes": 4, "candidatos": ["PICANYOL TARRE, JOAN", "TRUJILLO PESTAÑA, MIQUEL"]}, {"pdf": "SOLSONÈS", "panel": "SOLSONES", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "TARRAGONÈS", "panel": "TARRAGONES", "exacto": true, "vacantes": 3, "candidatos": ["GUINOVART PUJALS, JOAN MARIA", "HIJOS VALLVE, SANTIAGO"]}, {"pdf": "TERRA ALTA", "panel": "TERRA ALTA", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "URGELL", "panel": "URGELL", "exacto": true, "vacantes": 1, "candidatos": []}, {"pdf": "VALÈNCIA CIUTAT", "panel": "VALENCIA (CIUTAT)", "exacto": true, "vacantes": 4, "candidatos": ["GONZALEZ RODRIGUEZ, JOSE MANUEL"]}, {"pdf": "VALL D'ARAN", "panel": "VALL D'ARAN", "exacto": true, "vacantes": 1, "candidatos": ["GARCIA SANTANACH, ROBERT"]}, {"pdf": "VALLÈS OCCIDENTAL", "panel": "VALLES OCCIDENTAL", "exacto": true, "vacantes": 7, "candidatos": ["SALINAS MOLINA, RAMON", "URGELES BORRAS, DELFI"]}, {"pdf": "VALLÈS ORIENTAL", "panel": "VALLES ORIENTAL", "exacto": true, "vacantes": 4, "candidatos": []}];
 
-var INFORME_RESUMEN_OFICIAL={total:77,sinCandidaturas:32,conCandidaturas:45,votacion:3,cubiertas:16,parciales:26,candidatosTotal:111};
+var INFORME_RESUMEN_OFICIAL={total:77,sinCandidaturas:32,conCandidaturas:45,votacion:3,cubiertas:16,parciales:26,candidatosTotal:111}; // referencia del PDF original, ya no se usa para pintar (se recalcula siempre en vivo)
+
+// ── Dataset ACTIVO del informe: por defecto el original, o el último PDF subido (persistido en localStorage) ──
+var INFORME_77_DATA=INFORME_77_DEFAULT;
+var INFORME_META={archivo:'2026_06_26_RESUMEN_CANDIDATURAS_RECIBIDAS.pdf',fecha:null};
+var INFORME_FILTRO='todas'; // todas | sin | votacion | cubiertaparcial
+function informe77CargarActivo(){
+  try{
+    var raw=localStorage.getItem('informe77_activo');
+    if(raw){
+      var parsed=JSON.parse(raw);
+      if(parsed&&Array.isArray(parsed.rows)&&parsed.rows.length){
+        INFORME_77_DATA=parsed.rows;
+        INFORME_META=parsed.meta||INFORME_META;
+      }
+    }
+  }catch(e){}
+}
+informe77CargarActivo();
+
+// ── Recalcula SIEMPRE el resumen a partir del dataset activo (no de un texto fijo del PDF) ──
+function informe77ComputeResumen(rows){
+  var sin=0,con=0,votacion=0,cubiertas=0,parciales=0,candTotal=0;
+  rows.forEach(function(r){
+    var n=r.candidatos.length,v=r.vacantes;
+    candTotal+=n;
+    if(n===0)sin++;
+    else{
+      con++;
+      if(n>v)votacion++;
+      else if(n>=v)cubiertas++;
+      else parciales++;
+    }
+  });
+  return {total:rows.length,sinCandidaturas:sin,conCandidaturas:con,votacion:votacion,cubiertas:cubiertas,parciales:parciales,candidatosTotal:candTotal};
+}
+
+// ── Master de nombres/alias (de todos los PDFs vistos hasta ahora) para reconocer demarcaciones en un PDF nuevo ──
+function informe77MasterAlias(){
+  var map={}; // panelNombre -> array de alias conocidos
+  INFORME_77_DEFAULT.forEach(function(r){
+    map[r.panel]=map[r.panel]||[]; 
+    [r.panel,r.pdf].forEach(function(a){if(map[r.panel].indexOf(a)===-1)map[r.panel].push(a);});
+  });
+  INFORME_77_DATA.forEach(function(r){
+    map[r.panel]=map[r.panel]||[];
+    [r.panel,r.pdf].forEach(function(a){if(map[r.panel].indexOf(a)===-1)map[r.panel].push(a);});
+  });
+  var flat=[];
+  Object.keys(map).forEach(function(panel){
+    map[panel].forEach(function(alias){flat.push({panel:panel,alias:alias,aliasNorm:stripAccents(alias)});});
+  });
+  flat.sort(function(a,b){return b.aliasNorm.length-a.aliasNorm.length;}); // más largos primero (evita matches parciales erróneos)
+  return flat;
+}
+
+// ── Parsear el texto extraído de un PDF nuevo y construir filas en el mismo formato que INFORME_77_DATA ──
+function informe77ParsePDFText(fullText){
+  var textNorm=stripAccents(fullText).replace(/\s+/g,' ');
+  // recortar todo lo que venga después de "RESUMEN" (el bloque final no nos interesa: recalculamos nosotros)
+  var idxResumen=textNorm.indexOf(' RESUMEN ');
+  if(idxResumen===-1)idxResumen=textNorm.lastIndexOf('RESUMEN');
+  if(idxResumen>500)textNorm=textNorm.slice(0,idxResumen);
+
+  var master=informe77MasterAlias();
+  var hits=[];
+  master.forEach(function(m){
+    // límites de palabra simples para evitar matches parciales dentro de otra palabra
+    var re=new RegExp('(^|[^A-Z])'+m.aliasNorm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^A-Z]|$)');
+    var mm=textNorm.match(re);
+    if(mm){
+      var pos=textNorm.indexOf(mm[0])+mm[1].length;
+      hits.push({pos:pos,end:pos+m.aliasNorm.length,panel:m.panel,alias:m.alias});
+    }
+  });
+  // quedarnos con un único hit por panel (el de menor posición, primer match)
+  var porPanel={};
+  hits.forEach(function(h){ if(!porPanel[h.panel]||h.pos<porPanel[h.panel].pos) porPanel[h.panel]=h; });
+  var ordenados=Object.keys(porPanel).map(function(k){return porPanel[k];}).sort(function(a,b){return a.pos-b.pos;});
+
+  var rows=[];
+  var candFragRe=/^([A-ZÀ-ÚÑÇ][A-ZÀ-ÚÑÇ\s\.\-'ª]{2,45}),\s*([A-ZÀ-ÚÑÇ][A-ZÀ-ÚÑÇ\s\.\-'ª]{1,40})$/;
+  for(var i=0;i<ordenados.length;i++){
+    var h=ordenados[i];
+    var siguiente=ordenados[i+1];
+    var contenido=textNorm.slice(h.end, siguiente?siguiente.pos:textNorm.length);
+    var vac=contenido.match(/\b(\d{1,2})\b/);
+    var vacantes=vac?parseInt(vac[1],10):0;
+    var candidatos=[];
+    contenido.split('¦').forEach(function(frag){
+      frag=frag.trim().replace(/\s+/g,' ');
+      var cm=frag.match(candFragRe);
+      if(cm){
+        var nombre=(cm[1].trim()+', '+cm[2].trim());
+        if(nombre.length<55)candidatos.push(nombre);
+      }
+    });
+    var exacto = stripAccents(h.alias)===stripAccents(h.panel);
+    rows.push({pdf:h.alias, panel:h.panel, exacto:exacto, vacantes:vacantes, candidatos:candidatos});
+  }
+  // añadir al final, marcadas, las demarcaciones del master que NO se encontraron en este PDF nuevo
+  var encontrados={}; rows.forEach(function(r){encontrados[r.panel]=true;});
+  var todosPaneles=[]; INFORME_77_DEFAULT.forEach(function(r){if(todosPaneles.indexOf(r.panel)===-1)todosPaneles.push(r.panel);});
+  todosPaneles.forEach(function(panel){
+    if(!encontrados[panel]) rows.push({pdf:panel,panel:panel,exacto:true,vacantes:0,candidatos:[],noEncontrado:true});
+  });
+  return {rows:rows, encontradas:ordenados.length, total:todosPaneles.length};
+}
+
+async function informe77SubirPDF(input){
+  var file=input.files&&input.files[0];
+  if(!file)return;
+  if(!window.pdfjsLib){alert('No se pudo cargar el lector de PDF. Comprueba tu conexión e inténtalo de nuevo.');return;}
+  var btn=document.getElementById('informe77-upload-status');
+  if(btn)btn.textContent='Leyendo PDF…';
+  try{
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    var buf=await file.arrayBuffer();
+    var pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    var fullText='';
+    for(var p=1;p<=pdf.numPages;p++){
+      var page=await pdf.getPage(p);
+      var content=await page.getTextContent();
+      var prev=null, pageText='';
+      content.items.forEach(function(it){
+        var x=it.transform[4], y=it.transform[5];
+        if(prev){
+          var mismaLinea=Math.abs(y-prev.y)<3;
+          var gapX=x-(prev.x+(prev.w||0));
+          pageText += (!mismaLinea||gapX>8) ? ' ¦ ' : ' ';
+        }
+        pageText+=it.str;
+        prev={x:x,y:y,w:it.width||0};
+      });
+      fullText+=' ¦ '+pageText;
+    }
+    var resultado=informe77ParsePDFText(fullText);
+    if(resultado.encontradas<10){
+      alert('Solo se han podido identificar '+resultado.encontradas+' demarcaciones en ese PDF. Puede que el formato sea muy distinto al habitual. Revisa el archivo — no se ha sustituido el informe actual.');
+      if(btn)btn.textContent='';
+      input.value='';
+      return;
+    }
+    INFORME_77_DATA=resultado.rows;
+    INFORME_META={archivo:file.name, fecha:new Date().toLocaleString('es')};
+    try{localStorage.setItem('informe77_activo', JSON.stringify({rows:INFORME_77_DATA, meta:INFORME_META}));}catch(e){}
+    INFORME_FILTRO='todas';
+    renderInforme77();
+    alert('Informe actualizado: '+resultado.encontradas+' de '+resultado.total+' demarcaciones reconocidas de «'+file.name+'». El resumen y el recuento se han recalculado.');
+  }catch(err){
+    alert('No se ha podido leer el PDF: '+(err&&err.message?err.message:err));
+  }finally{
+    if(btn)btn.textContent='';
+    input.value='';
+  }
+}
+function informe77RestaurarOriginal(){
+  if(!confirm('¿Volver al informe original (el primero que subiste) y descartar la última actualización?'))return;
+  try{localStorage.removeItem('informe77_activo');}catch(e){}
+  INFORME_77_DATA=INFORME_77_DEFAULT;
+  INFORME_META={archivo:'2026_06_26_RESUMEN_CANDIDATURAS_RECIBIDAS.pdf',fecha:null};
+  INFORME_FILTRO='todas';
+  renderInforme77();
+}
+function informe77SetFiltro(f){ INFORME_FILTRO=f; renderInforme77(); }
 
 function informe77NuestrosCandidatos(panelNombre){
   // Nombres de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
@@ -1075,10 +1240,23 @@ function informe77NuestrosCandidatos(panelNombre){
 function renderInforme77(){
   var wrap=document.getElementById('informe-77-demarcaciones');
   if(!wrap)return;
-  var R=INFORME_RESUMEN_OFICIAL;
+  var R=informe77ComputeResumen(INFORME_77_DATA);
   var diffsNombre=INFORME_77_DATA.filter(function(r){return !r.exacto;});
   var haySociosReales=(contacts&&contacts.length>0);
   var html='';
+
+  // ── Cabecera: gestión del informe (subir nuevo PDF / restaurar el original) ──
+  html+='<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:#f5f7fb;border:1px solid var(--gray3);border-radius:10px;padding:10px 14px;margin-bottom:16px;">'
+    +'<div style="font-size:11.5px;color:var(--gray5);">📄 Informe activo: <b style="color:var(--azul);">'+(INFORME_META.archivo||'—')+'</b>'+(INFORME_META.fecha?' · subido '+INFORME_META.fecha:' (informe inicial)')+'</div>'
+    +'<div style="display:flex;gap:8px;align-items:center;">'
+      +'<span id="informe77-upload-status" style="font-size:11px;color:var(--azul2);"></span>'
+      +'<label style="font-size:11.5px;background:var(--azul);color:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;">'
+        +'<i class="ti ti-upload"></i> Subir Candidaturas LaSoci (PDF)'
+        +'<input type="file" accept="application/pdf" style="display:none;" onchange="informe77SubirPDF(this)">'
+      +'</label>'
+      +(INFORME_META.fecha?'<button onclick="informe77RestaurarOriginal()" style="font-size:11px;padding:7px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;color:var(--gray5);">Restaurar original</button>':'')
+    +'</div>'
+  +'</div>';
 
   // ── Diagrama SVG con conectores curvos (estilo esquema de tablas) ──
   html+='<style>.if77-svgwrap{overflow-x:auto;margin-bottom:8px;}.if77-svgwrap svg{display:block;min-width:760px;}</style>';
@@ -1148,25 +1326,44 @@ function renderInforme77(){
       : '<b>⏳ Aún no hay datos cargados del panel</b> para cruzar candidatos — se muestran solo los del PDF. Abre esta pestaña con los datos ya sincronizados para ver el cruce en rojo.')
     +'</div>';
 
+  // ── Filtros (con recuento de la selección) ──
+  var filtros=[
+    {k:'todas', l:'Todas', n:R.total, c:'#0C3470'},
+    {k:'sin', l:'Sin candidaturas', n:R.sinCandidaturas, c:'#b52a2a'},
+    {k:'votacion', l:'En votación', n:R.votacion, c:'#d97706'},
+    {k:'cubiertaparcial', l:'Cubierta o parcial', n:(R.cubiertas+R.parciales), c:'#3a7bd5'}
+  ];
+  html+='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">';
+  filtros.forEach(function(f){
+    var activo=(INFORME_FILTRO===f.k);
+    html+='<button onclick="informe77SetFiltro(\''+f.k+'\')" style="font-size:11.5px;padding:7px 13px;border-radius:99px;cursor:pointer;font-weight:600;border:1px solid '+(activo?f.c:'var(--gray3)')+';background:'+(activo?f.c:'#fff')+';color:'+(activo?'#fff':f.c)+';">'+f.l+' · '+f.n+'</button>';
+  });
+  html+='</div>';
+
   // ── Controles ──
   html+='<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px;">'
     +'<button onclick="informe77ToggleAll(true)" style="font-size:11px;padding:6px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;">Expandir todas</button>'
     +'<button onclick="informe77ToggleAll(false)" style="font-size:11px;padding:6px 12px;border:1px solid var(--gray3);border-radius:8px;background:#fff;cursor:pointer;">Contraer todas</button>'
     +'</div>';
 
-  // ── Listado de demarcaciones ──
+  // ── Listado de demarcaciones (respeta el filtro activo) ──
   html+='<div id="informe77-list">';
+  var mostradas=0;
   INFORME_77_DATA.forEach(function(r,i){
     var n=r.candidatos.length, v=r.vacantes;
-    var estado, estadoCol;
-    if(n===0){estado='Sin candidaturas';estadoCol='#b52a2a';}
-    else if(n>v){estado='En votación';estadoCol='#d97706';}
-    else if(n>=v){estado='Cubierta';estadoCol='#1D9E75';}
-    else{estado='Parcial';estadoCol='#3a7bd5';}
+    var estado, estadoCol, catFiltro;
+    if(n===0){estado='Sin candidaturas';estadoCol='#b52a2a';catFiltro='sin';}
+    else if(n>v){estado='En votación';estadoCol='#d97706';catFiltro='votacion';}
+    else if(n>=v){estado='Cubierta';estadoCol='#1D9E75';catFiltro='cubiertaparcial';}
+    else{estado='Parcial';estadoCol='#3a7bd5';catFiltro='cubiertaparcial';}
+
+    if(INFORME_FILTRO!=='todas'&&catFiltro!==INFORME_FILTRO)return; // no coincide con el filtro activo: no se pinta
+    mostradas++;
 
     var nombreHtml = r.exacto
       ? '<span>'+r.panel+'</span>'
       : '<span>'+r.panel+'</span> <span style="color:#b52a2a;font-weight:700;" title="Nombre según el PDF de LaSoci">／ '+r.pdf.trim()+'</span>';
+    if(r.noEncontrado)nombreHtml+=' <span style="color:#d97706;font-weight:700;font-size:10px;" title="No se ha encontrado esta demarcación en el último PDF subido">⚠ no está en el último PDF</span>';
 
     var nuestrosObj=informe77NuestrosCandidatos(r.panel);
     var nuestrosList=nuestrosObj.list, nuestrosSet=nuestrosObj.set;
@@ -1231,6 +1428,9 @@ function renderInforme77(){
       +'</div>'
     +'</div>';
   });
+  if(mostradas===0){
+    html+='<div style="text-align:center;padding:24px;color:var(--gray4);font-size:12.5px;">No hay demarcaciones que coincidan con este filtro.</div>';
+  }
   html+='</div>';
 
   wrap.innerHTML=html;
@@ -1238,14 +1438,18 @@ function renderInforme77(){
 function informe77Toggle(i){
   var body=document.getElementById('informe77-body-'+i);
   var arrow=document.getElementById('informe77-arrow-'+i);
+  if(!body||!arrow)return;
   var open=body.style.display==='block';
   body.style.display=open?'none':'block';
   arrow.style.transform=open?'rotate(0deg)':'rotate(90deg)';
 }
 function informe77ToggleAll(open){
   INFORME_77_DATA.forEach(function(r,i){
-    document.getElementById('informe77-body-'+i).style.display=open?'block':'none';
-    document.getElementById('informe77-arrow-'+i).style.transform=open?'rotate(90deg)':'rotate(0deg)';
+    var body=document.getElementById('informe77-body-'+i);
+    var arrow=document.getElementById('informe77-arrow-'+i);
+    if(!body||!arrow)return; // fila oculta por el filtro activo: se ignora
+    body.style.display=open?'block':'none';
+    arrow.style.transform=open?'rotate(90deg)':'rotate(0deg)';
   });
 }
 
@@ -1255,7 +1459,11 @@ function toggleAcc2(id){
   var arrow=document.getElementById(id+'-arrow');
   var open=body.classList.contains('open');
   if(open){body.classList.remove('open');arrow.style.transform='rotate(0deg)';}
-  else{body.classList.add('open');arrow.style.transform='rotate(180deg)';}
+  else{
+    body.classList.add('open');arrow.style.transform='rotate(180deg)';
+    // El INFORME de candidaturas siempre se repinta al abrir, para reflejar cualquier edición reciente en RECTORES
+    if(id==='acc-informe'){try{renderInforme77();}catch(e){}}
+  }
 }
 function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('open');}
 document.addEventListener('click',function(e){if(!document.getElementById('langSwitcher').contains(e.target))document.getElementById('langDropdown').classList.remove('open');});

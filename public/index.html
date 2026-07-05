@@ -805,7 +805,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
         </div>
         <button class="btn btn-sm" onclick="syncNow()"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar ahora</button>
         <button class="btn btn-sm" style="color:var(--red);margin-left:8px;" onclick="resetLocalCache()"><i class="ti ti-trash" aria-hidden="true"></i> Limpiar caché local</button>
-        <span id="syncStatus" style="font-size:11px;color:var(--gray5);margin-left:8px;"></span>
+        <span id="syncStatus" role="status" aria-live="polite" style="font-size:11px;color:var(--gray5);margin-left:8px;"></span>
       </div>
       <div class="card" style="margin-bottom:10px;">
         <div class="card-title">Importar Excel</div>
@@ -836,10 +836,10 @@ tr:hover .id-gray { color: var(--gray5) !important; }
   </div>
 </div>
 
-<div class="status-bar"><div class="status-dot" id="statusDot"></div><span id="statusText">Iniciando...</span></div>
+<div class="status-bar" role="status" aria-live="polite"><div class="status-dot" id="statusDot" aria-hidden="true"></div><span id="statusText">Iniciando...</span></div>
 
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-top"><h2 id="modalTitle">Nuevo rector</h2><button class="btn-icon" onclick="closeModal()" aria-label="Cerrar"><i class="ti ti-x" aria-hidden="true"></i></button></div>
     <div class="modal-body">
       <div class="fgrid">
@@ -889,7 +889,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 </div>
 
 <div class="modal-bg" id="censoModal" onclick="if(event.target===this)closeCensoModal()">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="censoModalTitle">
     <div class="modal-top"><h2 id="censoModalTitle">Editar registro del censo</h2><button class="btn-icon" onclick="closeCensoModal()" aria-label="Cerrar"><i class="ti ti-x" aria-hidden="true"></i></button></div>
     <div class="modal-body">
       <div class="fgrid">
@@ -911,7 +911,7 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 </div>
 
 <div class="ficha-bg" id="ficha" onclick="if(event.target===this)closeFicha()">
-  <div class="ficha">
+  <div class="ficha" role="dialog" aria-modal="true" aria-labelledby="fichaNombre">
     <div class="ficha-top">
       <div class="ficha-avatar" id="fichaAvatar"></div>
       <div class="ficha-info"><h3 id="fichaNombre"></h3><p id="fichaMeta"></p></div>
@@ -944,20 +944,20 @@ tr:hover .id-gray { color: var(--gray5) !important; }
 </div>
 
 <div class="notas-popup-bg" id="notasPopup" onclick="if(event.target===this)closeNotasPopup()">
-  <div class="notas-popup">
+  <div class="notas-popup" role="dialog" aria-modal="true" aria-labelledby="notasPopupTitle">
     <div class="notas-popup-top"><h3 id="notasPopupTitle">Notas</h3><button onclick="closeNotasPopup()" aria-label="Cerrar notas" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;"><i class="ti ti-x" aria-hidden="true" style="font-size:15px;"></i></button></div>
     <div class="notas-popup-body" id="notasPopupBody" style="white-space:pre-wrap;font-size:13px;color:var(--gray6);line-height:1.6;"></div>
   </div>
 </div>
 
 <div class="notas-popup-bg" id="candidatosPopup" onclick="if(event.target===this)closeCandidatosPopup()">
-  <div class="notas-popup" style="max-width:560px;">
+  <div class="notas-popup" style="max-width:560px;" role="dialog" aria-modal="true" aria-labelledby="candidatosPopupSub">
     <div class="notas-popup-top" style="align-items:flex-start;background:linear-gradient(135deg,#0C3470,#1a4fa0);">
       <div style="min-width:0;flex:1;">
         <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.3;text-transform:uppercase;letter-spacing:.4px;">Candidatos presentados</div>
         <div id="candidatosPopupSub" style="font-size:15px;font-weight:700;color:rgba(255,255,255,.92);margin-top:5px;"></div>
       </div>
-      <button onclick="closeCandidatosPopup()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;flex-shrink:0;"><i class="ti ti-x" style="font-size:15px;" aria-hidden="true"></i></button>
+      <button onclick="closeCandidatosPopup()" aria-label="Cerrar" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 8px;color:#fff;cursor:pointer;flex-shrink:0;"><i class="ti ti-x" style="font-size:15px;" aria-hidden="true"></i></button>
     </div>
     <div style="padding:10px 1.25rem 8px;border-bottom:1px solid var(--gray2);font-size:12px;font-weight:700;color:var(--gray5);text-transform:uppercase;letter-spacing:.4px;text-align:center;">Candidatos presentados por territorio</div>
     <div class="notas-popup-body" id="candidatosPopupBody" style="font-size:13px;color:var(--gray6);line-height:1.5;"></div>
@@ -1482,6 +1482,37 @@ function informe77ToggleAll(open){
 }
 
 
+// ── Fase 3 accesibilidad: atrapar el foco dentro de un modal mientras está abierto ──
+var _ftReturnEl=null, _ftKeyHandler=null;
+function trapFocusOpen(containerId, closeFn){
+  var container=document.getElementById(containerId);
+  if(!container)return;
+  _ftReturnEl=document.activeElement;
+  function focosVisibles(){
+    return Array.prototype.filter.call(
+      container.querySelectorAll('button,a[href],input,select,textarea,[tabindex]'),
+      function(el){return el.offsetParent!==null && !el.disabled && el.getAttribute('tabindex')!=='-1';}
+    );
+  }
+  setTimeout(function(){ var f=focosVisibles(); if(f.length)f[0].focus(); else container.focus(); },30);
+  if(_ftKeyHandler)document.removeEventListener('keydown',_ftKeyHandler);
+  _ftKeyHandler=function(e){
+    if(e.key==='Escape'){ e.preventDefault(); if(closeFn)closeFn(); return; }
+    if(e.key!=='Tab')return;
+    var f=focosVisibles();
+    if(!f.length)return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  };
+  document.addEventListener('keydown',_ftKeyHandler);
+}
+function trapFocusClose(){
+  if(_ftKeyHandler){document.removeEventListener('keydown',_ftKeyHandler);_ftKeyHandler=null;}
+  if(_ftReturnEl&&_ftReturnEl.focus)_ftReturnEl.focus();
+  _ftReturnEl=null;
+}
+
 function toggleAcc2(id){
   var body=document.getElementById(id+'-body');
   var arrow=document.getElementById(id+'-arrow');
@@ -1617,6 +1648,7 @@ function openNotasPopup(texto,titulo){
     document.getElementById('notasPopupBody').textContent=texto;
     if(titulo&&document.getElementById('notasPopupTitle'))document.getElementById('notasPopupTitle').textContent=titulo||'Notas';
     document.getElementById('notasPopup').classList.add('open');
+    trapFocusOpen('notasPopup',closeNotasPopup);
   });
 }
 function checkNotasAuth(callback){
@@ -1639,7 +1671,7 @@ function checkNotasAuth(callback){
   document.getElementById('notas-pwd-btn').onclick=tryPwd;
   document.getElementById('notas-pwd').onkeydown=function(e){if(e.key==='Enter')tryPwd();};
 }
-function closeNotasPopup(){document.getElementById('notasPopup').classList.remove('open');}
+function closeNotasPopup(){document.getElementById('notasPopup').classList.remove('open');trapFocusClose();}
 
 function _inferirSexo(nombreCompleto){
   var full=String(nombreCompleto||'').trim().toUpperCase();
@@ -1781,8 +1813,9 @@ function verCandidatos(ccaa){
       }).join('');
   }
   document.getElementById('candidatosPopup').classList.add('open');
+  trapFocusOpen('candidatosPopup',closeCandidatosPopup);
 }
-function closeCandidatosPopup(){document.getElementById('candidatosPopup').classList.remove('open');}
+function closeCandidatosPopup(){document.getElementById('candidatosPopup').classList.remove('open');trapFocusClose();}
 
 var contacts=[],cuotas=[],editId=null,contactsById={},fichaId=null,page=1,chT=null,chE=null,chC=null;
 
@@ -2456,8 +2489,9 @@ function openModalWithContact(c){
     notasEl.dataset.rawNotas=c.NOTAS;
   } else if(notasEl){notasEl.value='';notasEl.placeholder='Notas sobre este rector...';notasEl.style.borderColor='';notasEl.readOnly=false;notasEl.dataset.locked='';}
   document.getElementById('modal').classList.add('open');
+  trapFocusOpen('modal',closeModal);
 }
-function closeModal(){editId=null;document.getElementById('modal').classList.remove('open');}
+function closeModal(){editId=null;document.getElementById('modal').classList.remove('open');trapFocusClose();}
 
 async function saveContact(){
   const apellidos=document.getElementById('f-apellidos').value.trim();
@@ -2504,8 +2538,9 @@ function openFichaDirecto(id){
   document.getElementById('fichaMeta').textContent=[c.TERRITORIO,c.CCAA].filter(Boolean).join(' · ')||'Sin datos';
   document.getElementById('fichaDatos').innerHTML='<div class="ff"><span class="flbl">Email</span><span class="fval" style="color:var(--azul2);">'+(c.EMAIL||'-')+'</span></div><div class="ff"><span class="flbl">Móvil</span><span class="fval">'+(c.MOVIL||'-')+'</span></div><div class="ff"><span class="flbl">Idioma</span><span class="fval">'+(c.IDIOMA||'-')+'</span></div><div class="ff"><span class="flbl">Estado</span><span class="fval"><span class="badge '+(esActivo(c.ESTADO)?'b-activo':'b-inactivo')+'">'+c.ESTADO+'</span></span></div><div class="ff"><span class="flbl">Afín</span><span class="fval"><span class="badge '+(esAfin(c.AFINES)?'b-afin':'b-noafin')+'">'+(c.AFINES||'No')+'</span></span></div><div class="ff"><span class="flbl">ID</span><span class="fval" style="font-family:var(--mono);font-size:12px;">'+(c.ID||'-')+'</span></div>';
   renderNotas(c);document.getElementById('nuevaNota').value='';document.getElementById('ficha').classList.add('open');
+  trapFocusOpen('ficha',closeFicha);
 }
-function closeFicha(){document.getElementById('ficha').classList.remove('open');fichaId=null;_notasUnlocked=false;}
+function closeFicha(){document.getElementById('ficha').classList.remove('open');fichaId=null;_notasUnlocked=false;trapFocusClose();}
 function getNotas(c){
   if(!c.NOTAS)return[];
   try{
@@ -4289,8 +4324,9 @@ function censoOpenEdit(_row){
   var sugerencias=[...new Set(censoData.filter(function(x){return x.TERRITORIO_ACTUAL===c.TERRITORIO_ACTUAL&&x.NUEVO_TERRITORIO_PARA_RECTOR;}).map(function(x){return x.NUEVO_TERRITORIO_PARA_RECTOR;}))];
   dl.innerHTML=sugerencias.map(function(s){return '<option value="'+s+'">';}).join('');
   document.getElementById('censoModal').classList.add('open');
+  trapFocusOpen('censoModal',closeCensoModal);
 }
-function closeCensoModal(){ document.getElementById('censoModal').classList.remove('open'); _censoEditRow=null; }
+function closeCensoModal(){ document.getElementById('censoModal').classList.remove('open'); _censoEditRow=null; trapFocusClose(); }
 // Recalcula, a partir de TODO el censo, cuántos socios quedan asignados a cada "nuevo territorio"
 // y cuántos quedan en el territorio actual tras las segregaciones. Se ejecuta al guardar.
 function censoRecalcular(censoArr){

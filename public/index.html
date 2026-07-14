@@ -1243,6 +1243,86 @@ function informe77BorrarVersion(key){
   }
 }
 function informe77SetFiltro(f){ INFORME_FILTRO=f; renderInforme77(); }
+// ── Comprobación: ¿el candidato presentado está censado en ESE MISMO territorio? ──
+async function informe77ComprobarCenso(){
+  var btn=document.getElementById('informe77-censo-btn');
+  if(btn){btn.disabled=true;btn.textContent='Cargando censo…';}
+  try{
+    if(!censoLoaded){
+      const r=await fetch(SCRIPT_URL+'?action=censo&t='+Date.now(),{cache:'no-store'});
+      const d=await r.json();
+      if(!d.ok){alert('No se pudo cargar el Censo: '+(d.error||'error desconocido'));return;}
+      censoData=d.data||[];
+      censoLoaded=true;
+    }
+    if(btn)btn.textContent='Comprobando…';
+    var distintos=[], noEncontrados=[], ok=0;
+    INFORME_77_DATA.forEach(function(r){
+      r.candidatos.forEach(function(cNombre){
+        var nn=stripAccents(cNombre);
+        var candidatosApellidoNombre=nn.split(',');
+        var apNorm=(candidatosApellidoNombre[0]||'').trim();
+        var noNorm=(candidatosApellidoNombre[1]||'').trim();
+        var matches=censoData.filter(function(s){
+          var sApNorm=stripAccents(s.APELLIDOS||'');
+          var sNoNorm=stripAccents(s.NOMBRE||'');
+          return sApNorm===apNorm && (sNoNorm===noNorm || sNoNorm.indexOf(noNorm)===0 || noNorm.indexOf(sNoNorm)===0);
+        });
+        if(!matches.length){
+          noEncontrados.push({panel:r.panel, nombre:cNombre});
+          return;
+        }
+        var efectivos=matches.map(function(s){return (s.NUEVO_TERRITORIO_PARA_RECTOR||s.TERRITORIO_ACTUAL||'').trim();});
+        var coincide=efectivos.some(function(t){return stripAccents(t)===stripAccents(r.panel);});
+        if(coincide){ok++;}
+        else{
+          distintos.push({panel:r.panel, nombre:cNombre, censado:efectivos.filter(Boolean).join(' / ')||'(sin territorio en el censo)'});
+        }
+      });
+    });
+    informe77MostrarInformeCenso(ok, distintos, noEncontrados);
+  }catch(e){
+    alert('Error al comprobar el censo: '+(e&&e.message?e.message:e));
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-clipboard-check" aria-hidden="true"></i> Comprobar censo por territorio';}
+  }
+}
+function informe77MostrarInformeCenso(ok, distintos, noEncontrados){
+  var sub=document.getElementById('candidatosPopupSub');
+  if(sub)sub.textContent='Comprobación de censo por territorio';
+  var body=document.getElementById('notasPopupBody'); // reutilizamos el popup genérico de texto -> mejor construimos uno propio
+  var html='<div style="display:flex;flex-direction:column;gap:14px;">';
+  html+='<div style="display:flex;gap:10px;flex-wrap:wrap;">'
+    +'<div style="flex:1;min-width:120px;background:#eafaf0;border:1px solid #bfe8cf;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#1e7a42;">'+ok+'</div><div style="font-size:10px;color:#1e7a42;">Censados en su territorio</div></div>'
+    +'<div style="flex:1;min-width:120px;background:#fff7e6;border:1px solid #f0dba0;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#8a5a00;">'+distintos.length+'</div><div style="font-size:10px;color:#8a5a00;">Censados en OTRO territorio</div></div>'
+    +'<div style="flex:1;min-width:120px;background:#fde8e8;border:1px solid #f0b8b8;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#b52a2a;">'+noEncontrados.length+'</div><div style="font-size:10px;color:#b52a2a;">No encontrados en el censo</div></div>'
+  +'</div>';
+  if(distintos.length){
+    html+='<div><div style="font-size:11px;font-weight:700;color:#8a5a00;text-transform:uppercase;margin-bottom:6px;">⚠ Presentados en un territorio distinto al censado</div>'
+      +'<div style="display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto;">'+distintos.map(function(d){
+        return '<div style="background:#fff7e6;border:1px solid #f0dba0;border-radius:8px;padding:7px 10px;font-size:12px;">'
+          +'<b style="color:var(--gray6);">'+d.nombre+'</b><br>'
+          +'<span style="color:var(--gray5);">Presentado en: <b>'+d.panel+'</b> · Censado en: <b>'+d.censado+'</b></span>'
+        +'</div>';
+      }).join('')+'</div></div>';
+  }
+  if(noEncontrados.length){
+    html+='<div><div style="font-size:11px;font-weight:700;color:#b52a2a;text-transform:uppercase;margin-bottom:6px;">✖ No encontrados en el censo</div>'
+      +'<div style="display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto;">'+noEncontrados.map(function(d){
+        return '<div style="background:#fde8e8;border:1px solid #f0b8b8;border-radius:8px;padding:7px 10px;font-size:12px;">'
+          +'<b style="color:var(--gray6);">'+d.nombre+'</b> <span style="color:var(--gray5);">— '+d.panel+'</span>'
+        +'</div>';
+      }).join('')+'</div></div>';
+  }
+  if(!distintos.length && !noEncontrados.length){
+    html+='<div style="text-align:center;padding:20px;color:#1e7a42;font-size:13px;"><i class="ti ti-circle-check" style="font-size:28px;display:block;margin-bottom:8px;" aria-hidden="true"></i>Todos los candidatos presentados están censados en su mismo territorio.</div>';
+  }
+  html+='</div>';
+  document.getElementById('candidatosPopupBody').innerHTML=html;
+  document.getElementById('candidatosPopup').classList.add('open');
+  trapFocusOpen('candidatosPopup',closeCandidatosPopup);
+}
+
 function informe77TogglePendientes(){
   var body=document.getElementById('informe77-pend-body');
   var arrow=document.getElementById('informe77-pend-arrow');
@@ -1413,6 +1493,9 @@ function renderInforme77(){
     +'</div>'
     +'<div style="display:flex;gap:8px;align-items:center;">'
       +'<span id="informe77-upload-status" style="font-size:11px;color:var(--azul2);"></span>'
+      +'<button id="informe77-censo-btn" onclick="informe77ComprobarCenso()" style="font-size:11.5px;padding:7px 14px;border:1px solid var(--azul);border-radius:8px;background:#fff;color:var(--azul);cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;">'
+        +'<i class="ti ti-clipboard-check" aria-hidden="true"></i> Comprobar censo por territorio'
+      +'</button>'
       +'<label style="font-size:11.5px;background:var(--azul);color:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;">'
         +'<i class="ti ti-upload" aria-hidden="true"></i> Subir Candidaturas LaSoci (PDF)'
         +'<input type="file" accept="application/pdf" style="display:none;" onchange="informe77SubirPDF(this)">'

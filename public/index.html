@@ -1243,6 +1243,129 @@ function informe77BorrarVersion(key){
   }
 }
 function informe77SetFiltro(f){ INFORME_FILTRO=f; renderInforme77(); }
+function informe77TogglePendientes(){
+  var body=document.getElementById('informe77-pend-body');
+  var arrow=document.getElementById('informe77-pend-arrow');
+  var head=document.getElementById('informe77-pend-head');
+  if(!body)return;
+  var open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  if(arrow)arrow.style.transform=open?'rotate(0deg)':'rotate(90deg)';
+  if(head)head.setAttribute('aria-expanded',open?'false':'true');
+}
+
+function informe77CoincideAprox(nombre,listaNorm){
+  var nn=stripAccents(nombre);
+  for(var j=0;j<listaNorm.length;j++){
+    var o=listaNorm[j];
+    if(nn===o||nn.indexOf(o)===0||o.indexOf(nn)===0)return true;
+  }
+  return false;
+}
+
+// Territorios de Cataluña (para inferir CCAA cuando no hay ningún contacto previo en ese territorio)
+var INFORME77_TERRITORIOS_CATALUÑA=["ALT CAMP","ALT EMPORDA","ALT PENEDES","ALT URGELL","ALTA RIBAGORÇA","ANOIA","BAGES","BAIX CAMP","BAIX EBRE","BAIX EMPORDA","BAIX LLOBREGAT","BAIX PENEDES","BARCELONES","BARCELONA DTE. 01","BARCELONA DTE. 02","BARCELONA DTE. 03","BARCELONA DTE. 04","BARCELONA DTE. 05","BARCELONA DTE. 06","BARCELONA DTE. 07","BARCELONA DTE. 08","BARCELONA DTE. 09","BARCELONA DTE. 10","BERGUEDA","CERDANYA","CONCA DE BARBERA","GARRAF","GIRONES","LA GARROTXA","LA NOGUERA","LA SELVA","LES GARRIGUES","LLUÇANES","MARESME","MOIANES","MONTSIA","OSONA","PALLARS JUSSA","PALLARS SOBIRA","PLA DE L'ESTANY","PLA D'URGELL","PRIORAT","RIBERA D'EBRE","RIPOLLES","SEGARRA","SEGRIA","SOLSONES","TARRAGONES","TERRA ALTA","URGELL","VALL D'ARAN","VALLES OCCIDENTAL","VALLES ORIENTAL"];
+function informe77InferirCCAA(panelTerritorio){
+  var norm=stripAccents(panelTerritorio);
+  var existente=(contacts||[]).find(function(c){return stripAccents(c.TERRITORIO||'')===norm && c.CCAA;});
+  if(existente)return existente.CCAA;
+  if(INFORME77_TERRITORIOS_CATALUÑA.indexOf(panelTerritorio)!==-1)return 'CATALUÑA';
+  return '';
+}
+
+// Diferencias GLOBALES (todas las demarcaciones) entre el informe activo y RECTORES en vivo
+function informe77DiffGlobal(){
+  var faltantes=[], sobrantes=[];
+  INFORME_77_DATA.forEach(function(r){
+    var nuestrosObj=informe77NuestrosCandidatos(r.panel);
+    var nuestrosSetKeys=Object.keys(nuestrosObj.set);
+    var pdfNorm=r.candidatos.map(stripAccents);
+    r.candidatos.forEach(function(c){
+      if(!informe77CoincideAprox(c,nuestrosSetKeys)){
+        faltantes.push({panel:r.panel, nombre:c});
+      }
+    });
+    (contacts||[]).forEach(function(cont){
+      if(stripAccents(cont.TERRITORIO||'')!==stripAccents(r.panel))return;
+      if(String(cont.CANDIDATURA_PRESENTADA||'').trim().toUpperCase()!=='SI')return;
+      try{if(esFicticio(cont))return;}catch(e){}
+      var apNorm=stripAccents(cont.APELLIDOS||'');
+      if(/^NUMERO\s*\d+$/.test(apNorm))return;
+      var nombreCont=(String(cont.APELLIDOS||'').trim()+', '+String(cont.NOMBRE||'').trim()).replace(/^,\s*|,\s*$/g,'');
+      if(!nombreCont.trim())return;
+      if(!informe77CoincideAprox(nombreCont,pdfNorm)){
+        sobrantes.push({panel:r.panel, id:cont.ID, nombre:nombreCont});
+      }
+    });
+  });
+  return {faltantes:faltantes, sobrantes:sobrantes};
+}
+
+async function informe77AnadirCandidato(panelTerritorio, nombreCompleto, btn){
+  var partes=nombreCompleto.split(',');
+  var apellidos=(partes[0]||'').trim();
+  var nombre=(partes.slice(1).join(',')||'').trim();
+  var ccaa=informe77InferirCCAA(panelTerritorio);
+  var obj={ID:String(Date.now())+Math.floor(Math.random()*1000), APELLIDOS:apellidos, NOMBRE:nombre, TERRITORIO:panelTerritorio, IDIOMA:'ESPAÑOL', EMAIL:'', CCAA:ccaa, AFINES:'NO', MOVIL:'',
+    INTERES_RECTOR:'SI', CANDIDATURA_PRESENTADA:'SI', TIPO_ASOCIADO:'', TRATAMIENTO:'', SECCION:'', ESTADO:'PENDIENTE', NOTAS:''};
+  if(btn){btn.disabled=true;btn.textContent='Añadiendo…';}
+  try{
+    contacts.unshift(obj);
+    saveLocal();
+    await pushToSheet('add',obj);
+    renderAll();
+    renderInforme77();
+  }catch(e){
+    alert('No se ha podido añadir: '+(e&&e.message?e.message:e));
+  }
+}
+async function informe77AnadirTodosFaltantes(){
+  var diff=informe77DiffGlobal();
+  if(!diff.faltantes.length){alert('No hay candidatos pendientes de añadir.');return;}
+  if(!confirm('Se van a crear '+diff.faltantes.length+' fichas nuevas en RECTORES (Estado = PENDIENTE, Candidatura presentada = SÍ). La CCAA se rellena automáticamente cuando es posible; revísala después si queda vacía. ¿Continuar?'))return;
+  showSaving('Añadiendo '+diff.faltantes.length+' candidatos…');
+  try{
+    for(var i=0;i<diff.faltantes.length;i++){
+      var f=diff.faltantes[i];
+      var partes=f.nombre.split(',');
+      var apellidos=(partes[0]||'').trim();
+      var nombre=(partes.slice(1).join(',')||'').trim();
+      var ccaa=informe77InferirCCAA(f.panel);
+      var obj={ID:String(Date.now())+i+Math.floor(Math.random()*1000), APELLIDOS:apellidos, NOMBRE:nombre, TERRITORIO:f.panel, IDIOMA:'ESPAÑOL', EMAIL:'', CCAA:ccaa, AFINES:'NO', MOVIL:'',
+        INTERES_RECTOR:'SI', CANDIDATURA_PRESENTADA:'SI', TIPO_ASOCIADO:'', TRATAMIENTO:'', SECCION:'', ESTADO:'PENDIENTE', NOTAS:''};
+      contacts.unshift(obj);
+      await pushToSheet('add',obj);
+    }
+    saveLocal();renderAll();renderInforme77();setStatus('ok','Añadidos '+diff.faltantes.length+' candidatos nuevos');
+  }finally{hideSaving();}
+}
+async function informe77BorrarSobrante(id,btn){
+  if(btn){btn.disabled=true;btn.textContent='Borrando…';}
+  try{
+    var sid=String(id);
+    contacts=contacts.filter(function(c){return String(c.ID)!==sid;});
+    saveLocal();
+    await pushToSheet('delete',{ID:sid});
+    renderAll();
+    renderInforme77();
+  }catch(e){
+    alert('No se ha podido borrar: '+(e&&e.message?e.message:e));
+  }
+}
+async function informe77BorrarTodosSobrantes(){
+  var diff=informe77DiffGlobal();
+  if(!diff.sobrantes.length){alert('No hay fichas sobrantes para borrar.');return;}
+  if(!confirm('Se van a borrar '+diff.sobrantes.length+' fichas de RECTORES marcadas como "Candidatura presentada = SÍ" que no aparecen en el PDF activo. Esta acción no se puede deshacer. ¿Continuar?'))return;
+  showSaving('Borrando '+diff.sobrantes.length+' fichas…');
+  try{
+    for(var i=0;i<diff.sobrantes.length;i++){
+      var sid=String(diff.sobrantes[i].id);
+      contacts=contacts.filter(function(c){return String(c.ID)!==sid;});
+      await pushToSheet('delete',{ID:sid});
+    }
+    saveLocal();renderAll();renderInforme77();setStatus('ok','Borradas '+diff.sobrantes.length+' fichas');
+  }finally{hideSaving();}
+}
 
 function informe77NuestrosCandidatos(panelNombre){
   // Nombres de contactos con Candidatura presentada = SI en ese territorio (dato real del panel, en vivo)
@@ -1378,6 +1501,50 @@ function renderInforme77(){
       ? '<b>🔍 Comparación en ambos sentidos.</b> Se muestran los candidatos del PDF y los registrados en el panel (Candidatura presentada = SÍ) uno junto al otro. En <span style="color:#b52a2a;font-weight:700;">rojo</span>: el del PDF que no tiene ni una coincidencia aproximada en el panel, o el del panel que no aparece en el PDF.'
       : '<b>⏳ Aún no hay datos cargados del panel</b> para cruzar candidatos — se muestran solo los del PDF. Abre esta pestaña con los datos ya sincronizados para ver el cruce en rojo.')
     +'</div>';
+
+  // ── PENDIENTES: diferencias entre el informe activo y RECTORES en vivo ──
+  if(haySociosReales){
+    var _diff=informe77DiffGlobal();
+    html+='<div class="acc2-wrap" style="margin-bottom:14px;box-shadow:none;border:1px solid #f0dba0;">'
+      +'<div class="acc2-head" style="background:linear-gradient(135deg,#8a5a00,#b57a12);padding:12px 16px;" onclick="informe77TogglePendientes()" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();informe77TogglePendientes();}" tabindex="0" role="button" id="informe77-pend-head" aria-expanded="false" aria-controls="informe77-pend-body">'
+        +'<div class="acc2-title" style="font-size:12px;"><i class="ti ti-git-compare" aria-hidden="true"></i> PENDIENTES DE SINCRONIZAR CON RECTORES</div>'
+        +'<span style="color:#fff;font-size:11px;font-weight:700;">'+_diff.faltantes.length+' por añadir · '+_diff.sobrantes.length+' por revisar <span id="informe77-pend-arrow" style="display:inline-block;transition:transform .2s;margin-left:4px;">▶</span></span>'
+      +'</div>'
+      +'<div id="informe77-pend-body" style="display:none;background:#fffaf0;border:1px solid #f0dba0;border-top:none;padding:14px 16px;">'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">'
+        +'<div>'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+            +'<div style="font-size:11px;font-weight:700;color:#1e7a42;text-transform:uppercase;letter-spacing:.4px;">✚ Faltan en RECTORES ('+_diff.faltantes.length+')</div>'
+            +(_diff.faltantes.length?'<button onclick="informe77AnadirTodosFaltantes()" style="font-size:10.5px;padding:5px 10px;border-radius:6px;border:1px solid #1e7a42;background:#1e7a42;color:#fff;cursor:pointer;font-weight:600;">Añadir todos</button>':'')
+          +'</div>'
+          +(_diff.faltantes.length
+            ? '<div style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;">'+_diff.faltantes.map(function(f,fi){
+                return '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fff;border:1px solid var(--gray3);border-radius:8px;padding:6px 10px;">'
+                  +'<div style="min-width:0;"><div style="font-size:12px;font-weight:600;color:var(--gray6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+f.nombre+'</div><div style="font-size:10px;color:var(--gray4);">'+f.panel+'</div></div>'
+                  +'<button onclick="informe77AnadirCandidato(\''+f.panel.replace(/'/g,"\\'")+'\',\''+f.nombre.replace(/'/g,"\\'")+'\',this)" style="font-size:10.5px;padding:4px 9px;border-radius:6px;border:1px solid #1e7a42;background:#fff;color:#1e7a42;cursor:pointer;font-weight:600;flex-shrink:0;">Añadir</button>'
+                +'</div>';
+              }).join('')+'</div>'
+            : '<div style="font-size:12px;color:var(--gray4);">Todos los candidatos del PDF ya están en RECTORES.</div>')
+        +'</div>'
+        +'<div>'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+            +'<div style="font-size:11px;font-weight:700;color:#b52a2a;text-transform:uppercase;letter-spacing:.4px;">✖ No están en el PDF ('+_diff.sobrantes.length+')</div>'
+            +(_diff.sobrantes.length?'<button onclick="informe77BorrarTodosSobrantes()" style="font-size:10.5px;padding:5px 10px;border-radius:6px;border:1px solid #b52a2a;background:#b52a2a;color:#fff;cursor:pointer;font-weight:600;">Borrar todos</button>':'')
+          +'</div>'
+          +(_diff.sobrantes.length
+            ? '<div style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;">'+_diff.sobrantes.map(function(s){
+                return '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fff;border:1px solid var(--gray3);border-radius:8px;padding:6px 10px;">'
+                  +'<div style="min-width:0;"><div style="font-size:12px;font-weight:600;color:var(--gray6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+s.nombre+'</div><div style="font-size:10px;color:var(--gray4);">'+s.panel+'</div></div>'
+                  +'<button onclick="informe77BorrarSobrante(\''+String(s.id).replace(/'/g,"\\'")+'\',this)" style="font-size:10.5px;padding:4px 9px;border-radius:6px;border:1px solid #b52a2a;background:#fff;color:#b52a2a;cursor:pointer;font-weight:600;flex-shrink:0;">Borrar</button>'
+                +'</div>';
+              }).join('')+'</div>'
+            : '<div style="font-size:12px;color:var(--gray4);">No hay fichas en RECTORES fuera del PDF.</div>')
+        +'</div>'
+      +'</div>'
+      +'<div style="font-size:10.5px;color:#8a5a00;margin-top:10px;">Las fichas nuevas se crean con Estado = <b>PENDIENTE</b> y Candidatura presentada = <b>SÍ</b>. Revisa/completa la CCAA y el resto de datos desde la pestaña Rectores cuando puedas.</div>'
+      +'</div>'
+    +'</div>';
+  }
 
   // ── Filtros (con recuento de la selección) ──
   var filtros=[
